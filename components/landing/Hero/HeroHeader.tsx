@@ -1,0 +1,75 @@
+"use client";
+
+import { Zap, Copy, Check } from "lucide-react";
+import { motion, Variants } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import { SERVER_IP } from "@/lib/constants";
+
+interface HeroHeaderProps {
+    itemVariants: Variants;
+}
+
+export function HeroHeader({ itemVariants }: HeroHeaderProps) {
+    const { copied, copyToClipboard } = useCopyToClipboard();
+
+    return (
+        <div className="mt-8 flex flex-col items-center space-y-6 text-center md:mt-0">
+            <motion.div
+                variants={itemVariants}
+                className="border-brand-dark/5 text-brand-orange inline-flex items-center gap-2 rounded-full border bg-white px-3 py-1 text-xs font-bold tracking-widest uppercase shadow-sm"
+            >
+                <Zap size={12} className="fill-brand-orange" />
+                Nova Season 1.21 Disponível
+            </motion.div>
+
+            <motion.h1
+                variants={itemVariants}
+                className="text-brand-dark text-6xl leading-[1.1] font-black tracking-tight md:text-8xl lg:text-9xl"
+            >
+                A NOVA ERA DO <br />
+                <span className="from-brand-orange to-brand-orange animate-text-shimmer bg-gradient-to-r via-amber-500 bg-[length:200%_auto] bg-clip-text text-transparent">
+                    SURVIVAL
+                </span>
+            </motion.h1>
+
+            <motion.p
+                variants={itemVariants}
+                className="text-brand-dark/70 max-w-xl text-lg leading-relaxed font-medium md:text-xl"
+            >
+                Entre no AxisSMP e experimente um survival único com economia equilibrada, quests
+                diárias e uma comunidade que não para de crescer.
+            </motion.p>
+
+            <motion.div
+                variants={itemVariants}
+                className="flex w-full flex-col justify-center gap-4 sm:flex-row"
+            >
+                <button
+                    onClick={() => copyToClipboard(SERVER_IP)}
+                    className={cn(
+                        "hover:border-brand-orange/30 group flex items-center gap-3 rounded-full border border-black/5 bg-white px-8 py-4 shadow-sm transition-all hover:shadow-md active:scale-95",
+                        copied && "border-green-500/50 bg-green-50/50"
+                    )}
+                >
+                    <div
+                        className={cn(
+                            "text-brand-orange flex items-center justify-center transition-transform duration-300",
+                            copied ? "scale-110 text-green-500" : "group-hover:scale-110"
+                        )}
+                    >
+                        {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
+                    </div>
+                    <span
+                        className={cn(
+                            "text-brand-dark text-xl font-bold tracking-tight",
+                            copied && "text-green-600"
+                        )}
+                    >
+                        {copied ? "IP COPIADO!" : SERVER_IP}
+                    </span>
+                </button>
+            </motion.div>
+        </div>
+    );
+}

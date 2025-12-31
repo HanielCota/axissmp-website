@@ -1,26 +1,145 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --font-sans: var(--font-outfit), system-ui, sans-serif;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* Brand Colors */
+  --color-brand-light: #F5F2F2;
+  --color-brand-orange: #FEB05D;
+  --color-brand-blue: #5A7ACD;
+  --color-brand-dark: #2B2A2A;
+
+  /* UI Colors */
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* User Defined Light Palette */
+  --background: #F5F2F2;
+  /* Principal (fundo) */
+  --foreground: #2B2A2A;
+  /* Dark Text */
+
+  --card: #FFFFFF;
+  --card-foreground: #2B2A2A;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #2B2A2A;
+
+  --primary: #FEB05D;
+  /* Orange */
+  --primary-foreground: #2B2A2A;
+
+  --secondary: #5A7ACD;
+  /* Blue */
+  --secondary-foreground: #FFFFFF;
+
+  --muted: #E2E8F0;
+  --muted-foreground: #64748B;
+
+  --accent: #E2E8F0;
+  --accent-foreground: #2B2A2A;
+
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --ring: #FEB05D;
+
+  --radius: 0.75rem;
+}
+
+.dark {
+  /* Keeping dark values just in case user toggles, but default is now Light */
+  --background: #2B2A2A;
+  --foreground: #F5F2F2;
+  --card: #2B2A2A;
+  --card-foreground: #F5F2F2;
+  --popover: #2B2A2A;
+  --popover-foreground: #F5F2F2;
+  --primary: #FEB05D;
+  --primary-foreground: #2B2A2A;
+  --secondary: #5A7ACD;
+  --secondary-foreground: #FFFFFF;
+  --muted: #1E293B;
+  --muted-foreground: #94A3B8;
+  --accent: #1E293B;
+  --accent-foreground: #F5F2F2;
+  --destructive: #991B1B;
+  --destructive-foreground: #F5F2F2;
+  --border: #374151;
+  --input: #374151;
+  --ring: #FEB05D;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 120px;
+    /* Offset for fixed navbar */
+  }
+
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .clip-path-slant {
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+  }
+
+  .bg-noise {
+    /* Slightly darker noise for light mode to be visible */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px currentColor;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-brand-dark/20 rounded-full hover:bg-brand-orange/50 transition-colors;
+  }
 }

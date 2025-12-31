@@ -1,0 +1,11 @@
+import { TicketDetailClient } from "@/components/support/TicketDetailClient";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Atendimento | AxisSMP",
+    description: "Espaço de atendimento para suporte oficial.",
+};
+
+export default function TicketPage() {
+    return <TicketDetailClient />;
+}
