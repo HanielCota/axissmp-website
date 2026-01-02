@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
-import { User, Shield, ShieldAlert, UserCog } from "lucide-react";
+import { User, Shield, ShieldAlert, UserCog, ExternalLink } from "lucide-react";
 import { UserRoleButton } from "@/components/admin/UserRoleButton";
 
 export const dynamic = 'force-dynamic';
@@ -70,7 +70,12 @@ export default async function AdminUsersPage() {
                                                     className="w-10 h-10 rounded-xl border border-white/10"
                                                 />
                                                 <div>
-                                                    <div className="font-bold">{profile.nickname}</div>
+                                                    <Link
+                                                        href={`/player/${profile.nickname}`}
+                                                        className="font-bold hover:text-brand-orange transition-colors"
+                                                    >
+                                                        {profile.nickname}
+                                                    </Link>
                                                     <div className="text-xs text-white/40 font-mono">
                                                         {profile.id.slice(0, 8)}...
                                                     </div>
@@ -92,7 +97,14 @@ export default async function AdminUsersPage() {
                                         <td className="px-6 py-4 text-sm text-white/60">
                                             {new Date(profile.created_at).toLocaleDateString('pt-BR')}
                                         </td>
-                                        <td className="px-6 py-4 text-right">
+                                        <td className="px-6 py-4 text-right flex items-center justify-end gap-2">
+                                            <Link
+                                                href={`/player/${profile.nickname}`}
+                                                className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all"
+                                                title="Ver Perfil Público"
+                                            >
+                                                <ExternalLink size={16} />
+                                            </Link>
                                             <UserRoleButton userId={profile.id} currentRole={profile.role} />
                                         </td>
                                     </tr>

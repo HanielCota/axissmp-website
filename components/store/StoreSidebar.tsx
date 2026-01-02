@@ -13,7 +13,7 @@ interface CategoryItem {
 const categories: CategoryItem[] = [
     { id: "vips", name: "VIPs", icon: Crown },
     { id: "coins", name: "Coins", icon: Gem },
-    { id: "unban", name: "Desban", icon: Shield },
+    { id: "unban", name: "Unban", icon: Shield },
 ];
 
 interface StoreSidebarProps {

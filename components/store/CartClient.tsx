@@ -239,10 +239,11 @@ export function CartClient() {
                                                 </div>
                                                 <button
                                                     onClick={() => removeFromCart(item.id)}
-                                                    className="absolute top-6 right-0 md:static p-2 text-brand-dark/30 hover:text-red-500 transition-colors"
+                                                    className="flex items-center gap-2 px-3 py-2 text-red-500 hover:bg-red-50 rounded-lg transition-all font-bold text-xs uppercase tracking-wider group"
                                                     title="Remover item"
                                                 >
-                                                    <Trash2 size={18} />
+                                                    <Trash2 size={16} className="transition-transform group-hover:scale-110" />
+                                                    <span>Remover</span>
                                                 </button>
                                             </div>
                                         </div>

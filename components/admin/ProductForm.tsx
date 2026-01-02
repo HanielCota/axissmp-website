@@ -152,7 +152,7 @@ export default function ProductForm({ id }: ProductFormProps) {
                             >
                                 <option value="vips">VIPs</option>
                                 <option value="coins">Coins</option>
-                                <option value="unban">Desbanimento</option>
+                                <option value="unban">Unban</option>
                             </select>
                         </div>
                     </div>

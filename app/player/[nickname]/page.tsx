@@ -39,7 +39,7 @@ export default function PlayerProfilePage() {
             const { data, error } = await supabase
                 .from("profiles")
                 .select("nickname, level, created_at")
-                .eq("nickname", nicknameParam)
+                .ilike("nickname", nicknameParam)
                 .single();
 
             if (error || !data) {

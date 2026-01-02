@@ -39,12 +39,14 @@ export function Navbar() {
                 </div>
 
                 {/* Top Section: Header Content */}
-                <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-6 px-6 py-4 md:flex-row">
-                    {/* Left: Players Online */}
-                    <PlayersOnline />
+                <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-6 px-6 py-4 md:flex-row md:gap-0">
+                    {/* Left: Players Online (Equal width flex container on desktop) */}
+                    <div className="flex justify-center md:flex-1 md:justify-start">
+                        <PlayersOnline />
+                    </div>
 
                     {/* Center: Logo */}
-                    <div className="relative h-24 w-48 drop-shadow-2xl transition-transform duration-300 hover:scale-105 md:h-32 md:w-64">
+                    <div className="relative h-24 w-48 flex-none drop-shadow-2xl transition-transform duration-300 hover:scale-105 md:h-32 md:w-64">
                         <Link href="/" className="relative block h-full w-full">
                             <Image
                                 src="/images/logo/logo.png"
@@ -58,8 +60,8 @@ export function Navbar() {
                         </Link>
                     </div>
 
-                    {/* Right: Search & User */}
-                    <div className="hidden items-center gap-4 md:flex">
+                    {/* Right: Search & User (Equal width flex container on desktop) */}
+                    <div className="hidden md:flex md:flex-1 items-center justify-end gap-4">
                         <SearchBar />
                         <UserMenu />
                     </div>

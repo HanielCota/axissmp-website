@@ -87,7 +87,10 @@ export default function DashboardPage() {
             }
 
             if (profileData) {
-                setProfile(profileData);
+                setProfile({
+                    ...profileData,
+                    nickname: profileData.nickname || user.user_metadata?.nickname || "Jogador"
+                });
             }
 
             // Fetch orders

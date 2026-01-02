@@ -131,11 +131,7 @@ export default function WikiPage() {
                                 placeholder="Pesquise por comandos, itens, regras..."
                                 className="placeholder:text-brand-dark/30 text-brand-dark h-14 border-none bg-transparent text-lg shadow-none focus-visible:ring-0"
                             />
-                            <div className="text-brand-dark/30 hidden items-center gap-2 pr-4 text-xs font-bold tracking-wider uppercase md:flex">
-                                <span className="border-brand-dark/10 rounded border px-2 py-1">
-                                    CTRL K
-                                </span>
-                            </div>
+
                         </div>
                     </motion.div>
 

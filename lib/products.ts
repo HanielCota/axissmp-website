@@ -66,7 +66,7 @@ export const products: Product[] = [
     },
     {
         id: 7,
-        name: "Desbanimento",
+        name: "Unban",
         price: 25.00,
         category: "unban",
         color: "bg-red-500/20",
