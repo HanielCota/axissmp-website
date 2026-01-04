@@ -73,9 +73,6 @@ export default function PostForm({ slugParam }: PostFormProps) {
 
             if (result.error) {
                 toast.error(result.error);
-                if (result.details) {
-                    console.error(result.details);
-                }
                 return;
             }
 

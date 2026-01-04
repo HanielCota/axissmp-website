@@ -80,9 +80,6 @@ export default function ProductForm({ id }: ProductFormProps) {
 
             if (result.error) {
                 toast.error(result.error);
-                if (result.details) {
-                    console.error(result.details);
-                }
                 return;
             }
 

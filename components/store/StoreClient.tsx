@@ -55,9 +55,9 @@ export function StoreClient({ products }: StoreClientProps) {
     };
 
     return (
-        <main className="min-h-screen bg-brand-light pb-32">
+        <main className="min-h-screen bg-brand-light dark:bg-background pb-32">
             {/* Dark Header Background for Contrast */}
-            <div className="fixed top-0 left-0 right-0 h-[400px] bg-brand-dark/5 -z-10" />
+            <div className="fixed top-0 left-0 right-0 h-[400px] bg-brand-dark/5 dark:bg-white/5 -z-10" />
 
             <Navbar />
 
@@ -75,10 +75,10 @@ export function StoreClient({ products }: StoreClientProps) {
                         {/* Header */}
                         <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
                             <div>
-                                <h1 className="text-3xl font-black text-brand-dark mb-2">
+                                <h1 className="text-3xl font-black text-brand-dark dark:text-white mb-2">
                                     Loja do Servidor
                                 </h1>
-                                <p className="text-brand-dark/60">
+                                <p className="text-brand-dark/60 dark:text-white/60">
                                     Selecione uma categoria e adicione itens ao seu carrinho.
                                 </p>
                             </div>
@@ -106,8 +106,8 @@ export function StoreClient({ products }: StoreClientProps) {
                         </motion.div>
 
                         {filteredProducts.length === 0 && (
-                            <div className="text-center py-20 bg-white/50 rounded-3xl border border-dashed border-brand-dark/10">
-                                <p className="text-brand-dark/40 font-bold">Nenhum produto nesta categoria.</p>
+                            <div className="text-center py-20 bg-white/50 dark:bg-zinc-900/50 rounded-3xl border border-dashed border-brand-dark/10 dark:border-white/10">
+                                <p className="text-brand-dark/40 dark:text-white/40 font-bold">Nenhum produto nesta categoria.</p>
                             </div>
                         )}
                     </div>
@@ -124,19 +124,19 @@ export function StoreClient({ products }: StoreClientProps) {
                         exit={{ x: 50, opacity: 0 }}
                         className="fixed bottom-8 right-4 md:right-8 z-40 group"
                     >
-                        <div className="bg-zinc-950/80 backdrop-blur-2xl border border-white/10 rounded-2xl p-2 pr-4 shadow-2xl flex items-center gap-4 transition-all hover:bg-zinc-900 group-hover:border-white/20">
+                        <div className="bg-white/90 dark:bg-zinc-900/90 backdrop-blur-2xl border border-slate-200 dark:border-white/10 rounded-2xl p-2 pr-4 shadow-2xl flex items-center gap-4 transition-all hover:bg-white dark:hover:bg-zinc-900 group-hover:border-slate-300 dark:group-hover:border-white/20">
                             {/* Icon with Counter Badge */}
                             <div className="relative w-12 h-12 bg-brand-orange rounded-xl flex items-center justify-center shrink-0 shadow-lg shadow-brand-orange/20 transition-transform group-hover:scale-105 active:scale-95">
-                                <ShoppingCart size={22} className="text-brand-dark" />
-                                <span className="absolute -top-2 -right-2 bg-white text-zinc-950 text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-lg border border-zinc-200">
+                                <ShoppingCart size={22} className="text-white" />
+                                <span className="absolute -top-2 -right-2 bg-slate-900 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-lg border border-white dark:border-zinc-900">
                                     {totalItems}
                                 </span>
                             </div>
 
                             {/* Order Info */}
                             <div className="flex flex-col">
-                                <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest leading-none mb-1">Seu Carrinho</span>
-                                <span className="text-lg font-black text-white leading-none tracking-tight">
+                                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-widest leading-none mb-1">Seu Carrinho</span>
+                                <span className="text-lg font-black text-slate-900 dark:text-white leading-none tracking-tight">
                                     {formatPrice(totalPrice)}
                                 </span>
                             </div>
@@ -144,7 +144,7 @@ export function StoreClient({ products }: StoreClientProps) {
                             {/* Action Button */}
                             <button
                                 onClick={handleCheckoutClick}
-                                className="ml-2 bg-white hover:bg-zinc-100 text-zinc-950 font-black px-6 py-3 rounded-xl transition-all active:scale-95 shadow-xl text-sm whitespace-nowrap"
+                                className="ml-2 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-black px-6 py-3 rounded-xl transition-all active:scale-95 shadow-xl text-sm whitespace-nowrap"
                             >
                                 Finalizar compra
                             </button>

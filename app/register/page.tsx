@@ -51,7 +51,7 @@ export default function RegisterPage() {
     };
 
     return (
-        <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-black text-white selection:bg-brand-orange/30">
+        <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-brand-light dark:bg-black text-slate-900 dark:text-white selection:bg-brand-orange/30">
             {/* Background Image / Render */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-gradient-to-tr from-black via-black/60 to-transparent z-10" />
@@ -60,7 +60,7 @@ export default function RegisterPage() {
                     alt="Background"
                     fill
                     sizes="100vw"
-                    className="object-cover opacity-50 grayscale-[0.2]"
+                    className="object-cover opacity-10 dark:opacity-50 grayscale-[0.2]"
                     priority
                 />
             </div>
@@ -68,7 +68,7 @@ export default function RegisterPage() {
             {/* Back to Home Button */}
             <Link
                 href="/"
-                className="absolute top-8 left-8 z-20 flex items-center gap-2 rounded-full border border-white/5 bg-white/5 px-4 py-2 text-sm font-bold backdrop-blur-md transition-all hover:bg-white/10"
+                className="absolute top-8 left-8 z-20 flex items-center gap-2 rounded-full border border-slate-200 dark:border-white/5 bg-white/50 dark:bg-white/5 px-4 py-2 text-sm font-bold text-slate-600 dark:text-white backdrop-blur-md transition-all hover:bg-white/80 dark:hover:bg-white/10"
             >
                 <Home size={18} />
                 <span>Voltar ao Início</span>
@@ -93,18 +93,18 @@ export default function RegisterPage() {
                     </Link>
 
                     {/* Register Card */}
-                    <div className="w-full rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl shadow-2xl">
+                    <div className="w-full rounded-3xl border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-white/5 p-8 backdrop-blur-xl shadow-2xl">
                         <div className="mb-8 text-center md:text-left">
-                            <h1 className="text-3xl font-black tracking-tight text-white uppercase italic">Criar Conta</h1>
-                            <p className="text-white/60 font-medium">Comece sua jornada no maior Survival 1.21!</p>
+                            <h1 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white uppercase italic">Criar Conta</h1>
+                            <p className="text-slate-600 dark:text-white/70 font-medium">Comece sua jornada no maior Survival 1.21!</p>
                         </div>
 
                         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                             {/* Nickname Field */}
                             <div className="space-y-2">
-                                <label className="text-xs font-black uppercase tracking-widest text-white/40 ml-1">Nickname (In-game)</label>
+                                <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-white/60 ml-1">Nickname (In-game)</label>
                                 <div className="group relative">
-                                    <div className="absolute top-1/2 left-4 -translate-y-1/2 text-white/40 transition-colors group-focus-within:text-brand-orange">
+                                    <div className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-500 dark:text-white/60 transition-colors group-focus-within:text-brand-orange">
                                         <User size={20} />
                                     </div>
                                     <input
@@ -113,16 +113,16 @@ export default function RegisterPage() {
                                         value={nickname}
                                         onChange={(e) => setNickname(e.target.value)}
                                         placeholder="Seu nick no Minecraft"
-                                        className="h-14 w-full rounded-2xl border border-white/5 bg-white/5 pl-12 pr-4 font-bold text-white transition-all placeholder:text-white/20 hover:bg-white/10 focus:border-brand-orange/50 focus:bg-white/10 focus:outline-none focus:ring-4 focus:ring-brand-orange/10"
+                                        className="h-14 w-full rounded-2xl border border-slate-200 dark:border-white/5 bg-white dark:bg-white/5 pl-12 pr-4 font-bold text-slate-900 dark:text-white transition-all placeholder:text-slate-300 dark:placeholder:text-white/20 hover:bg-slate-50 dark:hover:bg-white/10 focus:border-brand-orange/50 focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-orange/10"
                                     />
                                 </div>
                             </div>
 
                             {/* Email Field */}
                             <div className="space-y-2">
-                                <label className="text-xs font-black uppercase tracking-widest text-white/40 ml-1">E-mail</label>
+                                <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-white/60 ml-1">E-mail</label>
                                 <div className="group relative">
-                                    <div className="absolute top-1/2 left-4 -translate-y-1/2 text-white/40 transition-colors group-focus-within:text-brand-orange">
+                                    <div className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-500 dark:text-white/60 transition-colors group-focus-within:text-brand-orange">
                                         <Mail size={20} />
                                     </div>
                                     <input
@@ -131,7 +131,7 @@ export default function RegisterPage() {
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         placeholder="seu@email.com"
-                                        className="h-14 w-full rounded-2xl border border-white/5 bg-white/5 pl-12 pr-4 font-bold text-white transition-all placeholder:text-white/20 hover:bg-white/10 focus:border-brand-orange/50 focus:bg-white/10 focus:outline-none focus:ring-4 focus:ring-brand-orange/10"
+                                        className="h-14 w-full rounded-2xl border border-slate-200 dark:border-white/5 bg-white dark:bg-white/5 pl-12 pr-4 font-bold text-slate-900 dark:text-white transition-all placeholder:text-slate-300 dark:placeholder:text-white/20 hover:bg-slate-50 dark:hover:bg-white/10 focus:border-brand-orange/50 focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-orange/10"
                                     />
                                 </div>
                             </div>
@@ -139,9 +139,9 @@ export default function RegisterPage() {
                             {/* Password Group */}
                             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                                 <div className="space-y-2">
-                                    <label className="text-xs font-black uppercase tracking-widest text-white/40 ml-1">Senha</label>
+                                    <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-white/60 ml-1">Senha</label>
                                     <div className="group relative">
-                                        <div className="absolute top-1/2 left-4 -translate-y-1/2 text-white/40 transition-colors group-focus-within:text-brand-orange">
+                                        <div className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-500 dark:text-white/60 transition-colors group-focus-within:text-brand-orange">
                                             <Lock size={20} />
                                         </div>
                                         <input
@@ -150,14 +150,14 @@ export default function RegisterPage() {
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             placeholder="••••"
-                                            className="h-14 w-full rounded-2xl border border-white/5 bg-white/5 pl-12 pr-4 font-bold text-white transition-all placeholder:text-white/20 hover:bg-white/10 focus:border-brand-orange/50 focus:bg-white/10 focus:outline-none focus:ring-4 focus:ring-brand-orange/10"
+                                            className="h-14 w-full rounded-2xl border border-slate-200 dark:border-white/5 bg-white dark:bg-white/5 pl-12 pr-4 font-bold text-slate-900 dark:text-white transition-all placeholder:text-slate-300 dark:placeholder:text-white/20 hover:bg-slate-50 dark:hover:bg-white/10 focus:border-brand-orange/50 focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-orange/10"
                                         />
                                     </div>
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-xs font-black uppercase tracking-widest text-white/40 ml-1">Confirmar</label>
+                                    <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-white/60 ml-1">Confirmar</label>
                                     <div className="group relative">
-                                        <div className="absolute top-1/2 left-4 -translate-y-1/2 text-white/40 transition-colors group-focus-within:text-brand-orange">
+                                        <div className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-500 dark:text-white/60 transition-colors group-focus-within:text-brand-orange">
                                             <Lock size={20} />
                                         </div>
                                         <input
@@ -166,7 +166,7 @@ export default function RegisterPage() {
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
                                             placeholder="••••"
-                                            className="h-14 w-full rounded-2xl border border-white/5 bg-white/5 pl-12 pr-4 font-bold text-white transition-all placeholder:text-white/20 hover:bg-white/10 focus:border-brand-orange/50 focus:bg-white/10 focus:outline-none focus:ring-4 focus:ring-brand-orange/10"
+                                            className="h-14 w-full rounded-2xl border border-slate-200 dark:border-white/5 bg-white dark:bg-white/5 pl-12 pr-4 font-bold text-slate-900 dark:text-white transition-all placeholder:text-slate-300 dark:placeholder:text-white/20 hover:bg-slate-50 dark:hover:bg-white/10 focus:border-brand-orange/50 focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-orange/10"
                                         />
                                     </div>
                                 </div>
@@ -191,11 +191,11 @@ export default function RegisterPage() {
                         </form>
 
                         <div className="mt-8 text-center">
-                            <p className="text-sm font-medium text-white/40">
+                            <p className="text-sm font-medium text-slate-500 dark:text-white/60">
                                 Já possui uma conta?{" "}
                                 <Link
                                     href="/login"
-                                    className="font-black text-white hover:text-brand-orange transition-colors"
+                                    className="font-black text-slate-900 dark:text-white hover:text-brand-orange transition-colors"
                                 >
                                     Fazer Login
                                 </Link>

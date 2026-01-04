@@ -1,57 +1,255 @@
-# 📜 CONSTITUIÇÃO DE DESENVOLVIMENTO: NEXT.JS + SUPABASE (MODO SÊNIOR)
+```markdown
+# 📜 REGRAS DE DESENVOLVIMENTO — PADRÃO SÊNIOR INEGOCIÁVEL
 
-Você é um Engenheiro de Software Sênior. Seu código deve ser elegante, performático e seguir rigorosamente os princípios de Clean Code. Não aceite mediocridade.
+**Next.js (App Router) + Supabase + Tailwind CSS + TypeScript**
 
----
-
-## 🚀 1. FONTES DE CONHECIMENTO (CONTEXTO ATUALIZADO)
-- **Next.js 16.1.1+:** Consulte sempre https://nextjs.org/docs/llms-full.txt para padrões de App Router e Server Actions.
-- **Supabase SSR:** Siga os padrões de `@supabase/ssr` com gerenciamento de cookies.
-- **Verdade Única:** Se houver conflito entre seu conhecimento prévio e estas fontes/regras, estas regras e a documentação oficial vencem.
-Sempre use a versão mais recente de tudo!
+> **Este documento define regras ABSOLUTAS para todo código entregue.**  
+> Não há exceções implícitas. Em caso de dúvida, prefira o caminho mais **explícito, previsível e seguro**.
 
 ---
 
-## 🛠️ 2. PADRÕES DE LÓGICA E CLEAN CODE (ESTRITO)
-- **Early Returns:** Sempre use o padrão de "Cláusula de Guarda". Trate os erros e casos negativos primeiro e retorne/lance o erro imediatamente. O fluxo principal deve ficar na raiz da função, sem indentação desnecessária.
-- **Abaixo o "Else":** Nunca use blocos `else`. Se um `if` termina em um `return` ou `throw`, o `else` é redundante e deve ser removido para reduzir a complexidade cognitiva.
-- **Vertical Spacing (Saltar Linhas):** O código deve respirar. Use uma linha em branco para separar blocos lógicos de código (ex: separação entre validação de inputs, chamada ao banco e retorno da função).
-- **Auto-Formatação:** O código deve ser entregue perfeitamente indentado e formatado seguindo os padrões do Prettier/ESLint.
-- **Funções Pequenas:** Cada função ou Server Action deve fazer apenas uma coisa (Single Responsibility Principle).
+## 🚀 1. FONTES DE VERDADE (HIERARQUIA ABSOLUTA)
+
+| Prioridade | Fonte | Referência |
+|------------|-------|------------|
+| **1ª** | Documentação oficial (mais recente) | [Next.js](https://nextjs.org/docs/app), [Supabase SSR](https://supabase.com/docs/guides/auth/server-side) |
+| **2ª** | Este documento | RULES.md |
+| **3ª** | Conhecimento prévio | - |
+
+**Conflito? Documentação oficial SEMPRE vence.**
+
+---
+
+## 🧠 2. CLEAN CODE — ZERO TOLERÂNCIA
+
+### 2.1 Fluxo de Controle **OBRIGATÓRIO**
+```typescript
+// ✅ CORRETO - Early Return
+export function processUser(user: User | null) {
+  if (!user) return null;
+  if (!user.email) throw new Error('Email obrigatório');
+  
+  // Happy path no nível raiz
+  return transformUser(user);
+}
+
+// ❌ PROIBIDO - else e aninhamento
+```
+
+- **Early Return**: obrigatório em todo `if`
+- **else**: **PROIBIDO** em qualquer lugar
+- **Fluxo principal**: sempre no nível raiz da função
+
+### 2.2 Estrutura Visual **OBRIGATÓRIA**
+```typescript
+export async function createProfile(data: CreateProfileInput) {
+  // 1. VALIDAÇÕES (Early Returns)
+  validateProfileData(data);
+  
+  // 2. LÓGICA PRINCIPAL (espaçamento intencional)
+  
+  const result = await supabase.from('profiles').insert(data);
+  
+  // 3. RETORNO
+  return result;
+}
+```
+
+### 2.3 Formatação **AUTOMÁTICA**
+- Prettier + ESLint = **lei**
+- Código entregue **nunca** precisa de ajustes
+- Imports ordenados, quebras consistentes
 
 ---
 
 ## 🏗️ 3. ARQUITETURA NEXT.JS (APP ROUTER)
-- **Server Components:** Padrão absoluto. Mantenha a lógica de busca de dados no servidor.
-- **Client Components:** Use `'use client'` apenas onde houver necessidade real de hooks (useState/useEffect) ou eventos do browser. 
-- **Server Actions:** Use para TODA mutação de dados. Elas devem ser seguras, validadas com Zod e retornar um padrão `{ data, error }`.
-- **Loading UI:** Utilize `loading.tsx` com skeletons para evitar layouts vazios durante o fetch.
+
+### 3.1 Server First **PADRÃO ABSOLUTO**
+```typescript
+// ✅ Server Component (padrão)
+export default async function Page() {
+  const data = await fetchData(); // Server-side
+  return <ProfileList data={data} />;
+}
+
+// ❌ Client Component (exceção)
+'use client'; // Somente se hook/evento browser necessário
+```
+
+**Client Components**: `'use client'` APENAS para:
+- Hooks de estado/efeito
+- Eventos do browser (onClick, onChange)
+
+### 3.2 Server Actions **FORMATO OBRIGATÓRIO**
+```typescript
+'use server';
+
+import { z } from 'zod';
+
+const schema = z.object({ name: z.string().min(1) });
+
+export async function createProfile(prevState: any, formData: FormData) {
+  const validated = schema.safeParse(Object.fromEntries(formData));
+  if (!validated.success) {
+    return { data: null, error: validated.error.message };
+  }
+
+  const { data, error } = await supabase.from('profiles').insert(validated.data);
+  if (error) return { data: null, error: error.message };
+
+  revalidatePath('/dashboard');
+  return { data: data[0], error: null };
+}
+```
+
+**Retorno SEMPRE**:
+```typescript
+{ data: T | null; error: string | null }
+```
+
+### 3.3 UX Loading **OBRIGATÓRIO**
+```
+app/dashboard/
+├── page.tsx
+├── loading.tsx  ← Skeleton obrigatório
+└── error.tsx
+```
 
 ---
 
-## ☁️ 4. SUPABASE, AUTH E SEGURANÇA
-- **SSR Client:** Nunca instancie o Supabase sem o helper de cookies no servidor. Use `@/utils/supabase/server` ou `@/utils/supabase/client` conforme o contexto.
-- **RLS (Row Level Security):** O RLS é a nossa lei. Nunca sugira queries que tentem burlar a segurança do banco.
-- **Middleware:** A proteção de rotas e o refresh de sessão devem acontecer obrigatoriamente no `middleware.ts`.
-- **Zod Validation:** Todo dado vindo do usuário (params ou formulários) DEVE ser validado com Zod antes de tocar o banco de dados.
+## ☁️ 4. SUPABASE & SEGURANÇA
+
+### 4.1 Instanciação **ÚNICA**
+```typescript
+// Server
+import { createSupabaseServerClient } from '@/utils/supabase/server';
+
+// Client  
+import { createSupabaseClient } from '@/utils/supabase/client';
+```
+
+**Nunca** instanciar Supabase diretamente.
+
+### 4.2 RLS **SAGRADO**
+```
+✅ RLS ativado + validação Zod
+❌ "RLS segura tudo"
+```
+
+### 4.3 Middleware **OBRIGATÓRIO**
+```typescript
+// app/middleware.ts - Proteção de rotas
+export const config = {
+  matcher: ['/dashboard/:path*']
+};
+```
+
+### 4.4 Validação **ZOD OBRIGATÓRIO**
+```typescript
+const paramsSchema = z.object({
+  id: z.string().uuid()
+});
+
+const validated = paramsSchema.parse(params);
+```
+
+**Validar SEMPRE**:
+- `params`
+- `searchParams` 
+- `formData`
+- Corpo de requests
 
 ---
 
-## 🎨 5. ESTILIZAÇÃO (TAILWIND CSS)
-- **Semantic Classes:** Use classes utilitárias de forma organizada.
-- **Condicionais:** Use a função `cn()` (clsx + tailwind-merge) para manipular classes.
-- **Componentização:** Não repita estilos. Se um padrão de design aparecer mais de duas vezes, transforme-o em um componente UI.
+## 🎨 5. TAILWIND CSS — ESTILIZAÇÃO
+
+### 5.1 Classes **SEMÂNTICAS**
+```typescript
+// ✅ CORRETO - agrupadas logicamente
+<div className="
+  container mx-auto
+  p-6
+  bg-white rounded-lg
+  shadow-lg
+">
+```
+
+### 5.2 Condicionais **cn() OBRIGATÓRIO**
+```typescript
+import { cn } from '@/lib/utils';
+
+<div className={cn(
+  'btn',
+  isLoading && 'opacity-50 cursor-not-allowed'
+)}>
+```
+
+### 5.3 Duplicação **PROIBIDA**
+```
+Se repetir 2+ vezes → criar componente UI
+```
 
 ---
 
-## ⌨️ 6. TYPESCRIPT (NO ANY)
-- **Strict Typing:** O uso de `any` resultará em erro crítico. Use tipos genéricos, interfaces bem definidas e os tipos gerados pelo Supabase CLI (`Database`).
-- **Interfaces:** Nomeie props de componentes como `interface Props { ... }`.
+## ⌨️ 6. TYPESCRIPT — ZERO ANY
+
+### 6.1 Tipos **EXPLÍCITOS**
+```typescript
+// ✅ CORRETO
+interface Props {
+  profiles: Profile[];
+  onDelete: (id: string) => void;
+}
+
+// ❌ PROIBIDO
+function Component(props: any) { }
+```
+
+### 6.2 Supabase Types **GERADOS**
+```bash
+npx supabase gen types typescript --local > types/supabase.ts
+```
 
 ---
 
-## 🤖 7. FLUXO DE TRABALHO DO AGENTE (ANTIGRAVITY)
-1. **Análise de Regras:** Antes de cada resposta, valide se o código segue o princípio de **Early Return** e **Sem Else**.
-2. **Plano de Ataque:** Descreva o plano em 3 pontos claros antes de escrever o código.
-3. **Refatoração Ativa:** Se você ler um arquivo meu que viola estas regras (como um código com muitos `if/else` aninhados), sua primeira sugestão deve ser a refatoração.
-4. **Verificação de Cookies:** Se for escrever uma query no Supabase, confirme se está usando o cliente correto para o contexto (Server vs Client).
+## 🔒 7. PROTOCOLO DE EXECUÇÃO (CHECKLIST)
+
+### Antes de escrever **TODO** código:
+
+```mermaid
+graph TD
+  A[1. Verificar: else? Aninhamento?] --> B[2. Validar: Server ou Client?]
+  B --> C[3. Zod schema pronto?]
+  C --> D[4. Retorno padronizado?]
+  D --> E[ESCREVER]
+```
+
+### Refatoração **PRIORITÁRIA** para código legado:
+1. `if/else` aninhado
+2. Funções > 30 linhas  
+3. Múltiplas responsabilidades
+
+---
+
+## ✅ CHECKLIST FINAL (CÓDIGO PRONTO?)
+
+| Item | ✅ |
+|------|---|
+| Early return em todos `if`? | ☐ |
+| Zero `else`? | ☐ |
+| Server Component (quando possível)? | ☐ |
+| Server Action com Zod? | ☐ |
+| `loading.tsx` com skeleton? | ☐ |
+| Tipos explícitos (zero `any`)? | ☐ |
+| Classes Tailwind agrupadas? | ☐ |
+| RLS + validação Zod? | ☐ |
+| Middleware protegendo rotas? | ☐ |
+
+---
+
+## 💎 PRINCÍPIO FINAL
+
+```
+Código bom = funciona
+Código sênior = ensina, escala, não surpreende
+```

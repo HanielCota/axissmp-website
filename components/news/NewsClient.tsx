@@ -106,7 +106,7 @@ export function NewsClient({ initialPosts }: NewsClientProps) {
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-brand-dark text-5xl font-black tracking-tight md:text-7xl"
+                        className="text-brand-dark dark:text-white text-5xl font-black tracking-tight md:text-7xl"
                     >
                         NOVIDADES DO <span className="text-brand-orange">AXIS</span>
                     </motion.h1>
@@ -114,7 +114,7 @@ export function NewsClient({ initialPosts }: NewsClientProps) {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-brand-dark/60 mx-auto max-w-2xl text-xl font-medium"
+                        className="text-brand-dark/60 dark:text-white/60 mx-auto max-w-2xl text-xl font-medium"
                     >
                         Fique por dentro de todas as atualizações, eventos e mudanças no servidor.
                     </motion.p>
@@ -125,7 +125,7 @@ export function NewsClient({ initialPosts }: NewsClientProps) {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="border-brand-dark/5 mb-12 flex flex-col items-center justify-between gap-6 rounded-3xl border bg-white/50 p-4 backdrop-blur-sm md:flex-row"
+                    className="border-brand-dark/5 dark:border-white/10 mb-12 flex flex-col items-center justify-between gap-6 rounded-3xl border bg-white/50 dark:bg-white/5 p-4 backdrop-blur-sm md:flex-row"
                 >
                     {/* Category Tabs */}
                     <div className="flex flex-wrap justify-center gap-2 md:justify-start">
@@ -135,7 +135,7 @@ export function NewsClient({ initialPosts }: NewsClientProps) {
                                 "rounded-full border px-4 py-2 text-sm font-bold transition-all",
                                 selectedCategory === "all"
                                     ? "bg-brand-dark border-brand-dark text-white"
-                                    : "text-brand-dark/60 hover:text-brand-dark hover:bg-brand-light border-brand-dark/5 bg-white"
+                                    : "text-brand-dark/60 dark:text-white/60 hover:text-brand-dark dark:hover:text-white hover:bg-brand-light dark:hover:bg-white/10 border-brand-dark/5 dark:border-white/10 bg-white dark:bg-white/5"
                             )}
                         >
                             Todas
@@ -148,7 +148,7 @@ export function NewsClient({ initialPosts }: NewsClientProps) {
                                     "flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold transition-all outline-none focus:ring-0 focus:outline-none",
                                     selectedCategory === key
                                         ? config.activeColor
-                                        : "text-brand-dark/60 hover:text-brand-dark hover:bg-brand-light border-brand-dark/5 bg-white"
+                                        : "text-brand-dark/60 dark:text-white/60 hover:text-brand-dark dark:hover:text-white hover:bg-brand-light dark:hover:bg-white/10 border-brand-dark/5 dark:border-white/10 bg-white dark:bg-white/5"
                                 )}
                             >
                                 {config.label}
@@ -167,7 +167,7 @@ export function NewsClient({ initialPosts }: NewsClientProps) {
                             placeholder="Buscar notícias..."
                             value={searchQuery}
                             onChange={handleSearchChange}
-                            className="border-brand-dark/10 focus:border-brand-orange/50 focus:ring-brand-orange/5 text-brand-dark placeholder:text-brand-dark/30 h-12 w-full rounded-2xl border bg-white pr-4 pl-12 font-medium transition-all focus:ring-4 focus:outline-none"
+                            className="border-brand-dark/10 dark:border-white/10 focus:border-brand-orange/50 focus:ring-brand-orange/5 text-brand-dark dark:text-white placeholder:text-brand-dark/30 dark:placeholder:text-white/30 h-12 w-full rounded-2xl border bg-white dark:bg-white/5 pr-4 pl-12 font-medium transition-all focus:ring-4 focus:outline-none"
                         />
                     </div>
                 </motion.div>
@@ -187,7 +187,7 @@ export function NewsClient({ initialPosts }: NewsClientProps) {
                                 >
                                     <Link
                                         href={`/news/${post.slug}`}
-                                        className="group border-brand-dark/5 hover:shadow-brand-dark/5 flex h-full flex-col rounded-[2rem] border bg-white p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+                                        className="group border-brand-dark/5 dark:border-white/10 hover:shadow-brand-dark/5 flex h-full flex-col rounded-[2rem] border bg-white dark:bg-zinc-900 p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
                                     >
                                         {/* Header Meta */}
                                         <div className="mb-6 flex items-center justify-between">
@@ -208,17 +208,17 @@ export function NewsClient({ initialPosts }: NewsClientProps) {
 
                                         {/* Content */}
                                         <div className="flex-1 space-y-3">
-                                            <h2 className="text-brand-dark group-hover:text-brand-orange text-2xl font-bold transition-colors">
+                                            <h2 className="text-brand-dark dark:text-white group-hover:text-brand-orange text-2xl font-bold transition-colors">
                                                 {post.title}
                                             </h2>
-                                            <p className="text-brand-dark/60 line-clamp-3 leading-relaxed font-medium">
+                                            <p className="text-brand-dark/60 dark:text-white/60 line-clamp-3 leading-relaxed font-medium">
                                                 {post.excerpt}
                                             </p>
                                         </div>
 
                                         {/* Footer */}
-                                        <div className="border-brand-dark/5 mt-8 flex items-center justify-between border-t pt-6">
-                                            <div className="text-brand-dark/30 text-sm font-bold">
+                                        <div className="border-brand-dark/5 dark:border-white/10 mt-8 flex items-center justify-between border-t pt-6">
+                                            <div className="text-brand-dark/30 dark:text-white/30 text-sm font-bold">
                                                 Por: {post.author}
                                             </div>
                                             <div className="bg-brand-light text-brand-dark/40 group-hover:bg-brand-orange flex h-10 w-10 items-center justify-center rounded-full transition-all group-hover:text-white">
@@ -232,10 +232,10 @@ export function NewsClient({ initialPosts }: NewsClientProps) {
                     </div>
                 ) : (
                     <div className="py-20 text-center">
-                        <div className="bg-brand-dark/5 text-brand-dark/20 mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full">
+                        <div className="bg-brand-dark/5 dark:bg-white/5 text-brand-dark/20 dark:text-white/20 mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full">
                             <Search size={40} />
                         </div>
-                        <h3 className="text-brand-dark text-xl font-bold">
+                        <h3 className="text-brand-dark dark:text-white text-xl font-bold">
                             Nenhum resultado encontrado
                         </h3>
                         <p className="text-brand-dark/50">
@@ -250,7 +250,7 @@ export function NewsClient({ initialPosts }: NewsClientProps) {
                         <button
                             onClick={() => handlePageChange(currentPage - 1)}
                             disabled={currentPage === 1}
-                            className="border-brand-dark/10 text-brand-dark hover:bg-brand-light rounded-xl border bg-white px-6 py-3 font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                            className="border-brand-dark/10 dark:border-white/10 text-brand-dark dark:text-white hover:bg-brand-light dark:hover:bg-white/10 rounded-xl border bg-white dark:bg-white/5 px-6 py-3 font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             Anterior
                         </button>
@@ -260,7 +260,7 @@ export function NewsClient({ initialPosts }: NewsClientProps) {
                         <button
                             onClick={() => handlePageChange(currentPage + 1)}
                             disabled={currentPage === totalPages}
-                            className="border-brand-dark/10 text-brand-dark hover:bg-brand-light rounded-xl border bg-white px-6 py-3 font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                            className="border-brand-dark/10 dark:border-white/10 text-brand-dark dark:text-white hover:bg-brand-light dark:hover:bg-white/10 rounded-xl border bg-white dark:bg-white/5 px-6 py-3 font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             Próxima
                         </button>

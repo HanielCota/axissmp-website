@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Minus, Plus, ShoppingCart, Info, Check } from "lucide-react";
+import { Minus, Plus, ShoppingCart, Info, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -61,7 +61,7 @@ export function ProductCard({ id, name, description, price, priceNum, category, 
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="group bg-white rounded-2xl p-4 flex flex-col items-center text-center shadow-sm border border-brand-dark/5 hover:border-brand-blue/30 transition-all hover:shadow-md"
+            className="group bg-white dark:bg-zinc-900 rounded-2xl p-4 flex flex-col items-center text-center shadow-sm border border-brand-dark/5 dark:border-white/10 hover:border-brand-blue/30 transition-all hover:shadow-md"
         >
             {/* Image / Icon */}
             <div className={cn(
@@ -85,7 +85,7 @@ export function ProductCard({ id, name, description, price, priceNum, category, 
             </div>
 
             {/* Info */}
-            <h3 className="font-bold text-brand-dark text-lg leading-tight mb-1">{name}</h3>
+            <h3 className="font-bold text-brand-dark dark:text-white text-lg leading-tight mb-1">{name}</h3>
             <p className="font-black text-brand-orange text-xl mb-4">{price}</p>
 
             {/* Actions */}
@@ -95,7 +95,7 @@ export function ProductCard({ id, name, description, price, priceNum, category, 
                     variant="ghost"
                     size="icon"
                     onClick={() => setShowDetails(true)}
-                    className="w-full bg-brand-dark/5 hover:bg-brand-dark/10 text-brand-dark/50 hover:text-brand-blue rounded-lg h-10"
+                    className="w-full bg-brand-dark/5 dark:bg-white/5 hover:bg-brand-dark/10 dark:hover:bg-white/10 text-brand-dark/50 dark:text-white/50 hover:text-brand-blue rounded-lg h-10"
                 >
                     <Info size={18} />
                 </Button>
@@ -103,19 +103,19 @@ export function ProductCard({ id, name, description, price, priceNum, category, 
                 {/* Quantity & Add */}
                 <div className="col-span-2 flex items-center gap-2">
                     {category === 'coins' && (
-                        <div className="flex items-center bg-brand-dark/5 rounded-lg h-10 px-1">
+                        <div className="flex items-center bg-brand-dark/5 dark:bg-white/5 rounded-lg h-10 px-1">
                             <button
                                 onClick={decrement}
                                 disabled={added}
-                                className="w-8 h-full flex items-center justify-center text-brand-dark/50 hover:text-brand-dark transition-colors disabled:opacity-50"
+                                className="w-8 h-full flex items-center justify-center text-brand-dark/50 dark:text-white/50 hover:text-brand-dark dark:hover:text-white transition-colors disabled:opacity-50"
                             >
                                 <Minus size={14} strokeWidth={3} />
                             </button>
-                            <span className="w-6 text-center font-bold text-brand-dark text-sm">{quantity}</span>
+                            <span className="w-6 text-center font-bold text-brand-dark dark:text-white text-sm">{quantity}</span>
                             <button
                                 onClick={increment}
                                 disabled={added}
-                                className="w-8 h-full flex items-center justify-center text-brand-dark/50 hover:text-brand-dark transition-colors disabled:opacity-50"
+                                className="w-8 h-full flex items-center justify-center text-brand-dark/50 dark:text-white/50 hover:text-brand-dark dark:hover:text-white transition-colors disabled:opacity-50"
                             >
                                 <Plus size={14} strokeWidth={3} />
                             </button>
@@ -166,53 +166,127 @@ export function ProductCard({ id, name, description, price, priceNum, category, 
             {/* Details Modal */}
             <AnimatePresence>
                 {showDetails && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-brand-dark/60 backdrop-blur-sm">
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                            className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative"
+                            aria-modal="true"
+                            role="dialog"
+                            className="bg-zinc-950 border border-white/10 w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl relative flex flex-col md:flex-row max-h-[90vh]"
                         >
                             <button
                                 onClick={() => setShowDetails(false)}
-                                className="absolute top-4 right-4 text-brand-dark/30 hover:text-brand-dark transition-colors"
+                                aria-label="Fechar detalhes do produto"
+                                className="absolute top-4 right-4 z-10 p-2 bg-black/20 hover:bg-black/40 text-white/70 hover:text-white rounded-full transition-colors backdrop-blur-sm"
                             >
-                                <Plus size={24} className="rotate-45" />
+                                <X size={20} />
                             </button>
 
+                            {/* Left Side - Image */}
                             <div className={cn(
-                                "w-24 h-24 rounded-2xl mx-auto mb-6 flex items-center justify-center",
+                                "relative w-full md:w-1/2 min-h-[300px] md:min-h-[500px] flex items-center justify-center p-8 overflow-hidden",
                                 color
                             )}>
+                                <div className="absolute inset-0 bg-[url('/images/noise.png')] opacity-10 mix-blend-overlay" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent md:bg-gradient-to-r md:from-transparent md:to-zinc-950/50" />
+
                                 {image && (
-                                    <div className="relative w-16 h-16">
-                                        <Image
-                                            src={image}
-                                            alt={name}
-                                            fill
-                                            className="object-contain"
-                                        />
+                                    <div className="relative w-full h-full max-w-[300px] max-h-[300px] md:max-w-none md:max-h-none flex items-center justify-center">
+                                        <motion.div
+                                            initial={{ y: 20, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ delay: 0.2 }}
+                                            className="relative w-full aspect-square"
+                                        >
+                                            <Image
+                                                src={image}
+                                                alt={name}
+                                                fill
+                                                className="object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                                                sizes="(max-width: 768px) 100vw, 50vw"
+                                                quality={100}
+                                            />
+                                        </motion.div>
                                     </div>
                                 )}
                             </div>
 
-                            <h2 className="text-2xl font-black text-brand-dark text-center mb-2">{name}</h2>
-                            <p className="text-brand-orange text-xl font-black text-center mb-6">{price}</p>
+                            {/* Right Side - Details */}
+                            <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col bg-zinc-950/50">
+                                <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <span className="px-3 py-1 bg-white/5 text-white/50 text-xs font-bold uppercase tracking-wider rounded-full">
+                                            {category === 'coins' ? 'Moedas' : category === 'vips' ? 'Vip' : 'Item'}
+                                        </span>
+                                    </div>
 
-                            <div className="prose prose-sm max-h-60 overflow-y-auto mb-8 text-brand-dark/70 text-center">
-                                {description || "Nenhuma descrição disponível para este item."}
+                                    <h2 className="text-3xl md:text-4xl font-black font-outfit text-white mb-2 leading-tight">
+                                        {name}
+                                    </h2>
+                                    <p className="text-2xl md:text-3xl font-black text-brand-orange mb-8">
+                                        {price}
+                                    </p>
+
+                                    <div className="prose prose-invert prose-sm max-w-none text-zinc-400 leading-relaxed space-y-4">
+                                        {description ? (
+                                            description.split('\n').map((line, i) => (
+                                                <p key={i}>{line}</p>
+                                            ))
+                                        ) : (
+                                            <p>Este item incrível irá melhorar sua jornada no servidor. Adquira agora e receba instantaneamente!</p>
+                                        )}
+
+                                        <ul className="grid gap-2 mt-6">
+                                            <li className="flex items-center gap-3 text-zinc-300">
+                                                <div className="w-6 h-6 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
+                                                    <Check size={14} />
+                                                </div>
+                                                Entrega Automática
+                                            </li>
+                                            <li className="flex items-center gap-3 text-zinc-300">
+                                                <div className="w-6 h-6 rounded-full bg-brand-blue/10 flex items-center justify-center text-brand-blue">
+                                                    <Check size={14} />
+                                                </div>
+                                                Suporte 24/7
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8 pt-6 border-t border-white/5">
+                                    <Button
+                                        onClick={() => {
+                                            handleAdd();
+                                            setShowDetails(false);
+                                        }}
+                                        disabled={added}
+                                        className={cn(
+                                            "w-full h-14 text-lg font-bold rounded-xl shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]",
+                                            added
+                                                ? "bg-green-500 hover:bg-green-600 text-white shadow-green-500/20"
+                                                : "bg-brand-blue hover:bg-brand-blue/90 text-white shadow-brand-blue/20"
+                                        )}
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            {added ? (
+                                                <>
+                                                    <div className="bg-white/20 p-1 rounded-full"><Check size={20} /></div>
+                                                    Adicionado ao Carrinho
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <div className="bg-white/20 p-1 rounded-full"><ShoppingCart size={20} /></div>
+                                                    Adicionar ao Carrinho
+                                                </>
+                                            )}
+                                        </div>
+                                    </Button>
+                                    <p className="text-center text-zinc-500 text-xs mt-4">
+                                        Ao comprar, você concorda com nossos termos de serviço.
+                                    </p>
+                                </div>
                             </div>
-
-                            <Button
-                                onClick={() => {
-                                    handleAdd();
-                                    setShowDetails(false);
-                                }}
-                                disabled={added}
-                                className="w-full bg-brand-blue hover:bg-brand-blue/90 text-white font-bold h-12 rounded-xl shadow-lg shadow-brand-blue/20"
-                            >
-                                Adicionar ao Carrinho
-                            </Button>
                         </motion.div>
                     </div>
                 )}

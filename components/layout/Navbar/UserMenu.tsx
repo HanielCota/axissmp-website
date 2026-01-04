@@ -88,9 +88,9 @@ export function UserMenu() {
             >
                 <Link
                     href="/login"
-                    className="group flex items-center gap-2 rounded-full bg-brand-orange/10 border border-brand-orange/20 px-5 py-2 text-sm font-bold text-white transition-all hover:bg-brand-orange hover:text-brand-dark"
+                    className="group flex items-center gap-2 rounded-full bg-brand-orange border border-brand-orange shadow-lg shadow-brand-orange/20 px-5 py-2 text-sm font-bold text-white transition-all hover:bg-white hover:text-brand-orange"
                 >
-                    <UserIcon size={18} className="text-brand-orange transition-colors group-hover:text-brand-dark" />
+                    <UserIcon size={18} className="text-white transition-colors group-hover:text-brand-orange" />
                     <span>Entrar</span>
                 </Link>
             </motion.div>

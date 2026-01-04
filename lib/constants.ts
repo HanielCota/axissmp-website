@@ -20,7 +20,7 @@ export const navLinks: NavLink[] = [
     { name: "Notícias", href: "/news", icon: Bell },
     { name: "Regras", href: "/rules", icon: ScrollText },
     { name: "Votar", href: "https://axissmp.com.br/votar", icon: Trophy, external: true },
-    { name: "Fórum", href: "#", icon: MessageSquare },
+    { name: "Fórum", href: "/forum", icon: MessageSquare },
     { name: "Loja", href: "/store", icon: ShoppingCart },
 ];
 

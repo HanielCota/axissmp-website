@@ -39,16 +39,16 @@ export default function LoginPage() {
     };
 
     return (
-        <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-black text-white selection:bg-brand-orange/30">
+        <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-brand-light dark:bg-black text-slate-900 dark:text-white selection:bg-brand-orange/30">
             {/* Background Image / Render */}
             <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-gradient-to-tr from-black via-black/60 to-transparent z-10" />
+                <div className="absolute inset-0 bg-white/70 dark:bg-black/60 z-10" />
                 <Image
                     src="/images/site/render.jpg"
                     alt="Background"
                     fill
                     sizes="100vw"
-                    className="object-cover opacity-50 grayscale-[0.2]"
+                    className="object-cover opacity-10 dark:opacity-50 grayscale-[0.2]"
                     priority
                 />
             </div>
@@ -56,7 +56,7 @@ export default function LoginPage() {
             {/* Back to Home Button */}
             <Link
                 href="/"
-                className="absolute top-8 left-8 z-20 flex items-center gap-2 rounded-full border border-white/5 bg-white/5 px-4 py-2 text-sm font-bold backdrop-blur-md transition-all hover:bg-white/10"
+                className="absolute top-8 left-8 z-20 flex items-center gap-2 rounded-full border border-slate-200 dark:border-white/5 bg-white/50 dark:bg-white/5 px-4 py-2 text-sm font-bold text-slate-600 dark:text-white backdrop-blur-md transition-all hover:bg-white/80 dark:hover:bg-white/10"
             >
                 <Home size={18} />
                 <span>Voltar ao Início</span>
@@ -81,18 +81,18 @@ export default function LoginPage() {
                     </Link>
 
                     {/* Login Card */}
-                    <div className="w-full rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl shadow-2xl">
+                    <div className="w-full rounded-3xl border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-white/5 p-8 backdrop-blur-xl shadow-2xl">
                         <div className="mb-8">
-                            <h1 className="text-3xl font-black tracking-tight text-white uppercase italic">Acesse sua Conta</h1>
-                            <p className="text-white/60 font-medium">Bem-vindo de volta, aventureiro!</p>
+                            <h1 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white uppercase italic">Acesse sua Conta</h1>
+                            <p className="text-slate-600 dark:text-white/70 font-medium">Bem-vindo de volta, aventureiro!</p>
                         </div>
 
                         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                             {/* Email Field */}
                             <div className="space-y-2">
-                                <label className="text-xs font-black uppercase tracking-widest text-white/40 ml-1">Seu E-mail</label>
+                                <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-white/60 ml-1">Seu E-mail</label>
                                 <div className="group relative">
-                                    <div className="absolute top-1/2 left-4 -translate-y-1/2 text-white/40 transition-colors group-focus-within:text-brand-orange">
+                                    <div className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-500 dark:text-white/60 transition-colors group-focus-within:text-brand-orange">
                                         <User size={20} />
                                     </div>
                                     <input
@@ -101,7 +101,7 @@ export default function LoginPage() {
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         placeholder="seu@email.com"
-                                        className="h-14 w-full rounded-2xl border border-white/5 bg-white/5 pl-12 pr-4 font-bold text-white transition-all placeholder:text-white/20 hover:bg-white/10 focus:border-brand-orange/50 focus:bg-white/10 focus:outline-none focus:ring-4 focus:ring-brand-orange/10"
+                                        className="h-14 w-full rounded-2xl border border-slate-200 dark:border-white/5 bg-white dark:bg-white/5 pl-12 pr-4 font-bold text-slate-900 dark:text-white transition-all placeholder:text-slate-300 dark:placeholder:text-white/20 hover:bg-slate-50 dark:hover:bg-white/10 focus:border-brand-orange/50 focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-orange/10"
                                     />
                                 </div>
                             </div>
@@ -109,11 +109,11 @@ export default function LoginPage() {
                             {/* Password Field */}
                             <div className="space-y-2">
                                 <div className="flex items-center justify-between ml-1">
-                                    <label className="text-xs font-black uppercase tracking-widest text-white/40">Sua Senha</label>
+                                    <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-white/60">Sua Senha</label>
                                     <Link href="#" className="text-xs font-bold text-brand-orange hover:underline">Esqueci a senha</Link>
                                 </div>
                                 <div className="group relative">
-                                    <div className="absolute top-1/2 left-4 -translate-y-1/2 text-white/40 transition-colors group-focus-within:text-brand-orange">
+                                    <div className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-500 dark:text-white/60 transition-colors group-focus-within:text-brand-orange">
                                         <Lock size={20} />
                                     </div>
                                     <input
@@ -122,7 +122,7 @@ export default function LoginPage() {
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                         placeholder="••••••••"
-                                        className="h-14 w-full rounded-2xl border border-white/5 bg-white/5 pl-12 pr-4 font-bold text-white transition-all placeholder:text-white/20 hover:bg-white/10 focus:border-brand-orange/50 focus:bg-white/10 focus:outline-none focus:ring-4 focus:ring-brand-orange/10"
+                                        className="h-14 w-full rounded-2xl border border-slate-200 dark:border-white/5 bg-white dark:bg-white/5 pl-12 pr-4 font-bold text-slate-900 dark:text-white transition-all placeholder:text-slate-300 dark:placeholder:text-white/20 hover:bg-slate-50 dark:hover:bg-white/10 focus:border-brand-orange/50 focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-orange/10"
                                     />
                                 </div>
                             </div>
@@ -146,11 +146,11 @@ export default function LoginPage() {
                         </form>
 
                         <div className="mt-8 text-center">
-                            <p className="text-sm font-medium text-white/40">
+                            <p className="text-sm font-medium text-slate-500 dark:text-white/60">
                                 Não tem uma conta?{" "}
                                 <Link
                                     href="/register"
-                                    className="font-black text-white hover:text-brand-orange transition-colors"
+                                    className="font-black text-slate-900 dark:text-white hover:text-brand-orange transition-colors"
                                 >
                                     Registre-se agora
                                 </Link>
@@ -159,7 +159,7 @@ export default function LoginPage() {
                     </div>
 
                     {/* Security Notice */}
-                    <p className="mt-8 text-center text-xs font-medium text-white/20 max-w-xs">
+                    <p className="mt-8 text-center text-xs font-medium text-slate-500 dark:text-white/40 max-w-xs">
                         Ao entrar, você concorda com nossos termos de uso e regras da comunidade.
                     </p>
                 </motion.div>

@@ -65,10 +65,10 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: "100%" }}
                     transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                    className="fixed inset-0 z-[100] h-[100dvh] w-full bg-brand-orange md:hidden flex flex-col"
+                    className="fixed inset-0 z-[100] h-[100dvh] w-full bg-brand-light dark:bg-zinc-950 md:hidden flex flex-col"
                 >
                     {/* Menu Header */}
-                    <div className="flex items-center justify-between px-6 py-4 border-b border-black/5">
+                    <div className="flex items-center justify-between px-6 py-4 border-b border-brand-dark/5 dark:border-white/5">
                         <div className="relative h-12 w-24">
                             <Image
                                 src="/images/logo/logo.png"
@@ -81,7 +81,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                         </div>
                         <button
                             onClick={onClose}
-                            className="bg-black/5 p-3 rounded-full text-brand-dark hover:bg-black/10 active:scale-95 transition-all"
+                            className="bg-brand-dark/5 dark:bg-white/5 p-3 rounded-full text-brand-dark dark:text-white hover:bg-brand-dark/10 dark:hover:bg-white/10 active:scale-95 transition-all"
                         >
                             <X size={24} />
                         </button>
@@ -99,9 +99,9 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                 <Link
                                     href={user ? "/dashboard" : "/login"}
                                     onClick={onClose}
-                                    className="flex items-center gap-4 rounded-2xl bg-white/20 p-5 font-black text-xl text-white transition-all active:scale-[0.98]"
+                                    className="flex items-center gap-4 rounded-2xl bg-brand-orange text-brand-dark p-5 font-black text-xl transition-all active:scale-[0.98]"
                                 >
-                                    <div className="bg-white/20 p-2 rounded-lg">
+                                    <div className="bg-brand-dark/10 p-2 rounded-lg">
                                         <UserIcon size={24} />
                                     </div>
                                     {user ? "Meu Dashboard" : "Minha Conta"}
@@ -118,9 +118,9 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                     <Link
                                         href="/admin"
                                         onClick={onClose}
-                                        className="flex items-center gap-4 rounded-2xl bg-brand-dark/10 p-5 font-black text-xl text-brand-dark transition-all active:scale-[0.98]"
+                                        className="flex items-center gap-4 rounded-2xl bg-red-500/10 p-5 font-black text-xl text-red-500 transition-all active:scale-[0.98]"
                                     >
-                                        <div className="bg-brand-dark/10 p-2 rounded-lg text-brand-dark">
+                                        <div className="bg-red-500/10 p-2 rounded-lg text-red-500">
                                             <ShieldAlert size={24} />
                                         </div>
                                         Painel Admin
@@ -139,10 +139,10 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                         href={link.href}
                                         target={link.external ? "_blank" : undefined}
                                         onClick={onClose}
-                                        className="text-brand-dark group flex items-center justify-between rounded-2xl bg-white/10 p-5 font-black text-xl transition-all hover:bg-white/20 active:scale-[0.98]"
+                                        className="text-brand-dark dark:text-white group flex items-center justify-between rounded-2xl bg-white dark:bg-white/5 p-5 font-black text-xl transition-all hover:bg-slate-50 dark:hover:bg-white/10 active:scale-[0.98] shadow-sm dark:shadow-none border border-brand-dark/5 dark:border-white/5"
                                     >
                                         <div className="flex items-center gap-4">
-                                            <div className="bg-white/20 p-2 rounded-lg group-hover:bg-white/30 transition-colors">
+                                            <div className="bg-brand-light dark:bg-white/10 p-2 rounded-lg group-hover:bg-white dark:group-hover:bg-white/20 transition-colors">
                                                 <link.icon className="h-6 w-6" />
                                             </div>
                                             {link.name}
@@ -161,7 +161,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                 <Link
                                     href="/cart"
                                     onClick={onClose}
-                                    className="flex items-center justify-between rounded-2xl border-2 border-brand-dark/10 bg-white p-5 shadow-lg active:scale-[0.98] transition-all"
+                                    className="flex items-center justify-between rounded-2xl border-2 border-brand-dark/10 dark:border-white/10 bg-white dark:bg-zinc-900 p-5 shadow-lg active:scale-[0.98] transition-all"
                                 >
                                     <div className="flex items-center gap-4">
                                         <div className="relative bg-brand-orange p-2 rounded-lg">
@@ -172,17 +172,17 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                                 </span>
                                             )}
                                         </div>
-                                        <span className="font-black text-xl text-brand-dark uppercase tracking-tight">Carrinho</span>
+                                        <span className="font-black text-xl text-brand-dark dark:text-white uppercase tracking-tight">Carrinho</span>
                                     </div>
-                                    <ChevronRight size={20} className="text-brand-dark/40" />
+                                    <ChevronRight size={20} className="text-brand-dark/40 dark:text-white/40" />
                                 </Link>
                             </motion.div>
                         </div>
                     </div>
 
                     {/* Footer: Social Links */}
-                    <div className="p-6 bg-black/5 mt-auto">
-                        <p className="text-brand-dark/60 text-xs font-bold uppercase tracking-widest text-center mb-4">Acompanhe nossas redes</p>
+                    <div className="p-6 bg-slate-50 dark:bg-black mt-auto">
+                        <p className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-widest text-center mb-4">Acompanhe nossas redes</p>
                         <div className="flex gap-3">
                             {socialLinks.map((social) => (
                                 <a

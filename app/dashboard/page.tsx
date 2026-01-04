@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { motion } from "framer-motion";
 import {
-    User,
+    User as UserIcon,
     Wallet,
     Trophy,
     Clock,
@@ -21,6 +21,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { Footer } from "@/components/layout/Footer";
 
 interface Profile {
     nickname: string;
@@ -43,16 +44,11 @@ interface Order {
     status: 'pending' | 'completed' | 'cancelled';
 }
 
-interface SessionUser {
-    id: string;
-    email?: string;
-    user_metadata?: {
-        nickname?: string;
-    };
-}
+
+import { type User } from "@supabase/supabase-js";
 
 export default function DashboardPage() {
-    const [user, setUser] = useState<SessionUser | null>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [profile, setProfile] = useState<Profile | null>(null);
     const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true);
@@ -68,7 +64,7 @@ export default function DashboardPage() {
                 return;
             }
 
-            setUser(user as any);
+            setUser(user);
 
             // Fetch profile data
             const { data: profileData, error: profileError } = await supabase
@@ -128,27 +124,27 @@ export default function DashboardPage() {
     const nickname = profile?.nickname || "Jogador";
 
     return (
-        <main className="min-h-screen bg-[#0a0a0a] text-white selection:bg-brand-orange/30">
+        <main className="min-h-screen bg-brand-light dark:bg-[#0a0a0a] text-slate-900 dark:text-white selection:bg-brand-orange/30">
             <div className="relative z-10 mx-auto max-w-7xl px-6 py-12 md:py-20">
                 {/* Header */}
                 <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
                     <div>
                         <Link
                             href="/"
-                            className="group mb-4 flex items-center gap-2 text-sm font-bold text-white/40 transition-colors hover:text-brand-orange"
+                            className="group mb-4 flex items-center gap-2 text-sm font-bold text-slate-500 dark:text-white/60 transition-colors hover:text-brand-orange"
                         >
                             <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
                             Voltar ao Início
                         </Link>
-                        <h1 className="text-4xl font-black uppercase italic tracking-tight md:text-5xl">
+                        <h1 className="text-4xl font-black uppercase italic tracking-tight md:text-5xl text-slate-900 dark:text-white">
                             Seu <span className="text-brand-orange">Dashboard</span>
                         </h1>
-                        <p className="text-white/60 font-medium mt-1">Bem-vindo à sua central de comando, {nickname}.</p>
+                        <p className="text-slate-600 dark:text-white/70 font-medium mt-1">Bem-vindo à sua central de comando, {nickname}.</p>
                     </div>
 
                     <button
                         onClick={handleLogout}
-                        className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-bold text-white/70 transition-all hover:bg-white/10 hover:text-red-400 active:scale-95"
+                        className="flex items-center gap-2 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 px-6 py-3 text-sm font-bold text-slate-600 dark:text-white/70 transition-all hover:bg-slate-50 dark:hover:bg-white/10 hover:text-red-500 dark:hover:text-red-400 active:scale-95 shadow-sm"
                     >
                         <LogOut size={18} />
                         Sair da Conta
@@ -162,7 +158,7 @@ export default function DashboardPage() {
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="relative col-span-1 overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl md:col-span-8 md:row-span-2 lg:col-span-6 lg:row-span-3"
+                        className="relative col-span-1 overflow-hidden rounded-[2.5rem] border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-8 backdrop-blur-xl md:col-span-8 md:row-span-2 lg:col-span-6 lg:row-span-3 shadow-xl dark:shadow-none"
                     >
                         <div className="absolute top-0 right-0 p-8">
                             <div className="rounded-full bg-brand-orange/20 px-4 py-1 text-xs font-black uppercase text-brand-orange">
@@ -172,8 +168,8 @@ export default function DashboardPage() {
 
                         <div className="flex h-full flex-col justify-between">
                             <div className="relative z-10">
-                                <span className="mb-2 block text-xs font-black uppercase tracking-widest text-white/40">Visual 3D</span>
-                                <h2 className="text-4xl font-black uppercase italic tracking-tighter">{nickname}</h2>
+                                <span className="mb-2 block text-xs font-black uppercase tracking-widest text-slate-500 dark:text-white/60">Visual 3D</span>
+                                <h2 className="text-4xl font-black uppercase italic tracking-tighter text-slate-900 dark:text-white">{nickname}</h2>
                             </div>
 
                             <div className="relative flex flex-1 items-center justify-center py-12">
@@ -197,7 +193,7 @@ export default function DashboardPage() {
                                 </Link>
                                 <Link
                                     href={`/player/${nickname}`}
-                                    className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-white/5 border border-white/10 p-4 text-sm font-black uppercase text-white transition-all hover:bg-white/10 w-full sm:w-auto"
+                                    className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 p-4 text-sm font-black uppercase text-slate-600 dark:text-white transition-all hover:bg-slate-200 dark:hover:bg-white/10 w-full sm:w-auto"
                                 >
                                     Ver Perfil Público
                                     <Share2 size={16} />
@@ -211,21 +207,21 @@ export default function DashboardPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="col-span-1 flex flex-col justify-between rounded-[2.5rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl md:col-span-4 lg:col-span-3 lg:row-span-1"
+                        className="col-span-1 flex flex-col justify-between rounded-[2.5rem] border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-8 backdrop-blur-xl md:col-span-4 lg:col-span-3 lg:row-span-1 shadow-sm"
                     >
                         <div className="flex items-center justify-between mb-4">
                             <div className="rounded-2xl bg-brand-orange/10 p-3 text-brand-orange">
                                 <Wallet size={24} />
                             </div>
-                            <Link href="/store" className="text-white/40 hover:text-white transition-colors">
+                            <Link href="/store" className="text-slate-500 dark:text-white/60 hover:text-brand-orange dark:hover:text-white transition-colors">
                                 <ChevronRight size={20} />
                             </Link>
                         </div>
                         <div>
-                            <span className="block text-xs font-black uppercase tracking-widest text-white/40">Saldo em Conta</span>
+                            <span className="block text-xs font-black uppercase tracking-widest text-slate-500 dark:text-white/60">Saldo em Conta</span>
                             <div className="flex items-baseline gap-1">
                                 <span className="text-sm font-black text-brand-orange">R$</span>
-                                <span className="text-3xl font-black tracking-tight">
+                                <span className="text-3xl font-black tracking-tight text-slate-900 dark:text-white">
                                     {profile?.balance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                                 </span>
                             </div>
@@ -237,17 +233,17 @@ export default function DashboardPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="col-span-1 flex flex-col justify-between rounded-[2.5rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl md:col-span-4 lg:col-span-3 lg:row-span-1"
+                        className="col-span-1 flex flex-col justify-between rounded-[2.5rem] border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-8 backdrop-blur-xl md:col-span-4 lg:col-span-3 lg:row-span-1 shadow-sm"
                     >
                         <div className="flex items-center justify-between mb-4">
                             <div className="rounded-2xl bg-brand-orange/10 p-3 text-brand-orange">
                                 <Trophy size={24} />
                             </div>
-                            <span className="text-xs font-bold text-white/20">Rank #240</span>
+                            <span className="text-xs font-bold text-slate-500 dark:text-white/40">Rank #240</span>
                         </div>
                         <div>
-                            <span className="block text-xs font-black uppercase tracking-widest text-white/40">Nível Global</span>
-                            <span className="text-3xl font-black tracking-tight">{profile?.level}</span>
+                            <span className="block text-xs font-black uppercase tracking-widest text-slate-500 dark:text-white/60">Nível Global</span>
+                            <span className="text-3xl font-black tracking-tight text-slate-900 dark:text-white">{profile?.level}</span>
                         </div>
                     </motion.div>
 
@@ -256,7 +252,7 @@ export default function DashboardPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="col-span-1 flex flex-col justify-between rounded-[2.5rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl md:col-span-4 lg:col-span-3 lg:row-span-1"
+                        className="col-span-1 flex flex-col justify-between rounded-[2.5rem] border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-8 backdrop-blur-xl md:col-span-4 lg:col-span-3 lg:row-span-1 shadow-sm"
                     >
                         <div className="flex items-center justify-between mb-4">
                             <div className="rounded-2xl bg-brand-orange/10 p-3 text-brand-orange">
@@ -264,8 +260,8 @@ export default function DashboardPage() {
                             </div>
                         </div>
                         <div>
-                            <span className="block text-xs font-black uppercase tracking-widest text-white/40">Tempo de Jogo</span>
-                            <span className="text-3xl font-black tracking-tight">124h <span className="text-sm font-medium text-white/40">32m</span></span>
+                            <span className="block text-xs font-black uppercase tracking-widest text-slate-500 dark:text-white/60">Tempo de Jogo</span>
+                            <span className="text-3xl font-black tracking-tight text-slate-900 dark:text-white">124h <span className="text-sm font-medium text-slate-500 dark:text-white/60">32m</span></span>
                         </div>
                     </motion.div>
 
@@ -274,34 +270,34 @@ export default function DashboardPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
-                        className="col-span-1 rounded-[2.5rem] border border-white/10 bg-white/5 p-8 backdrop-blur-xl md:col-span-8 lg:col-span-3 lg:row-span-2"
+                        className="col-span-1 rounded-[2.5rem] border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-8 backdrop-blur-xl md:col-span-8 lg:col-span-3 lg:row-span-2 shadow-sm"
                     >
-                        <span className="mb-6 block text-xs font-black uppercase tracking-widest text-white/40">Ações Rápidas</span>
+                        <span className="mb-6 block text-xs font-black uppercase tracking-widest text-slate-500 dark:text-white/60">Ações Rápidas</span>
                         <div className="flex flex-col gap-3">
                             <Link
                                 href="/store"
-                                className="group flex items-center justify-between rounded-2xl bg-white/5 p-4 transition-all hover:bg-white/10"
+                                className="group flex items-center justify-between rounded-2xl bg-slate-50 dark:bg-white/5 p-4 transition-all hover:bg-slate-100 dark:hover:bg-white/10"
                             >
                                 <div className="flex items-center gap-3">
                                     <ShoppingBag size={20} className="text-brand-orange" />
-                                    <span className="text-sm font-bold">Minhas Compras</span>
+                                    <span className="text-sm font-bold text-slate-700 dark:text-white">Minhas Compras</span>
                                 </div>
-                                <ChevronRight size={16} className="text-white/20 transition-transform group-hover:translate-x-1" />
+                                <ChevronRight size={16} className="text-slate-500 dark:text-white/40 transition-transform group-hover:translate-x-1" />
                             </Link>
                             <Link
                                 href="/support"
-                                className="group flex items-center justify-between rounded-2xl bg-white/5 p-4 transition-all hover:bg-white/10"
+                                className="group flex items-center justify-between rounded-2xl bg-slate-50 dark:bg-white/5 p-4 transition-all hover:bg-slate-100 dark:hover:bg-white/10"
                             >
                                 <div className="flex items-center gap-3">
                                     <LifeBuoy size={20} className="text-brand-orange" />
-                                    <span className="text-sm font-bold">Suporte VIP</span>
+                                    <span className="text-sm font-bold text-slate-700 dark:text-white">Suporte VIP</span>
                                 </div>
-                                <ChevronRight size={16} className="text-white/20 transition-transform group-hover:translate-x-1" />
+                                <ChevronRight size={16} className="text-slate-400 dark:text-white/20 transition-transform group-hover:translate-x-1" />
                             </Link>
                         </div>
 
                         <div className="mt-8 rounded-2xl border border-brand-orange/20 bg-brand-orange/5 p-4">
-                            <p className="text-xs font-bold leading-relaxed text-white/70">
+                            <p className="text-xs font-bold leading-relaxed text-brand-dark/70 dark:text-white/70">
                                 Precisando de ajuda in-game? Use <code className="rounded bg-brand-orange/20 px-1 py-0.5 text-brand-orange">/ajuda</code> ou abra um ticket pelo Discord!
                             </p>
                         </div>
@@ -313,16 +309,16 @@ export default function DashboardPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="mt-12 overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/5 backdrop-blur-xl"
+                    className="mt-12 overflow-hidden rounded-[2.5rem] border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 backdrop-blur-xl shadow-sm"
                 >
-                    <div className="border-b border-white/10 p-8">
-                        <h2 className="text-2xl font-black uppercase italic tracking-tight">Histórico de Pedidos</h2>
-                        <p className="text-white/40 text-sm font-medium mt-1">Acompanhe suas compras e o status de entrega.</p>
+                    <div className="border-b border-slate-200 dark:border-white/10 p-8">
+                        <h2 className="text-2xl font-black uppercase italic tracking-tight text-slate-900 dark:text-white">Histórico de Pedidos</h2>
+                        <p className="text-slate-600 dark:text-white/60 text-sm font-medium mt-1">Acompanhe suas compras e o status de entrega.</p>
                     </div>
 
                     <div className="overflow-x-auto">
                         <table className="w-full border-collapse text-left">
-                            <thead className="bg-white/5 text-xs font-black uppercase tracking-widest text-white/40">
+                            <thead className="bg-slate-50 dark:bg-white/5 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-white/60">
                                 <tr>
                                     <th className="px-8 py-4">ID do Pedido</th>
                                     <th className="px-8 py-4">Data</th>
@@ -331,24 +327,24 @@ export default function DashboardPage() {
                                     <th className="px-8 py-4">Status</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-white/5">
+                            <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                                 {orders.length === 0 ? (
                                     <tr>
-                                        <td colSpan={5} className="px-8 py-12 text-center text-white/20 font-bold italic">
+                                        <td colSpan={5} className="px-8 py-12 text-center text-slate-400 dark:text-white/20 font-bold italic">
                                             Nenhum pedido encontrado. Visite nossa loja!
                                         </td>
                                     </tr>
                                 ) : (
                                     orders.map((order) => (
-                                        <tr key={order.id} className="group hover:bg-white/[0.02] transition-colors">
-                                            <td className="px-8 py-6 font-mono text-xs text-white/40">#{order.id.slice(0, 8)}</td>
-                                            <td className="px-8 py-6 text-sm font-bold">
+                                        <tr key={order.id} className="group hover:bg-slate-50 dark:hover:bg-white/[0.02] transition-colors">
+                                            <td className="px-8 py-6 font-mono text-xs text-slate-500 dark:text-white/60">#{order.id.slice(0, 8)}</td>
+                                            <td className="px-8 py-6 text-sm font-bold text-slate-700 dark:text-white">
                                                 {new Date(order.created_at).toLocaleDateString('pt-BR')}
                                             </td>
                                             <td className="px-8 py-6">
                                                 <div className="flex flex-col gap-1">
                                                     {order.items.map((item: OrderItem, i: number) => (
-                                                        <span key={i} className="text-sm font-medium text-white/70">
+                                                        <span key={i} className="text-sm font-medium text-slate-600 dark:text-white/70">
                                                             {item.quantity}x {item.name}
                                                         </span>
                                                     ))}
@@ -383,6 +379,7 @@ export default function DashboardPage() {
                     </div>
                 </motion.div>
             </div>
+            <Footer />
         </main>
     );
 }

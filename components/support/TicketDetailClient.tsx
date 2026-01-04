@@ -18,6 +18,7 @@ import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
 
 interface Message {
     id: string;
@@ -169,17 +170,17 @@ export function TicketDetailClient() {
     if (!ticket) return null;
 
     return (
-        <main className="min-h-screen bg-[#0a0a0a] text-white selection:bg-brand-orange/30 flex flex-col">
+        <main className="min-h-screen bg-brand-light dark:bg-background text-slate-900 dark:text-white selection:bg-brand-orange/30 flex flex-col transition-colors duration-300">
             <Navbar />
 
             <div className="relative z-10 mx-auto max-w-5xl px-6 pt-32 pb-10 w-full flex-1 flex flex-col">
 
                 {/* Header Section */}
-                <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/5 border border-white/10 rounded-[2rem] p-8">
+                <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-[2rem] p-8 shadow-sm dark:shadow-none">
                     <div className="flex flex-col gap-2">
                         <Link
                             href="/support"
-                            className="group flex items-center gap-2 text-xs font-black uppercase tracking-widest text-white/20 transition-colors hover:text-brand-orange mb-2"
+                            className="group flex items-center gap-2 text-xs font-black uppercase tracking-widest text-slate-400 dark:text-white/20 transition-colors hover:text-brand-orange mb-2"
                         >
                             <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
                             Meus Atendimentos
@@ -194,7 +195,7 @@ export function TicketDetailClient() {
                             )}>
                                 {ticket.status === 'open' ? 'Aberto' : ticket.status === 'pending' ? 'Pendente' : 'Fechado'}
                             </span>
-                            <span className="text-[10px] font-black uppercase tracking-widest text-white/20">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-white/20">
                                 Ticket #{ticket.id.slice(0, 8)}
                             </span>
                         </div>
@@ -212,7 +213,7 @@ export function TicketDetailClient() {
                 </div>
 
                 {/* Chat Area */}
-                <div className="flex-1 flex flex-col bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden min-h-[500px] mb-6">
+                <div className="flex-1 flex flex-col bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-[2.5rem] overflow-hidden min-h-[500px] mb-6 shadow-sm dark:shadow-none">
 
                     {/* Message List */}
                     <div className="flex-1 overflow-y-auto p-8 space-y-6 scrollbar-thin scrollbar-thumb-white/10">
@@ -231,7 +232,7 @@ export function TicketDetailClient() {
                                             Staff AxisSMP
                                         </div>
                                     )}
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-white/20">
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-white/20">
                                         {msg.is_staff ? 'Equipe' : 'Você'} • {new Date(msg.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
                                     </span>
                                 </div>
@@ -239,7 +240,7 @@ export function TicketDetailClient() {
                                 <div className={cn(
                                     "p-5 rounded-2xl text-sm leading-relaxed",
                                     msg.is_staff
-                                        ? "bg-white/10 text-white rounded-tl-none border border-white/5"
+                                        ? "bg-slate-100 dark:bg-white/10 text-slate-800 dark:text-white rounded-tl-none border border-slate-200 dark:border-white/5"
                                         : "bg-brand-orange text-brand-dark font-medium rounded-tr-none shadow-lg shadow-brand-orange/10"
                                 )}>
                                     {msg.content}
@@ -250,7 +251,7 @@ export function TicketDetailClient() {
                     </div>
 
                     {/* Input Area */}
-                    <div className="p-6 bg-white/[0.03] border-t border-white/5">
+                    <div className="p-6 bg-slate-50 dark:bg-white/[0.03] border-t border-slate-200 dark:border-white/5">
                         {ticket.status === 'closed' ? (
                             <div className="flex items-center justify-center gap-3 py-4 text-white/20 font-black uppercase tracking-widest text-xs italic">
                                 <XCircle size={16} />
@@ -258,7 +259,7 @@ export function TicketDetailClient() {
                             </div>
                         ) : (
                             <form onSubmit={handleSendMessage} className="flex gap-4">
-                                <textarea
+                                <Textarea
                                     required
                                     rows={1}
                                     value={newMsg}
@@ -270,7 +271,7 @@ export function TicketDetailClient() {
                                         }
                                     }}
                                     placeholder="Digite sua mensagem aqui..."
-                                    className="flex-1 bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-brand-orange/50 transition-all placeholder:text-white/10 font-medium resize-none max-h-32"
+                                    className="flex-1 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl px-6 py-4 text-slate-900 dark:text-white focus-visible:outline-none focus:border-brand-orange/50 transition-all placeholder:text-slate-400 dark:placeholder:text-white/10 font-medium resize-none max-h-32 min-h-[60px]"
                                 />
                                 <button
                                     type="submit"
@@ -285,7 +286,7 @@ export function TicketDetailClient() {
                                 </button>
                             </form>
                         )}
-                        <div className="flex items-center justify-center gap-3 mt-4 text-[10px] font-black uppercase tracking-widest text-white/20">
+                        <div className="flex items-center justify-center gap-3 mt-4 text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-white/20">
                             <AlertCircle size={12} />
                             Evite flood. Nossa staff responderá o mais breve possível.
                         </div>

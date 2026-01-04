@@ -30,12 +30,17 @@ export async function getPosts() {
     return { data, error: null };
 }
 
+const slugSchema = z.string().min(3, "Slug inválido");
+
 export async function getPost(slug: string) {
+    const validated = slugSchema.safeParse(slug);
+    if (!validated.success) return { data: null, error: "Slug inválido." };
+
     const supabase = await createClient();
     const { data, error } = await supabase
         .from("posts")
         .select("*")
-        .eq("slug", slug)
+        .eq("slug", validated.data)
         .single();
 
     if (error) {
@@ -49,9 +54,19 @@ export async function getPost(slug: string) {
 export async function createPost(formData: FormData) {
     const supabase = await createClient();
 
-    // Auth check
+    // 1. Auth Check
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return { error: "Não autorizado." };
+    if (!user) return { data: null, error: "Não autorizado." };
+
+    const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .single();
+
+    if (profile?.role !== 'admin') {
+        return { data: null, error: "Apenas administradores podem criar notícias." };
+    }
 
     const rawData = {
         slug: formData.get("slug"),
@@ -67,7 +82,7 @@ export async function createPost(formData: FormData) {
     const validatedFields = postSchema.safeParse(rawData);
 
     if (!validatedFields.success) {
-        return { error: "Campos inválidos.", details: validatedFields.error.flatten().fieldErrors };
+        return { data: null, error: "Campos inválidos." };
     }
 
     const { error } = await supabase
@@ -76,19 +91,36 @@ export async function createPost(formData: FormData) {
 
     if (error) {
         console.error("Error creating post:", error);
-        return { error: "Erro ao criar notícia. Slug já existe?" };
+        return { data: null, error: "Erro ao criar notícia. Slug já existe?" };
     }
 
     revalidatePath("/news");
     revalidatePath("/admin/posts");
-    return { success: true };
+    return { data: { success: true }, error: null };
 }
 
 export async function updatePost(originalSlug: string, formData: FormData) {
+    const validatedSlug = slugSchema.safeParse(originalSlug);
+    if (!validatedSlug.success) return { data: null, error: "Slug original inválido." };
+
     const supabase = await createClient();
 
+    // 1. Auth Check
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return { data: null, error: "Não autorizado." };
+
+    const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .single();
+
+    if (profile?.role !== 'admin') {
+        return { data: null, error: "Apenas administradores podem atualizar notícias." };
+    }
+
     const rawData = {
-        slug: formData.get("slug"), // Allow slug change? Maybe risky but let's allow
+        slug: formData.get("slug"),
         title: formData.get("title"),
         excerpt: formData.get("excerpt"),
         content: formData.get("content"),
@@ -100,39 +132,56 @@ export async function updatePost(originalSlug: string, formData: FormData) {
     const validatedFields = postSchema.safeParse(rawData);
 
     if (!validatedFields.success) {
-        return { error: "Campos inválidos.", details: validatedFields.error.flatten().fieldErrors };
+        return { data: null, error: "Campos inválidos." };
     }
 
     const { error } = await supabase
         .from("posts")
         .update(validatedFields.data)
-        .eq("slug", originalSlug);
+        .eq("slug", validatedSlug.data);
 
     if (error) {
         console.error("Error updating post:", error);
-        return { error: "Erro ao atualizar notícia." };
+        return { data: null, error: "Erro ao atualizar notícia." };
     }
 
     revalidatePath("/news");
     revalidatePath(`/news/${validatedFields.data.slug}`);
     revalidatePath("/admin/posts");
-    return { success: true };
+    return { data: { success: true }, error: null };
 }
 
 export async function deletePost(slug: string) {
+    const validatedSlug = slugSchema.safeParse(slug);
+    if (!validatedSlug.success) return { data: null, error: "Slug inválido." };
+
     const supabase = await createClient();
+
+    // 1. Auth Check
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return { data: null, error: "Não autorizado." };
+
+    const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .single();
+
+    if (profile?.role !== 'admin') {
+        return { data: null, error: "Apenas administradores podem deletar notícias." };
+    }
 
     const { error } = await supabase
         .from("posts")
         .delete()
-        .eq("slug", slug);
+        .eq("slug", validatedSlug.data);
 
     if (error) {
         console.error("Error deleting post:", error);
-        return { error: "Erro ao deletar notícia." };
+        return { data: null, error: "Erro ao deletar notícia." };
     }
 
     revalidatePath("/news");
     revalidatePath("/admin/posts");
-    return { success: true };
+    return { data: { success: true }, error: null };
 }

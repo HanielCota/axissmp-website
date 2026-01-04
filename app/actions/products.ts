@@ -27,12 +27,17 @@ export async function getProducts() {
     return { data, error: null };
 }
 
+const idSchema = z.string().uuid("ID inválido");
+
 export async function getProduct(id: string) {
+    const validated = idSchema.safeParse(id);
+    if (!validated.success) return { data: null, error: "ID inválido." };
+
     const supabase = await createClient();
     const { data, error } = await supabase
         .from("products")
         .select("*")
-        .eq("id", id)
+        .eq("id", validated.data)
         .single();
 
     if (error) {
@@ -44,10 +49,21 @@ export async function getProduct(id: string) {
 }
 
 export async function createProduct(formData: FormData) {
+    // ... existing wrapper ...
     const supabase = await createClient();
 
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return { error: "Não autorizado." };
+    if (!user) return { data: null, error: "Não autorizado." };
+
+    const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .single();
+
+    if (profile?.role !== 'admin') {
+        return { data: null, error: "Apenas administradores podem criar produtos." };
+    }
 
     const rawData = {
         name: formData.get("name"),
@@ -59,7 +75,7 @@ export async function createProduct(formData: FormData) {
 
     const validatedFields = productSchema.safeParse(rawData);
     if (!validatedFields.success) {
-        return { error: "Campos inválidos.", details: validatedFields.error.flatten().fieldErrors };
+        return { data: null, error: "Campos inválidos." };
     }
 
     const { error } = await supabase
@@ -68,16 +84,32 @@ export async function createProduct(formData: FormData) {
 
     if (error) {
         console.error("Error creating product:", error);
-        return { error: "Erro ao criar produto." };
+        return { data: null, error: "Erro ao criar produto." };
     }
 
     revalidatePath("/store");
     revalidatePath("/admin/products");
-    return { success: true };
+    return { data: { success: true }, error: null };
 }
 
 export async function updateProduct(id: string, formData: FormData) {
+    const validatedId = idSchema.safeParse(id);
+    if (!validatedId.success) return { data: null, error: "ID inválido." };
+
     const supabase = await createClient();
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return { data: null, error: "Não autorizado." };
+
+    const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .single();
+
+    if (profile?.role !== 'admin') {
+        return { data: null, error: "Apenas administradores podem atualizar produtos." };
+    }
 
     const rawData = {
         name: formData.get("name"),
@@ -89,39 +121,55 @@ export async function updateProduct(id: string, formData: FormData) {
 
     const validatedFields = productSchema.safeParse(rawData);
     if (!validatedFields.success) {
-        return { error: "Campos inválidos.", details: validatedFields.error.flatten().fieldErrors };
+        return { data: null, error: "Campos inválidos." };
     }
 
     const { error } = await supabase
         .from("products")
         .update(validatedFields.data)
-        .eq("id", id);
+        .eq("id", validatedId.data);
 
     if (error) {
         console.error("Error updating product:", error);
-        return { error: "Erro ao atualizar produto." };
+        return { data: null, error: "Erro ao atualizar produto." };
     }
 
     revalidatePath("/store");
     revalidatePath(`/admin/products/${id}`);
     revalidatePath("/admin/products");
-    return { success: true };
+    return { data: { success: true }, error: null };
 }
 
 export async function deleteProduct(id: string) {
+    const validatedId = idSchema.safeParse(id);
+    if (!validatedId.success) return { data: null, error: "ID inválido." };
+
     const supabase = await createClient();
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return { data: null, error: "Não autorizado." };
+
+    const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .single();
+
+    if (profile?.role !== 'admin') {
+        return { data: null, error: "Apenas administradores podem deletar produtos." };
+    }
 
     const { error } = await supabase
         .from("products")
         .delete()
-        .eq("id", id);
+        .eq("id", validatedId.data);
 
     if (error) {
         console.error("Error deleting product:", error);
-        return { error: "Erro ao deletar produto." };
+        return { data: null, error: "Erro ao deletar produto." };
     }
 
     revalidatePath("/store");
     revalidatePath("/admin/products");
-    return { success: true };
+    return { data: { success: true }, error: null };
 }

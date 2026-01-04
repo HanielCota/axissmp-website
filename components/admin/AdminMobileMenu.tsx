@@ -65,7 +65,7 @@ export function AdminMobileMenu() {
                             animate={{ x: 0 }}
                             exit={{ x: "100%" }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="fixed right-0 top-0 h-full w-72 bg-[#1a1a1a] border-l border-white/5 z-50 flex flex-col"
+                            className="fixed right-0 top-0 h-full w-72 bg-zinc-900 border-l border-white/5 z-50 flex flex-col"
                         >
                             <div className="p-4 border-b border-white/5 flex items-center justify-between">
                                 <h2 className="font-black text-lg">Menu</h2>

@@ -8,8 +8,36 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-    title: "AxisSMP - A Nova Era do Survival",
-    description: "Servidor de Minecraft Survival 1.21 com economia, quests e comunidade ativa.",
+    metadataBase: new URL("https://axissmp.com"),
+    title: {
+        default: "AxisSMP - A Nova Era do Survival",
+        template: "%s | AxisSMP"
+    },
+    description: "Servidor de Minecraft Survival 1.21 com economia, quests, proteção de terrenos e uma comunidade ativa.",
+    keywords: ["minecraft", "survival", "servidor", "1.21", "axissmp", "economia", "mcmmo"],
+    authors: [{ name: "AxisSMP Team" }],
+    openGraph: {
+        type: "website",
+        locale: "pt_BR",
+        url: "https://axissmp.com",
+        siteName: "AxisSMP",
+        title: "AxisSMP - A Nova Era do Survival",
+        description: "O melhor servidor survival 1.21. Economia, quests e diversão garantida!",
+        images: [
+            {
+                url: "/images/site/og-image.jpg",
+                width: 1200,
+                height: 630,
+                alt: "AxisSMP Server",
+            },
+        ],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "AxisSMP - A Nova Era do Survival",
+        description: "O melhor servidor survival 1.21.",
+        images: ["/images/site/og-image.jpg"],
+    },
     icons: {
         icon: [
             { url: "/favicon.ico" },
@@ -19,16 +47,14 @@ export const metadata: Metadata = {
         ],
         shortcut: "/favicon.ico",
         apple: "/apple-touch-icon.png",
-        other: {
-            rel: "apple-touch-icon-precomposed",
-            url: "/apple-touch-icon.png",
-        },
     },
     manifest: "/site.webmanifest",
 };
 
 import { CartProvider } from "@/context/CartContext";
 import { Toaster } from "sonner";
+import { Footer } from "@/components/layout/Footer";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 export default function RootLayout({
     children,
@@ -36,14 +62,18 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="pt-BR" suppressHydrationWarning>
+        <html lang="pt-BR" suppressHydrationWarning style={{ scrollBehavior: "smooth" }}>
             <body
-                className={`${outfit.variable} bg-background text-foreground font-sans antialiased`}
+                className={`${outfit.variable} bg-background text-foreground font-sans antialiased min-h-screen flex flex-col`}
                 suppressHydrationWarning
             >
-                <CartProvider>
-                    {children}
-                </CartProvider>
+                <ThemeProvider>
+                    <CartProvider>
+                        <main className="flex-1">
+                            {children}
+                        </main>
+                    </CartProvider>
+                </ThemeProvider>
                 <Toaster
                     position="top-right"
                     richColors

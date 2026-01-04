@@ -2,12 +2,19 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
+
+// Schemas
+const updateRoleSchema = z.object({
+    userId: z.string().uuid(),
+    newRole: z.enum(['admin', 'user', 'mod'])
+});
 
 export async function getCurrentUserRole() {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
-    if (!user) return { role: null };
+    if (!user) return { data: null, error: "Usuário não autenticado." };
 
     const { data, error } = await supabase
         .from("profiles")
@@ -17,18 +24,25 @@ export async function getCurrentUserRole() {
 
     if (error) {
         console.error("Error fetching user role:", error);
-        return { role: null };
+        return { data: null, error: "Erro ao buscar cargo." };
     }
 
-    return { role: data?.role };
+    return { data: { role: data?.role }, error: null };
 }
 
 export async function updateUserRole(userId: string, newRole: 'admin' | 'user' | 'mod') {
-    const supabase = await createClient();
+    // 1. Validation
+    const validated = updateRoleSchema.safeParse({ userId, newRole });
 
-    // Verify if current user is admin
+    if (!validated.success) {
+        return { data: null, error: "Dados inválidos." };
+    }
+
+    const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return { error: "Não autorizado." };
+
+    // 2. Auth Check
+    if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: currentUserData } = await supabase
         .from("profiles")
@@ -36,20 +50,22 @@ export async function updateUserRole(userId: string, newRole: 'admin' | 'user' |
         .eq("id", user.id)
         .single();
 
+    // 3. Authorization Check
     if (currentUserData?.role !== 'admin') {
-        return { error: "Apenas administradores podem alterar cargos." };
+        return { data: null, error: "Apenas administradores podem alterar cargos." };
     }
 
+    // 4. Mutation
     const { error } = await supabase
         .from("profiles")
-        .update({ role: newRole })
-        .eq("id", userId);
+        .update({ role: validated.data.newRole })
+        .eq("id", validated.data.userId);
 
     if (error) {
         console.error("Error updating user role:", error);
-        return { error: "Erro ao atualizar cargo." };
+        return { data: null, error: "Erro ao atualizar cargo." };
     }
 
     revalidatePath("/admin/users");
-    return { success: true };
+    return { data: { success: true }, error: null };
 }

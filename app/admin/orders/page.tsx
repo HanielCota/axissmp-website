@@ -1,6 +1,6 @@
-import { getOrders, updateOrderStatus } from "@/app/actions/orders";
-import Link from "next/link";
-import { Package, Clock, CheckCircle, XCircle, Eye } from "lucide-react";
+import { getOrders } from "@/app/actions/orders";
+import Image from "next/image";
+import { Package, Clock, CheckCircle, XCircle } from "lucide-react";
 import { OrderStatusButton } from "@/components/admin/OrderStatusButton";
 
 export const dynamic = 'force-dynamic';
@@ -49,10 +49,13 @@ export default async function AdminOrdersPage() {
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
-                                                <img
+                                                <Image
                                                     src={`https://mc-heads.net/avatar/${order.nickname}/32`}
                                                     alt={order.nickname}
-                                                    className="w-8 h-8 rounded-lg"
+                                                    width={32}
+                                                    height={32}
+                                                    className="rounded-lg"
+                                                    unoptimized
                                                 />
                                                 <span className="font-bold">{order.nickname}</span>
                                             </div>

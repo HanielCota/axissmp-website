@@ -17,7 +17,7 @@ export function HeroHeader({ itemVariants }: HeroHeaderProps) {
         <div className="mt-8 flex flex-col items-center space-y-6 text-center md:mt-0">
             <motion.div
                 variants={itemVariants}
-                className="border-brand-dark/5 text-brand-orange inline-flex items-center gap-2 rounded-full border bg-white px-3 py-1 text-xs font-bold tracking-widest uppercase shadow-sm"
+                className="border-brand-dark/5 dark:border-white/10 text-brand-orange dark:bg-white/5 inline-flex items-center gap-2 rounded-full border bg-white px-3 py-1 text-xs font-bold tracking-widest uppercase shadow-sm"
             >
                 <Zap size={12} className="fill-brand-orange" />
                 Nova Season 1.21 Disponível
@@ -25,7 +25,7 @@ export function HeroHeader({ itemVariants }: HeroHeaderProps) {
 
             <motion.h1
                 variants={itemVariants}
-                className="text-brand-dark text-6xl leading-[1.1] font-black tracking-tight md:text-8xl lg:text-9xl"
+                className="text-brand-dark dark:text-white text-6xl leading-[1.1] font-black tracking-tight md:text-8xl lg:text-9xl"
             >
                 A NOVA ERA DO <br />
                 <span className="from-brand-orange to-brand-orange animate-text-shimmer bg-gradient-to-r via-amber-500 bg-[length:200%_auto] bg-clip-text text-transparent">
@@ -35,7 +35,7 @@ export function HeroHeader({ itemVariants }: HeroHeaderProps) {
 
             <motion.p
                 variants={itemVariants}
-                className="text-brand-dark/70 max-w-xl text-lg leading-relaxed font-medium md:text-xl"
+                className="text-brand-dark/90 dark:text-white/80 max-w-xl text-lg leading-relaxed font-medium md:text-xl"
             >
                 Entre no AxisSMP e experimente um survival único com economia equilibrada, quests
                 diárias e uma comunidade que não para de crescer.
@@ -48,8 +48,8 @@ export function HeroHeader({ itemVariants }: HeroHeaderProps) {
                 <button
                     onClick={() => copyToClipboard(SERVER_IP)}
                     className={cn(
-                        "hover:border-brand-orange/30 group flex items-center gap-3 rounded-full border border-black/5 bg-white px-8 py-4 shadow-sm transition-all hover:shadow-md active:scale-95",
-                        copied && "border-green-500/50 bg-green-50/50"
+                        "hover:border-brand-orange/30 dark:hover:border-brand-orange/50 group flex items-center gap-3 rounded-full border border-black/5 dark:border-white/10 bg-white dark:bg-white/5 px-8 py-4 shadow-sm transition-all hover:shadow-md active:scale-95",
+                        copied && "border-green-500/50 bg-green-50/50 dark:bg-green-500/10"
                     )}
                 >
                     <div
@@ -62,8 +62,8 @@ export function HeroHeader({ itemVariants }: HeroHeaderProps) {
                     </div>
                     <span
                         className={cn(
-                            "text-brand-dark text-xl font-bold tracking-tight",
-                            copied && "text-green-600"
+                            "text-brand-dark dark:text-white text-xl font-bold tracking-tight",
+                            copied && "text-green-600 dark:text-green-400"
                         )}
                     >
                         {copied ? "IP COPIADO!" : SERVER_IP}

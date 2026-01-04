@@ -2,6 +2,7 @@
 import { getPosts } from "@/app/actions/posts";
 import { NewsClient, UIPost } from "@/components/news/NewsClient";
 import { NewsCategory } from "@/lib/news-data";
+import { Footer } from "@/components/layout/Footer";
 
 export const dynamic = 'force-dynamic';
 
@@ -22,5 +23,10 @@ export default async function NewsPage() {
         image: post.image
     }));
 
-    return <NewsClient initialPosts={formattedPosts} />;
+    return (
+        <>
+            <NewsClient initialPosts={formattedPosts} />
+            <Footer />
+        </>
+    );
 }

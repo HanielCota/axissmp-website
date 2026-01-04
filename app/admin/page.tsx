@@ -11,8 +11,11 @@ export const dynamic = 'force-dynamic';
 export default async function AdminDashboardPage() {
     const { data: products } = await getProducts();
     const { data: posts } = await getPosts();
-    const ordersStats = await getOrdersStats();
-    const ticketsStats = await getTicketsStats();
+    const { data: ordersStatsData } = await getOrdersStats();
+    const { data: ticketsStatsData } = await getTicketsStats();
+
+    const ordersStats = ordersStatsData || { totalSales: 0, pendingCount: 0, paidCount: 0 };
+    const ticketsStats = ticketsStatsData || { openCount: 0, answeredCount: 0, closedCount: 0 };
 
     // Fetch user count
     const supabase = await createClient();

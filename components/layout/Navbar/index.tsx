@@ -12,6 +12,7 @@ import { SearchBar } from "./SearchBar";
 import { UserMenu } from "./UserMenu";
 import { DesktopNav } from "./DesktopNav";
 import { MobileMenu } from "./MobileMenu";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +27,7 @@ export function Navbar() {
             >
                 {/* Background Render */}
                 <div className="absolute inset-0 z-0 h-[180px] w-full overflow-hidden">
-                    <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/80 via-black/40 to-transparent" />
+                    <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/60 via-black/20 to-transparent" />
                     <Image
                         src="/images/site/render.jpg"
                         alt="Header Background"
@@ -63,6 +64,7 @@ export function Navbar() {
                     {/* Right: Search & User (Equal width flex container on desktop) */}
                     <div className="hidden md:flex md:flex-1 items-center justify-end gap-4">
                         <SearchBar />
+                        <ThemeToggle />
                         <UserMenu />
                     </div>
                 </div>

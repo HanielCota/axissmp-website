@@ -78,25 +78,37 @@
 }
 
 .dark {
-  /* Keeping dark values just in case user toggles, but default is now Light */
-  --background: #2B2A2A;
-  --foreground: #F5F2F2;
-  --card: #2B2A2A;
-  --card-foreground: #F5F2F2;
-  --popover: #2B2A2A;
-  --popover-foreground: #F5F2F2;
+  --background: #09090b;
+  /* Zinc 950 - Deep Premium Dark */
+  --foreground: #fafafa;
+  /* Zinc 50 */
+
+  --card: #18181b;
+  /* Zinc 900 */
+  --card-foreground: #fafafa;
+
+  --popover: #18181b;
+  --popover-foreground: #fafafa;
+
   --primary: #FEB05D;
-  --primary-foreground: #2B2A2A;
-  --secondary: #5A7ACD;
-  --secondary-foreground: #FFFFFF;
-  --muted: #1E293B;
-  --muted-foreground: #94A3B8;
-  --accent: #1E293B;
-  --accent-foreground: #F5F2F2;
-  --destructive: #991B1B;
-  --destructive-foreground: #F5F2F2;
-  --border: #374151;
-  --input: #374151;
+  --primary-foreground: #18181b;
+
+  --secondary: #27272a;
+  /* Zinc 800 */
+  --secondary-foreground: #fafafa;
+
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  /* Zinc 400 */
+
+  --accent: #27272a;
+  --accent-foreground: #fafafa;
+
+  --destructive: #7f1d1d;
+  --destructive-foreground: #fafafa;
+
+  --border: #27272a;
+  --input: #27272a;
   --ring: #FEB05D;
 }
 
@@ -107,12 +119,14 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 120px;
+    scroll-padding-top: 80px;
     /* Offset for fixed navbar */
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
   }
 }
 
@@ -141,5 +155,16 @@
 
   ::-webkit-scrollbar-thumb {
     @apply bg-brand-dark/20 rounded-full hover:bg-brand-orange/50 transition-colors;
+  }
+}
+
+/* Custom Animations */
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
   }
 }

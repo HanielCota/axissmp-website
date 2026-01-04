@@ -40,14 +40,14 @@ export function StoreSidebar({ activeCategory, onSelectCategory }: StoreSidebarP
                                 className={cn(
                                     "flex-none lg:w-full flex items-center justify-between p-3 lg:p-4 rounded-xl font-bold transition-all border-2 whitespace-nowrap",
                                     isActive
-                                        ? "bg-white border-brand-blue text-brand-blue shadow-lg shadow-brand-blue/5"
-                                        : "bg-transparent border-transparent text-brand-dark/60 hover:bg-white/50 hover:text-brand-dark"
+                                        ? "bg-white dark:bg-zinc-800 border-brand-blue text-brand-blue shadow-lg shadow-brand-blue/5"
+                                        : "bg-transparent border-transparent text-brand-dark/60 dark:text-white/60 hover:bg-white/50 dark:hover:bg-white/5 hover:text-brand-dark dark:hover:text-white"
                                 )}
                             >
                                 <div className="flex items-center gap-3">
                                     <div className={cn(
                                         "p-2 rounded-lg transition-colors",
-                                        isActive ? "bg-brand-blue/10" : "bg-brand-dark/5"
+                                        isActive ? "bg-brand-blue/10" : "bg-brand-dark/5 dark:bg-white/5"
                                     )}>
                                         <cat.icon size={20} />
                                     </div>
@@ -63,8 +63,8 @@ export function StoreSidebar({ activeCategory, onSelectCategory }: StoreSidebarP
             </div>
 
             {/* Support Link */}
-            <div className="pt-4 border-t border-brand-dark/5">
-                <button className="w-full flex items-center gap-3 p-4 rounded-xl text-brand-dark/50 hover:text-brand-dark font-medium transition-colors">
+            <div className="pt-4 border-t border-brand-dark/5 dark:border-white/5">
+                <button className="w-full flex items-center gap-3 p-4 rounded-xl text-brand-dark/50 dark:text-white/50 hover:text-brand-dark dark:hover:text-white font-medium transition-colors">
                     <HelpCircle size={20} />
                     <span>Precisa de ajuda?</span>
                 </button>

@@ -1,4 +1,5 @@
 import { SupportClient } from "@/components/support/SupportClient";
+import { Footer } from "@/components/layout/Footer";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,5 +8,10 @@ export const metadata: Metadata = {
 };
 
 export default function SupportPage() {
-    return <SupportClient />;
+    return (
+        <>
+            <SupportClient />
+            <Footer />
+        </>
+    );
 }
