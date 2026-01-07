@@ -3,8 +3,6 @@ import Link from "next/link";
 import { User, Shield, ShieldAlert, UserCog, ExternalLink } from "lucide-react";
 import { UserRoleButton } from "@/components/admin/UserRoleButton";
 
-export const dynamic = 'force-dynamic';
-
 interface Profile {
     id: string;
     nickname: string;

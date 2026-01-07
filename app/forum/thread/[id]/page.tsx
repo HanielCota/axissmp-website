@@ -46,8 +46,6 @@ interface PostCount {
     user_id: string;
 }
 
-export const dynamic = "force-dynamic";
-
 export default async function ThreadPage({ params }: Props) {
     const supabase = await createClient();
     const { id } = await params;

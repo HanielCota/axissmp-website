@@ -44,21 +44,21 @@ USING (true);
 -- Authenticated users can react
 CREATE POLICY "Authenticated users can react"
 ON forum_reactions FOR INSERT
-WITH CHECK (auth.role() = 'authenticated');
+WITH CHECK ((select auth.role()) = 'authenticated');
 
 -- Users can remove their own reactions
 CREATE POLICY "Users can remove their own reactions"
 ON forum_reactions FOR DELETE
-USING (auth.uid() = user_id);
+USING ((select auth.uid()) = user_id);
 
 -- 6. RLS Policies for Reports
 -- Only staff can view reports (Assuming profiles table has roles)
 -- For now, let's allow reporters to see their own reports
 CREATE POLICY "Users can view their own reports"
 ON forum_reports FOR SELECT
-USING (auth.uid() = reporter_id);
+USING ((select auth.uid()) = reporter_id);
 
 -- Authenticated users can report
 CREATE POLICY "Authenticated users can report"
 ON forum_reports FOR INSERT
-WITH CHECK (auth.role() = 'authenticated');
+WITH CHECK ((select auth.role()) = 'authenticated');

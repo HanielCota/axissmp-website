@@ -12,12 +12,12 @@ const postSchema = z.object({
     category: z.enum(["update", "event", "maintenance", "announcement"]),
     author: z.string().default("Admin"),
     image: z.string().optional(),
-    date: z.string().optional(), // We can auto-generate or let edit
+    date: z.string().optional(),
 });
 
 export async function getPosts() {
     const supabase = await createClient();
-    const { data, error } = await supabase
+    const { data: rawPosts, error } = await supabase
         .from("posts")
         .select("*")
         .order("created_at", { ascending: false });
@@ -27,6 +27,7 @@ export async function getPosts() {
         return { data: null, error: "Erro ao buscar notícias." };
     }
 
+    const data = JSON.parse(JSON.stringify(rawPosts));
     return { data, error: null };
 }
 
@@ -37,7 +38,7 @@ export async function getPost(slug: string) {
     if (!validated.success) return { data: null, error: "Slug inválido." };
 
     const supabase = await createClient();
-    const { data, error } = await supabase
+    const { data: rawPost, error } = await supabase
         .from("posts")
         .select("*")
         .eq("slug", validated.data)
@@ -48,13 +49,13 @@ export async function getPost(slug: string) {
         return { data: null, error: "Notícia não encontrada." };
     }
 
+    const data = JSON.parse(JSON.stringify(rawPost));
     return { data, error: null };
 }
 
 export async function createPost(formData: FormData) {
     const supabase = await createClient();
 
-    // 1. Auth Check
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
@@ -105,7 +106,6 @@ export async function updatePost(originalSlug: string, formData: FormData) {
 
     const supabase = await createClient();
 
-    // 1. Auth Check
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
@@ -157,7 +157,6 @@ export async function deletePost(slug: string) {
 
     const supabase = await createClient();
 
-    // 1. Auth Check
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 

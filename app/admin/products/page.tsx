@@ -3,8 +3,6 @@ import Link from "next/link";
 import { Plus, Pencil } from "lucide-react";
 import { DeleteProductButton } from "@/components/admin/DeleteProductButton";
 
-export const dynamic = 'force-dynamic';
-
 export default async function AdminProductsPage() {
     const { data: products } = await getProducts();
 

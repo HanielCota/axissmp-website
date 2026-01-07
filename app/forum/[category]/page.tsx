@@ -40,8 +40,6 @@ interface Props {
 }
 
 // Force dynamic rendering to ensure we always get the latest threads
-export const dynamic = "force-dynamic";
-
 export default async function CategoryPage({ params, searchParams }: Props) {
     const supabase = await createClient();
     const { category } = await params;

@@ -42,7 +42,7 @@ ON products FOR SELECT USING (true);
 CREATE POLICY "Admins can insert products" 
 ON products FOR INSERT 
 WITH CHECK (
-  auth.uid() IN (
+  (select auth.uid()) IN (
     SELECT id FROM profiles WHERE role = 'admin'
   )
 );
@@ -50,7 +50,7 @@ WITH CHECK (
 CREATE POLICY "Admins can update products" 
 ON products FOR UPDATE 
 USING (
-  auth.uid() IN (
+  (select auth.uid()) IN (
     SELECT id FROM profiles WHERE role = 'admin'
   )
 );
@@ -58,7 +58,7 @@ USING (
 CREATE POLICY "Admins can delete products" 
 ON products FOR DELETE 
 USING (
-  auth.uid() IN (
+  (select auth.uid()) IN (
     SELECT id FROM profiles WHERE role = 'admin'
   )
 );
@@ -70,7 +70,7 @@ ON posts FOR SELECT USING (true);
 CREATE POLICY "Admins can insert posts" 
 ON posts FOR INSERT 
 WITH CHECK (
-  auth.uid() IN (
+  (select auth.uid()) IN (
     SELECT id FROM profiles WHERE role = 'admin'
   )
 );
@@ -78,7 +78,7 @@ WITH CHECK (
 CREATE POLICY "Admins can update posts" 
 ON posts FOR UPDATE 
 USING (
-  auth.uid() IN (
+  (select auth.uid()) IN (
     SELECT id FROM profiles WHERE role = 'admin'
   )
 );
@@ -86,7 +86,7 @@ USING (
 CREATE POLICY "Admins can delete posts" 
 ON posts FOR DELETE 
 USING (
-  auth.uid() IN (
+  (select auth.uid()) IN (
     SELECT id FROM profiles WHERE role = 'admin'
   )
 );
@@ -100,12 +100,4 @@ USING (
 
 -- Let's assume we handle role updates via a secure server action that uses `supabaseAdmin` (service role) or we check permission carefully.
 -- For now, let's create a policy that allows Admins to update ANY profile (to change roles, etc)
-CREATE POLICY "Admins can update any profile" 
-ON profiles FOR UPDATE 
-USING (
-  auth.uid() IN (
-    SELECT id FROM profiles WHERE role = 'admin'
-  )
-);
-
 -- Note: You (the owner) will need to manually set your role to 'admin' in the database table initially.

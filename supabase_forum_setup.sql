@@ -59,12 +59,12 @@ USING (true);
 -- Authenticated users can create threads
 CREATE POLICY "Authenticated users can create threads"
 ON forum_threads FOR INSERT
-WITH CHECK (auth.role() = 'authenticated');
+WITH CHECK ((select auth.role()) = 'authenticated');
 
 -- Users can update their own threads
 CREATE POLICY "Users can update their own threads"
 ON forum_threads FOR UPDATE
-USING (auth.uid() = user_id);
+USING ((select auth.uid()) = user_id);
 
 -- 6. RLS Policies for Posts
 -- Everyone can view posts
@@ -75,12 +75,12 @@ USING (true);
 -- Authenticated users can create posts
 CREATE POLICY "Authenticated users can create posts"
 ON forum_posts FOR INSERT
-WITH CHECK (auth.role() = 'authenticated');
+WITH CHECK ((select auth.role()) = 'authenticated');
 
 -- Users can update their own posts
 CREATE POLICY "Users can update their own posts"
 ON forum_posts FOR UPDATE
-USING (auth.uid() = user_id);
+USING ((select auth.uid()) = user_id);
 
 -- 7. Seed Initial Categories
 INSERT INTO forum_categories (name, description, slug, icon, order_index) VALUES

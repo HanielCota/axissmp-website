@@ -2,8 +2,6 @@ import { getAdminTickets } from "@/app/actions/tickets";
 import Link from "next/link";
 import { MessageSquare, Clock, CheckCircle, XCircle } from "lucide-react";
 
-export const dynamic = 'force-dynamic';
-
 const statusConfig = {
     open: { label: "Aberto", color: "text-yellow-500", bg: "bg-yellow-500/10", icon: Clock },
     answered: { label: "Respondido", color: "text-emerald-500", bg: "bg-emerald-500/10", icon: CheckCircle },

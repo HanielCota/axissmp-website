@@ -46,7 +46,7 @@ export async function getAdminTickets() {
         return { data: null, error: "Apenas administradores podem ver tickets." };
     }
 
-    const { data, error } = await supabase
+    const { data: rawTickets, error } = await supabase
         .from("tickets")
         .select("*")
         .order("created_at", { ascending: false });
@@ -56,6 +56,7 @@ export async function getAdminTickets() {
         return { data: null, error: "Erro ao buscar tickets." };
     }
 
+    const data = JSON.parse(JSON.stringify(rawTickets));
     return { data: data as Ticket[], error: null };
 }
 
@@ -109,12 +110,14 @@ export async function getAdminTicketDetail(ticketId: string) {
         .eq("id", ticket.user_id)
         .single();
 
+    const data = JSON.parse(JSON.stringify({
+        ticket: ticket as Ticket,
+        messages: messages as TicketMessage[],
+        userNickname: userProfile?.nickname || "Usuário"
+    }));
+
     return {
-        data: {
-            ticket: ticket as Ticket,
-            messages: messages as TicketMessage[],
-            userNickname: userProfile?.nickname || "Usuário"
-        },
+        data,
         error: null
     };
 }
@@ -234,13 +237,15 @@ export async function getTicketsStats() {
     const answeredCount = tickets?.filter(t => t.status === 'answered').length || 0;
     const closedCount = tickets?.filter(t => t.status === 'closed').length || 0;
 
+    const data = JSON.parse(JSON.stringify({
+        openCount,
+        answeredCount,
+        closedCount,
+        total: tickets?.length || 0
+    }));
+
     return {
-        data: {
-            openCount,
-            answeredCount,
-            closedCount,
-            total: tickets?.length || 0
-        },
+        data,
         error: null
     };
 }

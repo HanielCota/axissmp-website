@@ -3,8 +3,6 @@ import Link from "next/link";
 import { Plus, Pencil } from "lucide-react";
 import { DeletePostButton } from "@/components/admin/DeletePostButton";
 
-export const dynamic = 'force-dynamic';
-
 export default async function AdminPostsPage() {
     const { data: posts } = await getPosts();
 

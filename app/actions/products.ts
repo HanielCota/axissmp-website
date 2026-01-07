@@ -14,7 +14,7 @@ const productSchema = z.object({
 
 export async function getProducts() {
     const supabase = await createClient();
-    const { data, error } = await supabase
+    const { data: rawProducts, error } = await supabase
         .from("products")
         .select("*")
         .order("price", { ascending: true });
@@ -24,6 +24,7 @@ export async function getProducts() {
         return { data: null, error: "Erro ao buscar produtos." };
     }
 
+    const data = JSON.parse(JSON.stringify(rawProducts));
     return { data, error: null };
 }
 

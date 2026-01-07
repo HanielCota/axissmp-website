@@ -39,7 +39,7 @@ export async function getOrders() {
         return { data: null, error: "Apenas administradores podem ver pedidos." };
     }
 
-    const { data, error } = await supabase
+    const { data: rawOrders, error } = await supabase
         .from("orders")
         .select("*")
         .order("created_at", { ascending: false });
@@ -49,6 +49,7 @@ export async function getOrders() {
         return { data: null, error: "Erro ao buscar pedidos." };
     }
 
+    const data = JSON.parse(JSON.stringify(rawOrders));
     return { data: data as Order[], error: null };
 }
 
@@ -76,7 +77,7 @@ export async function getOrder(id: string) {
     }
 
     // 2. Fetch
-    const { data, error } = await supabase
+    const { data: rawOrder, error } = await supabase
         .from("orders")
         .select("*")
         .eq("id", validated.data)
@@ -87,6 +88,7 @@ export async function getOrder(id: string) {
         return { data: null, error: "Pedido não encontrado." };
     }
 
+    const data = JSON.parse(JSON.stringify(rawOrder));
     return { data: data as Order, error: null };
 }
 
@@ -160,8 +162,9 @@ export async function getOrdersStats() {
     const pendingCount = orders?.filter(o => o.status === 'pending').length || 0;
     const paidCount = orders?.filter(o => o.status === 'paid' || o.status === 'delivered').length || 0;
 
+    const data = JSON.parse(JSON.stringify({ totalSales, pendingCount, paidCount }));
     return {
-        data: { totalSales, pendingCount, paidCount },
+        data,
         error: null
     };
 }

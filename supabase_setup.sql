@@ -22,10 +22,18 @@ create policy "Public profiles are viewable by everyone." on profiles
   for select using (true);
 
 create policy "Users can insert their own profile." on profiles
-  for insert with check (auth.uid() = id);
+  for insert with check ((select auth.uid()) = id);
 
-create policy "Users can update own profile." on profiles
-  for update using (auth.uid() = id);
+create policy "Manage profiles" on profiles
+  for update using (
+    ((select auth.uid()) = id) 
+    OR 
+    (EXISTS (
+      SELECT 1 FROM profiles 
+      WHERE profiles.id = (select auth.uid()) 
+      AND profiles.role = 'admin'
+    ))
+  );
 
 -- 4. Função para criar o perfil automaticamente quando um usuário se registra
 create or replace function public.handle_new_user()

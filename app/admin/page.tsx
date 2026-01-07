@@ -6,8 +6,6 @@ import { ShoppingBag, FileText, Users, TrendingUp, Package, MessageSquare } from
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 
-export const dynamic = 'force-dynamic';
-
 export default async function AdminDashboardPage() {
     const { data: products } = await getProducts();
     const { data: posts } = await getPosts();

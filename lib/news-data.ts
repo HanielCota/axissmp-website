@@ -1,15 +1,6 @@
-export type NewsCategory = "update" | "event" | "maintenance" | "announcement";
+"use cache";
 
-export interface NewsPost {
-    slug: string;
-    title: string;
-    excerpt: string;
-    content: string;
-    date: string;
-    category: NewsCategory;
-    author: string;
-    image?: string;
-}
+import { NewsCategory, NewsPost } from "@/types/news";
 
 export const newsData: NewsPost[] = [
     {

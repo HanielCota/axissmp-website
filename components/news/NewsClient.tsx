@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
-import { NewsCategory } from "@/lib/news-data"; // Keep using this type for consistency
+import { NewsCategory } from "@/types/news"; // Use centralized types
 import Link from "next/link";
 import { Calendar, ArrowRight, Bell, Tag, Wrench, ShieldAlert, Search, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";

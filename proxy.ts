@@ -1,7 +1,11 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-export async function middleware(request: NextRequest) {
+/**
+ * Next.js 16 Proxy - Replaces middleware.ts
+ * Clarifies the network boundary and runs on Node.js runtime.
+ */
+export async function proxy(request: NextRequest) {
     let response = NextResponse.next({
         request: {
             headers: request.headers,
@@ -58,14 +62,13 @@ export async function middleware(request: NextRequest) {
 
     const isAuthPage = request.nextUrl.pathname.startsWith('/login') ||
         request.nextUrl.pathname.startsWith('/register')
-    const isProtectedPage = request.nextUrl.pathname.startsWith('/dashboard')
+    const isProtectedPage = request.nextUrl.pathname.startsWith('/dashboard') ||
+        request.nextUrl.pathname.startsWith('/admin')
 
-    // Redireciona usuários logados tentando acessar login/registro para o dashboard
     if (isAuthPage && user) {
         return NextResponse.redirect(new URL('/dashboard', request.url))
     }
 
-    // Redireciona usuários deslogados tentando acessar o dashboard para o login
     if (isProtectedPage && !user) {
         return NextResponse.redirect(new URL('/login', request.url))
     }
@@ -75,14 +78,8 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        /*
-         * Match all request paths except for the ones starting with:
-         * - _next/static (static files)
-         * - _next/image (image optimization files)
-         * - favicon.ico (favicon file)
-         * Feel free to modify this pattern to include more paths.
-         */
         '/dashboard/:path*',
+        '/admin/:path*',
         '/login',
         '/register',
     ],

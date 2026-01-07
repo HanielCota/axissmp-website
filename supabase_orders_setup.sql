@@ -15,10 +15,10 @@ ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
 -- Policies
 CREATE POLICY "Users can view their own orders"
 ON orders FOR SELECT
-USING (auth.uid() = user_id);
+USING ((select auth.uid()) = user_id);
 
 CREATE POLICY "Users can insert their own orders"
 ON orders FOR INSERT
-WITH CHECK (auth.uid() = user_id);
+WITH CHECK ((select auth.uid()) = user_id);
 
 -- Optional: Create a view or function to handle order statistics if needed later

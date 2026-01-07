@@ -27,11 +27,11 @@ ALTER TABLE ticket_messages ENABLE ROW LEVEL SECURITY;
 -- 3. RLS Policies for Tickets
 CREATE POLICY "Users can view their own tickets"
 ON tickets FOR SELECT
-USING (auth.uid() = user_id);
+USING ((select auth.uid()) = user_id);
 
 CREATE POLICY "Users can insert their own tickets"
 ON tickets FOR INSERT
-WITH CHECK (auth.uid() = user_id);
+WITH CHECK ((select auth.uid()) = user_id);
 
 -- 4. RLS Policies for Ticket Messages
 CREATE POLICY "Users can view messages of their own tickets"
@@ -40,7 +40,7 @@ USING (
     EXISTS (
         SELECT 1 FROM tickets 
         WHERE tickets.id = ticket_messages.ticket_id 
-        AND tickets.user_id = auth.uid()
+        AND tickets.user_id = (select auth.uid())
     )
 );
 
@@ -50,7 +50,7 @@ WITH CHECK (
     EXISTS (
         SELECT 1 FROM tickets 
         WHERE tickets.id = ticket_messages.ticket_id 
-        AND tickets.user_id = auth.uid()
+        AND tickets.user_id = (select auth.uid())
     )
-    AND auth.uid() = user_id
+    AND (select auth.uid()) = user_id
 );

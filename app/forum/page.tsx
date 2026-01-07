@@ -6,18 +6,27 @@ import { ForumSearch } from "@/components/forum/ForumSearch";
 import { ForumServerStatus } from "@/components/forum/ForumServerStatus";
 import { RecentThreadsWidget, QuickLinksWidget } from "@/components/forum/ForumSidebar";
 import { BackButton } from "@/components/ui/back-button";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export const dynamic = "force-dynamic";
-
-export default async function ForumPage() {
+async function getForumCategories() {
+    "use cache";
     const supabase = await createClient();
-
-    const { data: categories, error } = await supabase
+    const { data: rawData, error } = await supabase
         .from("forum_categories")
         .select("*")
         .order("order_index", { ascending: true });
 
-    if (error) {
+    if (error) throw error;
+
+    return JSON.parse(JSON.stringify(rawData));
+}
+
+export default async function ForumPage() {
+    let categories;
+    try {
+        categories = await getForumCategories();
+    } catch (error) {
         console.error("Error fetching forum categories:", error);
         return (
             <Alert variant="destructive">

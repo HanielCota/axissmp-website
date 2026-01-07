@@ -1,10 +1,7 @@
-
 import { getPosts } from "@/app/actions/posts";
 import { NewsClient, UIPost } from "@/components/news/NewsClient";
-import { NewsCategory } from "@/lib/news-data";
+import { NewsCategory } from "@/types/news";
 import { Footer } from "@/components/layout/Footer";
-
-export const dynamic = 'force-dynamic';
 
 export default async function NewsPage() {
     const { data: posts } = await getPosts();
