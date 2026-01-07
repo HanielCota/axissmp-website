@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 interface DeleteProductButtonProps {
-    id: string;
+    id: number | string;
 }
 
 export function DeleteProductButton({ id }: DeleteProductButtonProps) {
@@ -18,7 +18,7 @@ export function DeleteProductButton({ id }: DeleteProductButtonProps) {
         if (!confirm("Tem certeza que deseja excluir este produto?")) return;
 
         startTransition(async () => {
-            const result = await deleteProduct(id);
+            const result = await deleteProduct(String(id));
 
             if (result.error) {
                 toast.error(result.error);

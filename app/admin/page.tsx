@@ -5,6 +5,8 @@ import { getTicketsStats } from "@/app/actions/tickets";
 import { ShoppingBag, FileText, Users, TrendingUp, Package, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { Product } from "@/lib/products";
+import { Post } from "@/components/landing/NewsSection";
 
 export default async function AdminDashboardPage() {
     const { data: products } = await getProducts();
@@ -106,7 +108,7 @@ export default async function AdminDashboardPage() {
                 <div className="rounded-3xl border border-white/5 bg-black/20 p-8 backdrop-blur-sm">
                     <h3 className="text-xl font-bold mb-6">Últimos Produtos</h3>
                     <div className="space-y-4">
-                        {products?.slice(0, 5).map((product) => (
+                        {products?.slice(0, 5).map((product: Product) => (
                             <div key={product.id} className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/5">
                                 <div className={`w-10 h-10 rounded-xl ${product.color || 'bg-white/10'} flex items-center justify-center`}>
                                     <ShoppingBag size={16} className="text-white/50" />
@@ -130,7 +132,7 @@ export default async function AdminDashboardPage() {
                 <div className="rounded-3xl border border-white/5 bg-black/20 p-8 backdrop-blur-sm">
                     <h3 className="text-xl font-bold mb-6">Últimas Notícias</h3>
                     <div className="space-y-4">
-                        {posts?.slice(0, 5).map((post) => (
+                        {posts?.slice(0, 5).map((post: Post) => (
                             <div key={post.slug} className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/5">
                                 <div className="flex-1">
                                     <h4 className="font-bold text-sm line-clamp-1">{post.title}</h4>

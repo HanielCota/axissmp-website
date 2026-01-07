@@ -8,9 +8,10 @@ import { RecentThreadsWidget, QuickLinksWidget } from "@/components/forum/ForumS
 import { BackButton } from "@/components/ui/back-button";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ForumCategory } from "@/types/forum";
+import { unstable_noStore as noStore } from 'next/cache';
 
 async function getForumCategories() {
-    "use cache";
     const supabase = await createClient();
     const { data: rawData, error } = await supabase
         .from("forum_categories")
@@ -23,6 +24,7 @@ async function getForumCategories() {
 }
 
 export default async function ForumPage() {
+    noStore();
     let categories;
     try {
         categories = await getForumCategories();
@@ -94,7 +96,7 @@ export default async function ForumPage() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {(categories || []).map((cat) => (
+                        {(categories || []).map((cat: ForumCategory) => (
                             <ForumCategoryCard key={cat.id} category={cat} />
                         ))}
                     </div>

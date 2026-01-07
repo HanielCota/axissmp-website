@@ -5,7 +5,7 @@ import { ArrowRight, Calendar, User, Zap } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-interface Post {
+export interface Post {
     slug: string;
     title: string;
     excerpt: string;

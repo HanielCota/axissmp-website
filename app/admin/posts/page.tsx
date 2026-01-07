@@ -2,6 +2,7 @@ import { getPosts } from "@/app/actions/posts";
 import Link from "next/link";
 import { Plus, Pencil } from "lucide-react";
 import { DeletePostButton } from "@/components/admin/DeletePostButton";
+import { Post } from "@/components/landing/NewsSection";
 
 export default async function AdminPostsPage() {
     const { data: posts } = await getPosts();
@@ -35,7 +36,7 @@ export default async function AdminPostsPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-white/5">
-                            {posts?.map((post) => (
+                            {posts?.map((post: Post) => (
                                 <tr key={post.slug} className="group hover:bg-white/[0.02] transition-colors">
                                     <td className="px-6 py-4">
                                         <div className="font-bold line-clamp-1 max-w-sm">{post.title}</div>

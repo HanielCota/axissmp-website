@@ -2,6 +2,7 @@ import { getProducts } from "@/app/actions/products";
 import Link from "next/link";
 import { Plus, Pencil } from "lucide-react";
 import { DeleteProductButton } from "@/components/admin/DeleteProductButton";
+import { Product } from "@/lib/products";
 
 export default async function AdminProductsPage() {
     const { data: products } = await getProducts();
@@ -34,7 +35,7 @@ export default async function AdminProductsPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-white/5">
-                            {products?.map((product) => (
+                            {products?.map((product: Product) => (
                                 <tr key={product.id} className="group hover:bg-white/[0.02] transition-colors">
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-4">

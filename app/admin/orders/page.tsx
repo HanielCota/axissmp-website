@@ -2,6 +2,7 @@ import { getOrders } from "@/app/actions/orders";
 import Image from "next/image";
 import { Package, Clock, CheckCircle, XCircle } from "lucide-react";
 import { OrderStatusButton } from "@/components/admin/OrderStatusButton";
+import { unstable_noStore as noStore } from 'next/cache';
 
 const statusConfig = {
     pending: { label: "Pendente", color: "text-yellow-500", bg: "bg-yellow-500/10", icon: Clock },
@@ -11,6 +12,7 @@ const statusConfig = {
 };
 
 export default async function AdminOrdersPage() {
+    noStore();
     const { data: orders } = await getOrders();
 
     return (
@@ -69,7 +71,7 @@ export default async function AdminOrdersPage() {
                                         <td className="px-6 py-4">
                                             <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${status.bg} ${status.color}`}>
                                                 <StatusIcon size={14} />
-                                                <span className="text-xs font-bold uppercase">{status.label}</span>
+                                                <span className="text-xs font-black uppercase">{status.label}</span>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 text-sm text-white/60">
