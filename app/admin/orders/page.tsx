@@ -4,6 +4,9 @@ import { Package, Clock, CheckCircle, XCircle } from "lucide-react";
 import { OrderStatusButton } from "@/components/admin/OrderStatusButton";
 import { unstable_noStore as noStore } from 'next/cache';
 
+// Force dynamic rendering
+export const revalidate = 0;
+
 const statusConfig = {
     pending: { label: "Pendente", color: "text-yellow-500", bg: "bg-yellow-500/10", icon: Clock },
     paid: { label: "Pago", color: "text-emerald-500", bg: "bg-emerald-500/10", icon: CheckCircle },

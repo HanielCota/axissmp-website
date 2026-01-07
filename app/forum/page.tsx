@@ -11,6 +11,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ForumCategory } from "@/types/forum";
 import { unstable_noStore as noStore } from 'next/cache';
 
+// Force dynamic rendering
+export const revalidate = 0;
+
 async function getForumCategories() {
     const supabase = await createClient();
     const { data: rawData, error } = await supabase

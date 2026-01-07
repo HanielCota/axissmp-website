@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
+import { Suspense } from "react";
 
 const outfit = Outfit({
     subsets: ["latin"],
@@ -68,11 +69,13 @@ export default function RootLayout({
                 suppressHydrationWarning
             >
                 <ThemeProvider>
-                    <CartProvider>
-                        <main className="flex-1">
-                            {children}
-                        </main>
-                    </CartProvider>
+                    <Suspense fallback={null}>
+                        <CartProvider>
+                            <main className="flex-1">
+                                {children}
+                            </main>
+                        </CartProvider>
+                    </Suspense>
                 </ThemeProvider>
                 <Toaster
                     position="top-right"
