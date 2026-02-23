@@ -67,7 +67,7 @@ export default function RulesPage() {
             <div className="pointer-events-none fixed inset-0">
                 <div className="bg-brand-orange/10 dark:bg-brand-orange/5 absolute top-0 right-0 h-[500px] w-[500px] translate-x-1/2 -translate-y-1/2 rounded-full blur-[100px]" />
                 <div className="bg-brand-blue/10 dark:bg-brand-blue/5 absolute bottom-0 left-0 h-[500px] w-[500px] -translate-x-1/2 translate-y-1/2 rounded-full blur-[100px]" />
-                <div className="bg-slate-900/5 dark:bg-white/5 absolute top-1/2 left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 opacity-[0.03]" />
+                <div className="absolute top-1/2 left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 bg-slate-900/5 opacity-[0.03] dark:bg-white/5" />
             </div>
 
             <Navbar />
@@ -78,7 +78,7 @@ export default function RulesPage() {
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-brand-dark dark:text-white text-5xl font-black tracking-tight md:text-7xl"
+                        className="text-brand-dark text-5xl font-black tracking-tight md:text-7xl dark:text-white"
                     >
                         REGRAS DO <span className="text-brand-orange">AXIS</span>
                     </motion.h1>
@@ -86,7 +86,7 @@ export default function RulesPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-brand-dark/80 dark:text-white/80 mx-auto max-w-2xl text-xl font-medium"
+                        className="text-brand-dark/80 mx-auto max-w-2xl text-xl font-medium dark:text-white/80"
                     >
                         A transparência é a chave. Entenda o que faz nossa comunidade girar e o que
                         a mantém segura para todos.
@@ -106,7 +106,9 @@ export default function RulesPage() {
                             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-green-500/10 text-green-600">
                                 <Check size={24} strokeWidth={3} />
                             </div>
-                            <h2 className="text-brand-dark dark:text-white text-3xl font-bold">Permitido</h2>
+                            <h2 className="text-brand-dark text-3xl font-bold dark:text-white">
+                                Permitido
+                            </h2>
                         </motion.div>
 
                         <div className="space-y-4">
@@ -116,18 +118,18 @@ export default function RulesPage() {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.3 + index * 0.1 }}
-                                    className="group border-brand-dark/5 dark:border-white/10 relative rounded-2xl border bg-white dark:bg-white/5 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-500/5 dark:hover:bg-white/10 dark:hover:shadow-none"
+                                    className="group border-brand-dark/5 relative rounded-2xl border bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-500/5 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 dark:hover:shadow-none"
                                 >
                                     <div className="absolute top-0 left-0 h-full w-1 rounded-l-2xl bg-green-500 opacity-0 transition-opacity group-hover:opacity-100" />
                                     <div className="flex gap-4">
-                                        <div className="bg-brand-light dark:bg-white/5 text-brand-dark/40 dark:text-white/40 flex h-10 w-10 items-center justify-center rounded-xl transition-colors group-hover:bg-green-50 dark:group-hover:bg-green-500/10 group-hover:text-green-600">
+                                        <div className="bg-brand-light text-brand-dark/40 flex h-10 w-10 items-center justify-center rounded-xl transition-colors group-hover:bg-green-50 group-hover:text-green-600 dark:bg-white/5 dark:text-white/40 dark:group-hover:bg-green-500/10">
                                             <rule.icon size={20} />
                                         </div>
                                         <div>
-                                            <h3 className="text-brand-dark dark:text-white mb-1 text-lg font-bold transition-colors group-hover:text-green-700 dark:group-hover:text-green-500">
+                                            <h3 className="text-brand-dark mb-1 text-lg font-bold transition-colors group-hover:text-green-700 dark:text-white dark:group-hover:text-green-500">
                                                 {rule.title}
                                             </h3>
-                                            <p className="text-brand-dark/80 dark:text-white/70 text-sm leading-relaxed font-medium">
+                                            <p className="text-brand-dark/80 text-sm leading-relaxed font-medium dark:text-white/70">
                                                 {rule.description}
                                             </p>
                                         </div>
@@ -148,7 +150,9 @@ export default function RulesPage() {
                             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-500/10 text-red-600">
                                 <X size={24} strokeWidth={3} />
                             </div>
-                            <h2 className="text-brand-dark dark:text-white text-3xl font-bold">Proibido</h2>
+                            <h2 className="text-brand-dark text-3xl font-bold dark:text-white">
+                                Proibido
+                            </h2>
                         </motion.div>
 
                         <div className="space-y-4">
@@ -158,18 +162,18 @@ export default function RulesPage() {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.3 + index * 0.1 }}
-                                    className="group border-brand-dark/5 dark:border-white/10 relative rounded-2xl border bg-white dark:bg-white/5 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-red-500/5 dark:hover:bg-white/10 dark:hover:shadow-none"
+                                    className="group border-brand-dark/5 relative rounded-2xl border bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-red-500/5 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 dark:hover:shadow-none"
                                 >
                                     <div className="absolute top-0 left-0 h-full w-1 rounded-l-2xl bg-red-500 opacity-0 transition-opacity group-hover:opacity-100" />
                                     <div className="flex gap-4">
-                                        <div className="bg-brand-light dark:bg-white/5 text-brand-dark/40 dark:text-white/40 flex h-10 w-10 items-center justify-center rounded-xl transition-colors group-hover:bg-red-50 dark:group-hover:bg-red-500/10 group-hover:text-red-600">
+                                        <div className="bg-brand-light text-brand-dark/40 flex h-10 w-10 items-center justify-center rounded-xl transition-colors group-hover:bg-red-50 group-hover:text-red-600 dark:bg-white/5 dark:text-white/40 dark:group-hover:bg-red-500/10">
                                             <rule.icon size={20} />
                                         </div>
                                         <div>
-                                            <h3 className="text-brand-dark dark:text-white mb-1 text-lg font-bold transition-colors group-hover:text-red-700 dark:group-hover:text-red-500">
+                                            <h3 className="text-brand-dark mb-1 text-lg font-bold transition-colors group-hover:text-red-700 dark:text-white dark:group-hover:text-red-500">
                                                 {rule.title}
                                             </h3>
-                                            <p className="text-brand-dark/80 dark:text-white/70 text-sm leading-relaxed font-medium">
+                                            <p className="text-brand-dark/80 text-sm leading-relaxed font-medium dark:text-white/70">
                                                 {rule.description}
                                             </p>
                                         </div>

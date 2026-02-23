@@ -15,7 +15,10 @@ export function BackButton({ href, label = "Voltar", className }: BackButtonProp
             variant="ghost"
             size="sm"
             asChild
-            className={cn("gap-2 text-muted-foreground hover:text-primary pl-0 hover:bg-transparent transition-colors", className)}
+            className={cn(
+                "text-muted-foreground hover:text-primary gap-2 pl-0 transition-colors hover:bg-transparent",
+                className
+            )}
         >
             <Link href={href}>
                 <ArrowLeft size={16} />

@@ -1,6 +1,6 @@
-'use server'
+"use server";
 
-import { z } from 'zod';
+import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
@@ -9,7 +9,7 @@ const orderIdSchema = z.string().uuid();
 
 const updateStatusSchema = z.object({
     id: z.string().uuid(),
-    status: z.enum(['pending', 'paid', 'delivered', 'cancelled'])
+    status: z.enum(["pending", "paid", "delivered", "cancelled"]),
 });
 
 export interface Order {
@@ -18,7 +18,7 @@ export interface Order {
     nickname: string;
     items: Array<{ id: string; name: string; price: number; quantity: number }>;
     total_amount: number;
-    status: 'pending' | 'paid' | 'delivered' | 'cancelled';
+    status: "pending" | "paid" | "delivered" | "cancelled";
     created_at: string;
 }
 
@@ -26,7 +26,9 @@ export async function getOrders() {
     const supabase = await createClient();
 
     // Auth Check
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: profile } = await supabase
@@ -35,7 +37,7 @@ export async function getOrders() {
         .eq("id", user.id)
         .single();
 
-    if (profile?.role !== 'admin') {
+    if (profile?.role !== "admin") {
         return { data: null, error: "Apenas administradores podem ver pedidos." };
     }
 
@@ -63,7 +65,9 @@ export async function getOrder(id: string) {
     const supabase = await createClient();
 
     // Auth Check
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: profile } = await supabase
@@ -72,7 +76,7 @@ export async function getOrder(id: string) {
         .eq("id", user.id)
         .single();
 
-    if (profile?.role !== 'admin') {
+    if (profile?.role !== "admin") {
         return { data: null, error: "Apenas administradores podem ver pedidos." };
     }
 
@@ -92,7 +96,7 @@ export async function getOrder(id: string) {
     return { data: data as Order, error: null };
 }
 
-export async function updateOrderStatus(id: string, status: Order['status']) {
+export async function updateOrderStatus(id: string, status: Order["status"]) {
     // 1. Validação Zod
     const validated = updateStatusSchema.safeParse({ id, status });
     if (!validated.success) {
@@ -102,7 +106,9 @@ export async function updateOrderStatus(id: string, status: Order['status']) {
     const supabase = await createClient();
 
     // 2. Verificar autorização
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: profile } = await supabase
@@ -111,7 +117,7 @@ export async function updateOrderStatus(id: string, status: Order['status']) {
         .eq("id", user.id)
         .single();
 
-    if (profile?.role !== 'admin') {
+    if (profile?.role !== "admin") {
         return { data: null, error: "Apenas administradores podem alterar pedidos." };
     }
 
@@ -134,7 +140,9 @@ export async function getOrdersStats() {
     const supabase = await createClient();
 
     // Auth Check
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: profile } = await supabase
@@ -143,28 +151,28 @@ export async function getOrdersStats() {
         .eq("id", user.id)
         .single();
 
-    if (profile?.role !== 'admin') {
+    if (profile?.role !== "admin") {
         return { data: null, error: "Apenas administradores podem ver estatísticas." };
     }
 
-    const { data: orders, error } = await supabase
-        .from("orders")
-        .select("total_amount, status");
+    const { data: orders, error } = await supabase.from("orders").select("total_amount, status");
 
     if (error) {
         return { data: null, error: "Erro ao buscar estatísticas." };
     }
 
-    const totalSales = orders
-        ?.filter(o => o.status === 'paid' || o.status === 'delivered')
-        .reduce((sum, o) => sum + (o.total_amount || 0), 0) || 0;
+    const totalSales =
+        orders
+            ?.filter((o) => o.status === "paid" || o.status === "delivered")
+            .reduce((sum, o) => sum + (o.total_amount || 0), 0) || 0;
 
-    const pendingCount = orders?.filter(o => o.status === 'pending').length || 0;
-    const paidCount = orders?.filter(o => o.status === 'paid' || o.status === 'delivered').length || 0;
+    const pendingCount = orders?.filter((o) => o.status === "pending").length || 0;
+    const paidCount =
+        orders?.filter((o) => o.status === "paid" || o.status === "delivered").length || 0;
 
     const data = JSON.parse(JSON.stringify({ totalSales, pendingCount, paidCount }));
     return {
         data,
-        error: null
+        error: null,
     };
 }

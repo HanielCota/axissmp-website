@@ -8,7 +8,7 @@ export interface CartItem {
     name: string;
     price: number;
     quantity: number;
-    category: 'vips' | 'coins' | 'unban';
+    category: "vips" | "coins" | "unban";
     image?: string;
 }
 
@@ -81,7 +81,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     // Calculated values (Fix floating point precision)
     const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-    const totalPrice = parseFloat(items.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2));
+    const totalPrice = parseFloat(
+        items.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)
+    );
 
     // Actions
     const addToCart = (item: Omit<CartItem, "quantity">, quantity: number) => {
@@ -91,7 +93,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
             if (existingIndex >= 0) {
                 // Update quantity of existing item (with limit)
                 const updated = [...prev];
-                const newQuantity = Math.min(updated[existingIndex].quantity + quantity, MAX_QUANTITY);
+                const newQuantity = Math.min(
+                    updated[existingIndex].quantity + quantity,
+                    MAX_QUANTITY
+                );
 
                 updated[existingIndex] = {
                     ...updated[existingIndex],
@@ -118,9 +123,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         const safeQuantity = Math.min(quantity, MAX_QUANTITY);
 
         setItems((prev) =>
-            prev.map((item) =>
-                item.id === id ? { ...item, quantity: safeQuantity } : item
-            )
+            prev.map((item) => (item.id === id ? { ...item, quantity: safeQuantity } : item))
         );
     };
 

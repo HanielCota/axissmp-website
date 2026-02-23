@@ -1,6 +1,6 @@
 "use client";
 
-import { createProduct, updateProduct, getProduct } from "@/app/actions/products";
+import { createProduct, updateProduct, getProduct } from "@/lib/actions/products";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
@@ -74,9 +74,8 @@ export default function ProductForm({ id }: ProductFormProps) {
         formData.set("color", color);
 
         startTransition(async () => {
-            const result = id === "new"
-                ? await createProduct(formData)
-                : await updateProduct(id, formData);
+            const result =
+                id === "new" ? await createProduct(formData) : await updateProduct(id, formData);
 
             if (result.error) {
                 toast.error(result.error);
@@ -92,60 +91,66 @@ export default function ProductForm({ id }: ProductFormProps) {
     if (loading) {
         return (
             <div className="flex h-64 items-center justify-center">
-                <Loader2 className="animate-spin text-brand-orange" size={32} />
+                <Loader2 className="text-brand-orange animate-spin" size={32} />
             </div>
         );
     }
 
     return (
-        <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="animate-in fade-in slide-in-from-bottom-4 mx-auto max-w-2xl duration-500">
             <Link
                 href="/admin/products"
-                className="inline-flex items-center gap-2 text-sm font-bold text-white/40 hover:text-white mb-6 transition-colors"
+                className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-white/40 transition-colors hover:text-white"
             >
                 <ArrowLeft size={16} />
                 Voltar para Produtos
             </Link>
 
             <div className="rounded-3xl border border-white/5 bg-black/20 p-8 backdrop-blur-sm">
-                <h2 className="text-2xl font-black uppercase italic tracking-tight mb-8">
+                <h2 className="mb-8 text-2xl font-black tracking-tight uppercase italic">
                     {id === "new" ? "Novo Produto" : "Editar Produto"}
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Name */}
                     <div className="space-y-2">
-                        <label className="text-xs font-black uppercase tracking-widest text-white/40">Nome do Produto</label>
+                        <label className="text-xs font-black tracking-widest text-white/40 uppercase">
+                            Nome do Produto
+                        </label>
                         <input
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
-                            className="w-full rounded-xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white placeholder:text-white/20 focus:border-brand-orange focus:outline-none focus:ring-1 focus:ring-brand-orange transition-all"
+                            className="focus:border-brand-orange focus:ring-brand-orange w-full rounded-xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white transition-all placeholder:text-white/20 focus:ring-1 focus:outline-none"
                             placeholder="Ex: VIP Lendário"
                         />
                     </div>
 
                     {/* Price and Category */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                         <div className="space-y-2">
-                            <label className="text-xs font-black uppercase tracking-widest text-white/40">Preço (R$)</label>
+                            <label className="text-xs font-black tracking-widest text-white/40 uppercase">
+                                Preço (R$)
+                            </label>
                             <input
                                 type="number"
                                 step="0.01"
                                 value={price}
                                 onChange={(e) => setPrice(e.target.value)}
                                 required
-                                className="w-full rounded-xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white placeholder:text-white/20 focus:border-brand-orange focus:outline-none focus:ring-1 focus:ring-brand-orange transition-all"
+                                className="focus:border-brand-orange focus:ring-brand-orange w-full rounded-xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white transition-all placeholder:text-white/20 focus:ring-1 focus:outline-none"
                                 placeholder="0.00"
                             />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-xs font-black uppercase tracking-widest text-white/40">Categoria</label>
+                            <label className="text-xs font-black tracking-widest text-white/40 uppercase">
+                                Categoria
+                            </label>
                             <select
                                 value={category}
                                 onChange={(e) => setCategory(e.target.value)}
-                                className="w-full rounded-xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white focus:border-brand-orange focus:outline-none focus:ring-1 focus:ring-brand-orange transition-all appearance-none cursor-pointer"
+                                className="focus:border-brand-orange focus:ring-brand-orange w-full cursor-pointer appearance-none rounded-xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white transition-all focus:ring-1 focus:outline-none"
                             >
                                 <option value="vips">VIPs</option>
                                 <option value="coins">Coins</option>
@@ -156,35 +161,42 @@ export default function ProductForm({ id }: ProductFormProps) {
 
                     {/* Image Upload */}
                     <div className="space-y-2">
-                        <label className="text-xs font-black uppercase tracking-widest text-white/40">Imagem do Produto</label>
-                        <ImageUpload
-                            value={image}
-                            onChange={setImage}
-                        />
+                        <label className="text-xs font-black tracking-widest text-white/40 uppercase">
+                            Imagem do Produto
+                        </label>
+                        <ImageUpload value={image} onChange={setImage} />
                     </div>
 
                     {/* Color Class */}
                     <div className="space-y-2">
-                        <label className="text-xs font-black uppercase tracking-widest text-white/40">Cor de Fundo (Tailwind Class)</label>
+                        <label className="text-xs font-black tracking-widest text-white/40 uppercase">
+                            Cor de Fundo (Tailwind Class)
+                        </label>
                         <div className="flex gap-4">
                             <input
                                 type="text"
                                 value={color}
                                 onChange={(e) => setColor(e.target.value)}
-                                className="flex-1 rounded-xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white placeholder:text-white/20 focus:border-brand-orange focus:outline-none focus:ring-1 focus:ring-brand-orange transition-all"
+                                className="focus:border-brand-orange focus:ring-brand-orange flex-1 rounded-xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white transition-all placeholder:text-white/20 focus:ring-1 focus:outline-none"
                                 placeholder="bg-brand-orange/20"
                             />
-                            <div className={`w-12 h-12 rounded-xl border border-white/5 ${color} shrink-0`}></div>
+                            <div
+                                className={`h-12 w-12 rounded-xl border border-white/5 ${color} shrink-0`}
+                            ></div>
                         </div>
                     </div>
 
-                    <div className="pt-4 border-t border-white/5 flex justify-end">
+                    <div className="flex justify-end border-t border-white/5 pt-4">
                         <button
                             type="submit"
                             disabled={isPending}
-                            className="flex items-center gap-2 rounded-xl bg-brand-orange px-8 py-3 text-sm font-black uppercase text-brand-dark transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="bg-brand-orange text-brand-dark flex items-center gap-2 rounded-xl px-8 py-3 text-sm font-black uppercase transition-all hover:scale-[1.02] active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            {isPending ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
+                            {isPending ? (
+                                <Loader2 className="animate-spin" size={18} />
+                            ) : (
+                                <Save size={18} />
+                            )}
                             {id === "new" ? "Criar Produto" : "Salvar Alterações"}
                         </button>
                     </div>

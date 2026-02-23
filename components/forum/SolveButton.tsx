@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Loader2 } from "lucide-react";
-import { solveThread } from "@/app/actions/forum";
+import { solveThread } from "@/lib/actions/forum";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -44,9 +44,13 @@ export function SolveButton({ threadId, postId }: SolveButtonProps) {
             disabled={isLoading}
             variant="outline"
             size="sm"
-            className="h-8 text-[10px] font-black uppercase tracking-wide border-green-500/20 text-green-500 hover:bg-green-500/10 gap-2"
+            className="h-8 gap-2 border-green-500/20 text-[10px] font-black tracking-wide text-green-500 uppercase hover:bg-green-500/10"
         >
-            {isLoading ? <Loader2 className="w-3 h-3 animate-spin" /> : <CheckCircle2 className="w-3 h-3" />}
+            {isLoading ? (
+                <Loader2 className="h-3 w-3 animate-spin" />
+            ) : (
+                <CheckCircle2 className="h-3 w-3" />
+            )}
             Marcar como Solução
         </Button>
     );

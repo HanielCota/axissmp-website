@@ -6,7 +6,7 @@ export default function CategoryLoading() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <Skeleton className="h-9 w-64 mb-2" />
+                    <Skeleton className="mb-2 h-9 w-64" />
                     <Skeleton className="h-5 w-96" />
                 </div>
                 <Skeleton className="h-10 w-32 rounded-xl" />
@@ -19,10 +19,10 @@ export default function CategoryLoading() {
             <Skeleton className="h-px w-full" />
 
             {/* Thread List Header */}
-            <div className="hidden md:flex items-center px-6 py-3">
-                <Skeleton className="flex-1 h-4" />
-                <Skeleton className="w-32 h-4" />
-                <Skeleton className="w-48 h-4" />
+            <div className="hidden items-center px-6 py-3 md:flex">
+                <Skeleton className="h-4 flex-1" />
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-4 w-48" />
             </div>
 
             {/* Threads */}

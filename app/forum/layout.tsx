@@ -8,23 +8,17 @@ export const metadata: Metadata = {
     description: "Participe da comunidade AxisSMP.",
 };
 
-export default function ForumLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+export default function ForumLayout({ children }: { children: React.ReactNode }) {
     return (
-        <div className="min-h-screen bg-background flex flex-col">
+        <div className="bg-background flex min-h-screen flex-col">
             <Navbar />
 
             {/* Subtle Background Texture */}
-            <div className="fixed inset-0 bg-noise opacity-30 pointer-events-none z-0" />
+            <div className="bg-noise pointer-events-none fixed inset-0 z-0 opacity-30" />
 
-            <div className="flex-1 container mx-auto px-4 py-8 max-w-7xl pt-10 relative z-10">
+            <div className="relative z-10 container mx-auto max-w-7xl flex-1 px-4 py-8 pt-10">
                 <ForumBreadcrumbs />
-                <div className="pt-10">
-                    {children}
-                </div>
+                <div className="pt-10">{children}</div>
             </div>
 
             <Footer />

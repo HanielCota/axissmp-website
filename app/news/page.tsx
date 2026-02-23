@@ -1,4 +1,4 @@
-import { getPosts } from "@/app/actions/posts";
+import { getPosts } from "@/lib/actions/posts";
 import { NewsClient, UIPost } from "@/components/news/NewsClient";
 import { NewsCategory } from "@/types/news";
 import { Footer } from "@/components/layout/Footer";
@@ -13,12 +13,12 @@ export default async function NewsPage() {
         excerpt: post.excerpt,
         category: post.category as NewsCategory,
         author: post.author,
-        date: new Date(post.created_at).toLocaleDateString('pt-BR', {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric'
+        date: new Date(post.created_at).toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
         }),
-        image: post.image
+        image: post.image,
     }));
 
     return (

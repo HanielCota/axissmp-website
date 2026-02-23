@@ -7,11 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Label } from "@/components/ui/label"; // Label might not exist, check
+
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
-// Assuming Label exists or I use native label. I'll use native label for safety or create Label. 
+// Assuming Label exists or I use native label. I'll use native label for safety or create Label.
 // Standard shadcn has Label. I'll stick to a simple div with label for now to avoid blocking.
 
 export default function CreateThreadPage({ params }: { params: Promise<{ category: string }> }) {
@@ -28,7 +28,9 @@ export default function CreateThreadPage({ params }: { params: Promise<{ categor
 
         try {
             // 1. Get user
-            const { data: { user } } = await supabase.auth.getUser();
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
             if (!user) {
                 toast.error("Você precisa estar logado para criar um tópico.");
                 router.push("/login");
@@ -56,24 +58,23 @@ export default function CreateThreadPage({ params }: { params: Promise<{ categor
                     // My schema puts content in thread for initial post usually, or keeps them separate.
                     // My schema: `content` IN `forum_threads`. Good.
                     category_id: categoryData.id,
-                    user_id: user.id
+                    user_id: user.id,
                 })
                 .select()
                 .single();
 
             if (threadError) throw threadError;
 
-            // 4. Create Initial Post (Optional, but good for consistent "everything is a post" model, but my schema has content in thread too. 
+            // 4. Create Initial Post (Optional, but good for consistent "everything is a post" model, but my schema has content in thread too.
             // Let's also create a post record if we want responses to be uniform, OR just render thread content as the first post.
             // My schema has `forum_posts` pointing to `forum_threads`.
-            // Let's insert into `forum_posts` as well so it appears in the list of replies? 
+            // Let's insert into `forum_posts` as well so it appears in the list of replies?
             // Or better: Treat the Thread entry as the "OP" and `forum_posts` as replies.
             // I will stick to Thread = OP.
 
             toast.success("Tópico criado com sucesso!");
             router.push(`/forum/thread/${threadData.id}`);
             router.refresh();
-
         } catch (error) {
             console.error("Error creating thread:", error);
             toast.error("Erro ao criar tópico. Tente novamente.");
@@ -83,7 +84,7 @@ export default function CreateThreadPage({ params }: { params: Promise<{ categor
     };
 
     return (
-        <div className="max-w-3xl mx-auto">
+        <div className="mx-auto max-w-3xl">
             <Card>
                 <CardHeader>
                     <CardTitle>Criar Novo Tópico</CardTitle>

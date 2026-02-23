@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Edit2, Loader2 } from "lucide-react";
-import { updateForumContent } from "@/app/actions/forum";
+import { updateForumContent } from "@/lib/actions/forum";
 import { Modal } from "@/components/ui/modal";
 import { MarkdownEditor } from "./MarkdownEditor";
 import { useRouter } from "next/navigation";
@@ -17,7 +17,13 @@ interface EditButtonProps {
     className?: string;
 }
 
-export function EditButton({ postId, initialContent, isThread = false, showIconOnly = false, className }: EditButtonProps) {
+export function EditButton({
+    postId,
+    initialContent,
+    isThread = false,
+    showIconOnly = false,
+    className,
+}: EditButtonProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [content, setContent] = useState(initialContent);
     const [open, setOpen] = useState(false);
@@ -31,7 +37,11 @@ export function EditButton({ postId, initialContent, isThread = false, showIconO
 
         setIsLoading(true);
         try {
-            const { data, error } = await updateForumContent(postId, content, isThread ? 'thread' : 'post');
+            const { data, error } = await updateForumContent(
+                postId,
+                content,
+                isThread ? "thread" : "post"
+            );
 
             if (error) {
                 toast.error(error);
@@ -59,8 +69,8 @@ export function EditButton({ postId, initialContent, isThread = false, showIconO
                 onClick={() => setOpen(true)}
                 className="gap-2"
             >
-                <Edit2 className="w-4 h-4" />
-                {!showIconOnly && <span className="uppercase font-black text-[10px]">Editar</span>}
+                <Edit2 className="h-4 w-4" />
+                {!showIconOnly && <span className="text-[10px] font-black uppercase">Editar</span>}
             </Button>
 
             <Modal
@@ -68,18 +78,18 @@ export function EditButton({ postId, initialContent, isThread = false, showIconO
                 onOpenChange={setOpen}
                 title="Editar Postagem"
                 footer={
-                    <div className="flex gap-3 w-full">
+                    <div className="flex w-full gap-3">
                         <Button
                             variant="outline"
                             onClick={() => setOpen(false)}
-                            className="flex-1 font-black uppercase tracking-widest"
+                            className="flex-1 font-black tracking-widest uppercase"
                         >
                             Cancelar
                         </Button>
                         <Button
                             onClick={handleEdit}
                             disabled={isLoading || !content.trim() || content === initialContent}
-                            className="flex-1 font-black uppercase tracking-widest"
+                            className="flex-1 font-black tracking-widest uppercase"
                         >
                             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                             Salvar Alterações

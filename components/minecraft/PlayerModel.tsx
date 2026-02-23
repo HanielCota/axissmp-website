@@ -36,7 +36,7 @@ export function PlayerModel({ nickname, size = 64, className, mode = "head" }: P
                 alt={`${nickname}'s Minecraft ${mode}`}
                 width={size}
                 height={mode === "body" ? size * 2 : size}
-                className="object-contain drop-shadow-md transition-transform group-hover:scale-110 duration-500"
+                className="object-contain drop-shadow-md transition-transform duration-500 group-hover:scale-110"
                 unoptimized // External API images
             />
         </div>

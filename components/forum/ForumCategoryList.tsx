@@ -14,14 +14,14 @@ export function ForumCategoryList({ categories }: ForumCategoryListProps) {
         show: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.1
-            }
-        }
+                staggerChildren: 0.1,
+            },
+        },
     };
 
     const item = {
         hidden: { opacity: 0, y: 20 },
-        show: { opacity: 1, y: 0 }
+        show: { opacity: 1, y: 0 },
     };
 
     return (
@@ -29,7 +29,7 @@ export function ForumCategoryList({ categories }: ForumCategoryListProps) {
             variants={container}
             initial="hidden"
             animate="show"
-            className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            className="grid grid-cols-1 gap-4 md:grid-cols-2"
         >
             {categories.map((category) => (
                 <motion.div key={category.id} variants={item}>

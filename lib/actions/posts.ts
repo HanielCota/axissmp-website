@@ -1,4 +1,4 @@
-'use server'
+"use server";
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
@@ -56,7 +56,9 @@ export async function getPost(slug: string) {
 export async function createPost(formData: FormData) {
     const supabase = await createClient();
 
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: profile } = await supabase
@@ -65,7 +67,7 @@ export async function createPost(formData: FormData) {
         .eq("id", user.id)
         .single();
 
-    if (profile?.role !== 'admin') {
+    if (profile?.role !== "admin") {
         return { data: null, error: "Apenas administradores podem criar notícias." };
     }
 
@@ -77,7 +79,11 @@ export async function createPost(formData: FormData) {
         category: formData.get("category"),
         author: formData.get("author") || "Admin",
         image: formData.get("image"),
-        date: new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }),
+        date: new Date().toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+        }),
     };
 
     const validatedFields = postSchema.safeParse(rawData);
@@ -86,9 +92,7 @@ export async function createPost(formData: FormData) {
         return { data: null, error: "Campos inválidos." };
     }
 
-    const { error } = await supabase
-        .from("posts")
-        .insert(validatedFields.data);
+    const { error } = await supabase.from("posts").insert(validatedFields.data);
 
     if (error) {
         console.error("Error creating post:", error);
@@ -106,7 +110,9 @@ export async function updatePost(originalSlug: string, formData: FormData) {
 
     const supabase = await createClient();
 
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: profile } = await supabase
@@ -115,7 +121,7 @@ export async function updatePost(originalSlug: string, formData: FormData) {
         .eq("id", user.id)
         .single();
 
-    if (profile?.role !== 'admin') {
+    if (profile?.role !== "admin") {
         return { data: null, error: "Apenas administradores podem atualizar notícias." };
     }
 
@@ -157,7 +163,9 @@ export async function deletePost(slug: string) {
 
     const supabase = await createClient();
 
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: profile } = await supabase
@@ -166,14 +174,11 @@ export async function deletePost(slug: string) {
         .eq("id", user.id)
         .single();
 
-    if (profile?.role !== 'admin') {
+    if (profile?.role !== "admin") {
         return { data: null, error: "Apenas administradores podem deletar notícias." };
     }
 
-    const { error } = await supabase
-        .from("posts")
-        .delete()
-        .eq("slug", validatedSlug.data);
+    const { error } = await supabase.from("posts").delete().eq("slug", validatedSlug.data);
 
     if (error) {
         console.error("Error deleting post:", error);

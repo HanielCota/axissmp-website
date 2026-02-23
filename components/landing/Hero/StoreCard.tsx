@@ -12,10 +12,7 @@ export function StoreCard({ itemVariants }: StoreCardProps) {
             variants={itemVariants}
             className="from-brand-orange group shadow-brand-orange/20 relative col-span-1 overflow-hidden rounded-3xl bg-gradient-to-br to-amber-500 p-8 shadow-xl transition-transform hover:scale-[1.02] md:col-span-6 lg:col-span-4 lg:row-span-2"
         >
-            <Link
-                href="/store"
-                className="absolute inset-0 z-20"
-            />
+            <Link href="/store" className="absolute inset-0 z-20" />
 
             <div className="relative z-10 flex h-full flex-col justify-between">
                 <div>

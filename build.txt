@@ -1,0 +1,44 @@
+﻿
+> temp_app@0.1.0 build
+> next build
+
+Ôû▓ Next.js 16.1.5 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+Ô£ô Compiled successfully in 3.4s
+  Running TypeScript ...
+node.exe : Failed to compile.
+No linha:1 caractere:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Users\Haniel\AppData\Roaming ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Failed to 
+    compile.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+./app/admin/page.tsx:8:25
+Type error: Cannot find module '@/constants/products' 
+or its corresponding type declarations.
+
+[0m [90m  6 |[39m [36mimport[39m [33mLink[39m 
+[36mfrom[39m [32m"next/link"[39m[33m;[39m
+ [90m  7 |[39m [36mimport[39m { createClient } 
+[36mfrom[39m 
+[32m"@/lib/supabase/server"[39m[33m;[39m
+[31m[1m>[22m[39m[90m  8 |[39m [36mimport[39m { 
+[33mProduct[39m } [36mfrom[39m 
+[32m"@/constants/products"[39m[33m;[39m
+ [90m    |[39m                         
+[31m[1m^[22m[39m
+ [90m  9 |[39m [36mimport[39m { [33mPost[39m } 
+[36mfrom[39m 
+[32m"@/components/landing/NewsSection"[39m[33m;[39m
+ [90m 10 |[39m
+ [90m 11 |[39m [36mexport[39m [36mdefault[39m 
+[36masync[39m [36mfunction[39m 
+[33mAdminDashboardPage[39m() {[0m
+Next.js build worker exited with code: 1 and signal: 
+null

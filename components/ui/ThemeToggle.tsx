@@ -10,13 +10,12 @@ export function ThemeToggle() {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
     }, []);
 
     if (!mounted) {
-        return (
-            <div className="h-10 w-10 rounded-full bg-white/10 animate-pulse" />
-        );
+        return <div className="h-10 w-10 animate-pulse rounded-full bg-white/10" />;
     }
 
     const isDark = theme === "dark";
@@ -24,7 +23,7 @@ export function ThemeToggle() {
     return (
         <motion.button
             onClick={() => setTheme(isDark ? "light" : "dark")}
-            className="relative h-10 w-10 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center transition-all hover:bg-white/10 hover:border-brand-orange/50 group"
+            className="hover:border-brand-orange/50 group relative flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 backdrop-blur-md transition-all hover:bg-white/10"
             whileTap={{ scale: 0.9 }}
             aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
         >

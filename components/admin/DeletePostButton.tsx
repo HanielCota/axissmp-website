@@ -1,7 +1,7 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
-import { deletePost } from "@/app/actions/posts";
+import { deletePost } from "@/lib/actions/posts";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -34,7 +34,7 @@ export function DeletePostButton({ slug }: DeletePostButtonProps) {
         <button
             onClick={handleDelete}
             disabled={isPending}
-            className="p-2 rounded-lg hover:bg-red-500/10 text-white/40 hover:text-red-500 transition-colors disabled:opacity-50"
+            className="rounded-lg p-2 text-white/40 transition-colors hover:bg-red-500/10 hover:text-red-500 disabled:opacity-50"
             title="Excluir"
         >
             <Trash2 size={18} />

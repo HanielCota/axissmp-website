@@ -1,4 +1,4 @@
-'use server'
+"use server";
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
@@ -53,7 +53,9 @@ export async function createProduct(formData: FormData) {
     // ... existing wrapper ...
     const supabase = await createClient();
 
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: profile } = await supabase
@@ -62,7 +64,7 @@ export async function createProduct(formData: FormData) {
         .eq("id", user.id)
         .single();
 
-    if (profile?.role !== 'admin') {
+    if (profile?.role !== "admin") {
         return { data: null, error: "Apenas administradores podem criar produtos." };
     }
 
@@ -79,9 +81,7 @@ export async function createProduct(formData: FormData) {
         return { data: null, error: "Campos inválidos." };
     }
 
-    const { error } = await supabase
-        .from("products")
-        .insert(validatedFields.data);
+    const { error } = await supabase.from("products").insert(validatedFields.data);
 
     if (error) {
         console.error("Error creating product:", error);
@@ -99,7 +99,9 @@ export async function updateProduct(id: string, formData: FormData) {
 
     const supabase = await createClient();
 
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: profile } = await supabase
@@ -108,7 +110,7 @@ export async function updateProduct(id: string, formData: FormData) {
         .eq("id", user.id)
         .single();
 
-    if (profile?.role !== 'admin') {
+    if (profile?.role !== "admin") {
         return { data: null, error: "Apenas administradores podem atualizar produtos." };
     }
 
@@ -147,7 +149,9 @@ export async function deleteProduct(id: string) {
 
     const supabase = await createClient();
 
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: profile } = await supabase
@@ -156,14 +160,11 @@ export async function deleteProduct(id: string) {
         .eq("id", user.id)
         .single();
 
-    if (profile?.role !== 'admin') {
+    if (profile?.role !== "admin") {
         return { data: null, error: "Apenas administradores podem deletar produtos." };
     }
 
-    const { error } = await supabase
-        .from("products")
-        .delete()
-        .eq("id", validatedId.data);
+    const { error } = await supabase.from("products").delete().eq("id", validatedId.data);
 
     if (error) {
         console.error("Error deleting product:", error);

@@ -11,7 +11,7 @@ export const siteConfig = {
             orange: "#FF8C00", // Example brand orange
             dark: "#09090b",
             light: "#fafafa",
-        }
+        },
     },
     minecraft: {
         ip: "jogar.axissmp.com.br",
@@ -19,7 +19,7 @@ export const siteConfig = {
     },
     payment: {
         pixDiscount: 0.05, // 5% discount
-    }
+    },
 };
 
 export type SiteConfig = typeof siteConfig;

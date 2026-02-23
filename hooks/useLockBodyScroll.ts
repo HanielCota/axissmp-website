@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect } from "react";
 
 export function useLockBodyScroll() {
     useLayoutEffect(() => {
@@ -12,7 +12,7 @@ export function useLockBodyScroll() {
         const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
 
         // Prevent scrolling on mount
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = "hidden";
 
         // Compensate for scrollbar width to prevent "jump"
         if (scrollBarWidth > 0) {

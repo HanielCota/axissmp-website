@@ -27,9 +27,9 @@ export function UserMenu() {
                 }
 
                 const { data: profile, error } = await supabase
-                    .from('profiles')
-                    .select('role')
-                    .eq('id', authUser.id)
+                    .from("profiles")
+                    .select("role")
+                    .eq("id", authUser.id)
                     .single();
 
                 if (error) {
@@ -50,7 +50,8 @@ export function UserMenu() {
         }, 2000);
 
         // Check current user
-        supabase.auth.getUser()
+        supabase.auth
+            .getUser()
             .then(({ data: { user } }) => {
                 fetchUserWithRole(user);
             })
@@ -59,14 +60,18 @@ export function UserMenu() {
             });
 
         // Listen for changes
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange(async (_event, session) => {
             if (!session) {
                 setUser(null);
                 setLoading(false);
                 return;
             }
 
-            const { data: { user } } = await supabase.auth.getUser();
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
             fetchUserWithRole(user);
         });
 
@@ -77,20 +82,22 @@ export function UserMenu() {
     }, []);
 
     if (loading) {
-        return <div className="h-10 w-28 animate-pulse rounded-full bg-white/10 border border-white/10" />;
+        return (
+            <div className="h-10 w-28 animate-pulse rounded-full border border-white/10 bg-white/10" />
+        );
     }
 
     if (!user) {
         return (
-            <motion.div
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-            >
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Link
                     href="/login"
-                    className="group flex items-center gap-2 rounded-full bg-brand-orange border border-brand-orange shadow-lg shadow-brand-orange/20 px-5 py-2 text-sm font-bold text-white transition-all hover:bg-white hover:text-brand-orange"
+                    className="group bg-brand-orange border-brand-orange shadow-brand-orange/20 hover:text-brand-orange flex items-center gap-2 rounded-full border px-5 py-2 text-sm font-bold text-white shadow-lg transition-all hover:bg-white"
                 >
-                    <UserIcon size={18} className="text-white transition-colors group-hover:text-brand-orange" />
+                    <UserIcon
+                        size={18}
+                        className="group-hover:text-brand-orange text-white transition-colors"
+                    />
                     <span>Entrar</span>
                 </Link>
             </motion.div>
@@ -101,11 +108,11 @@ export function UserMenu() {
 
     return (
         <div className="flex items-center gap-3">
-            {user.role === 'admin' && (
+            {user.role === "admin" && (
                 <Link href="/admin">
                     <motion.div
                         whileHover={{ scale: 1.05 }}
-                        className="flex items-center justify-center rounded-full border border-brand-orange/50 bg-brand-orange/10 px-3 py-1 text-xs font-bold text-brand-orange backdrop-blur-md transition-all hover:bg-brand-orange hover:text-brand-dark"
+                        className="border-brand-orange/50 bg-brand-orange/10 text-brand-orange hover:bg-brand-orange hover:text-brand-dark flex items-center justify-center rounded-full border px-3 py-1 text-xs font-bold backdrop-blur-md transition-all"
                     >
                         ADMIN
                     </motion.div>
@@ -114,10 +121,12 @@ export function UserMenu() {
             <Link href="/dashboard">
                 <motion.div
                     whileHover={{ scale: 1.05 }}
-                    className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 pl-4 pr-1 py-1 backdrop-blur-md transition-all hover:bg-white/10"
+                    className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 py-1 pr-1 pl-4 backdrop-blur-md transition-all hover:bg-white/10"
                 >
-                    <span className="text-sm font-black text-white uppercase tracking-tight">{nickname}</span>
-                    <div className="h-8 w-8 overflow-hidden rounded-full border border-brand-orange bg-black/20">
+                    <span className="text-sm font-black tracking-tight text-white uppercase">
+                        {nickname}
+                    </span>
+                    <div className="border-brand-orange h-8 w-8 overflow-hidden rounded-full border bg-black/20">
                         <img
                             src={`https://mc-heads.net/avatar/${nickname}/32`}
                             alt={nickname}

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { navLinks } from "@/lib/constants";
+import { navLinks } from "@/constants/constants";
 
 export function DesktopNav() {
     return (
@@ -21,8 +21,6 @@ export function DesktopNav() {
                     )}
                 </Link>
             ))}
-
-
         </nav>
     );
 }

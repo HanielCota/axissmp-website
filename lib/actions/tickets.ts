@@ -1,6 +1,6 @@
-'use server'
+"use server";
 
-import { z } from 'zod';
+import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
@@ -9,7 +9,7 @@ const ticketIdSchema = z.string().uuid();
 
 const sendReplySchema = z.object({
     ticketId: z.string().uuid(),
-    content: z.string().min(1, "Mensagem não pode estar vazia").max(5000)
+    content: z.string().min(1, "Mensagem não pode estar vazia").max(5000),
 });
 
 export interface Ticket {
@@ -17,7 +17,7 @@ export interface Ticket {
     user_id: string;
     title: string;
     category: string;
-    status: 'open' | 'answered' | 'closed';
+    status: "open" | "answered" | "closed";
     created_at: string;
 }
 
@@ -33,7 +33,9 @@ export interface TicketMessage {
 export async function getAdminTickets() {
     const supabase = await createClient();
 
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: profile } = await supabase
@@ -42,7 +44,7 @@ export async function getAdminTickets() {
         .eq("id", user.id)
         .single();
 
-    if (profile?.role !== 'admin') {
+    if (profile?.role !== "admin") {
         return { data: null, error: "Apenas administradores podem ver tickets." };
     }
 
@@ -70,7 +72,9 @@ export async function getAdminTicketDetail(ticketId: string) {
     const supabase = await createClient();
 
     // 2. Verificar autorização
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: profile } = await supabase
@@ -79,7 +83,7 @@ export async function getAdminTicketDetail(ticketId: string) {
         .eq("id", user.id)
         .single();
 
-    if (profile?.role !== 'admin') {
+    if (profile?.role !== "admin") {
         return { data: null, error: "Apenas administradores podem ver tickets." };
     }
 
@@ -110,15 +114,17 @@ export async function getAdminTicketDetail(ticketId: string) {
         .eq("id", ticket.user_id)
         .single();
 
-    const data = JSON.parse(JSON.stringify({
-        ticket: ticket as Ticket,
-        messages: messages as TicketMessage[],
-        userNickname: userProfile?.nickname || "Usuário"
-    }));
+    const data = JSON.parse(
+        JSON.stringify({
+            ticket: ticket as Ticket,
+            messages: messages as TicketMessage[],
+            userNickname: userProfile?.nickname || "Usuário",
+        })
+    );
 
     return {
         data,
-        error: null
+        error: null,
     };
 }
 
@@ -132,7 +138,9 @@ export async function sendAdminReply(ticketId: string, content: string) {
     const supabase = await createClient();
 
     // 2. Verificar autorização
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: profile } = await supabase
@@ -141,19 +149,17 @@ export async function sendAdminReply(ticketId: string, content: string) {
         .eq("id", user.id)
         .single();
 
-    if (profile?.role !== 'admin') {
+    if (profile?.role !== "admin") {
         return { data: null, error: "Apenas administradores podem responder tickets." };
     }
 
     // 3. Inserir mensagem
-    const { error: msgError } = await supabase
-        .from("ticket_messages")
-        .insert({
-            ticket_id: validated.data.ticketId,
-            user_id: user.id,
-            content: validated.data.content,
-            is_staff: true
-        });
+    const { error: msgError } = await supabase.from("ticket_messages").insert({
+        ticket_id: validated.data.ticketId,
+        user_id: user.id,
+        content: validated.data.content,
+        is_staff: true,
+    });
 
     if (msgError) {
         console.error("Error sending reply:", msgError);
@@ -161,10 +167,7 @@ export async function sendAdminReply(ticketId: string, content: string) {
     }
 
     // 4. Atualizar status
-    await supabase
-        .from("tickets")
-        .update({ status: 'answered' })
-        .eq("id", validated.data.ticketId);
+    await supabase.from("tickets").update({ status: "answered" }).eq("id", validated.data.ticketId);
 
     revalidatePath(`/admin/tickets/${validated.data.ticketId}`);
     revalidatePath("/admin/tickets");
@@ -181,7 +184,9 @@ export async function closeTicket(ticketId: string) {
     const supabase = await createClient();
 
     // 2. Verificar autorização
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: profile } = await supabase
@@ -190,14 +195,14 @@ export async function closeTicket(ticketId: string) {
         .eq("id", user.id)
         .single();
 
-    if (profile?.role !== 'admin') {
+    if (profile?.role !== "admin") {
         return { data: null, error: "Apenas administradores podem fechar tickets." };
     }
 
     // 3. Fechar ticket
     const { error } = await supabase
         .from("tickets")
-        .update({ status: 'closed' })
+        .update({ status: "closed" })
         .eq("id", validated.data);
 
     if (error) {
@@ -212,7 +217,9 @@ export async function closeTicket(ticketId: string) {
 export async function getTicketsStats() {
     const supabase = await createClient();
 
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
     const { data: profile } = await supabase
@@ -221,31 +228,31 @@ export async function getTicketsStats() {
         .eq("id", user.id)
         .single();
 
-    if (profile?.role !== 'admin') {
+    if (profile?.role !== "admin") {
         return { data: null, error: "Apenas administradores podem ver estatísticas." };
     }
 
-    const { data: tickets, error } = await supabase
-        .from("tickets")
-        .select("status");
+    const { data: tickets, error } = await supabase.from("tickets").select("status");
 
     if (error) {
         return { data: null, error: "Erro ao buscar estatísticas." };
     }
 
-    const openCount = tickets?.filter(t => t.status === 'open').length || 0;
-    const answeredCount = tickets?.filter(t => t.status === 'answered').length || 0;
-    const closedCount = tickets?.filter(t => t.status === 'closed').length || 0;
+    const openCount = tickets?.filter((t) => t.status === "open").length || 0;
+    const answeredCount = tickets?.filter((t) => t.status === "answered").length || 0;
+    const closedCount = tickets?.filter((t) => t.status === "closed").length || 0;
 
-    const data = JSON.parse(JSON.stringify({
-        openCount,
-        answeredCount,
-        closedCount,
-        total: tickets?.length || 0
-    }));
+    const data = JSON.parse(
+        JSON.stringify({
+            openCount,
+            answeredCount,
+            closedCount,
+            total: tickets?.length || 0,
+        })
+    );
 
     return {
         data,
-        error: null
+        error: null,
     };
 }

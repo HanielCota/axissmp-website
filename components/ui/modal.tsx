@@ -19,32 +19,30 @@ function ModalInner({ open, onOpenChange, title, description, children, footer }
     useLockBodyScroll();
 
     return createPortal(
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-y-auto">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto p-4">
             <div
-                className="fixed inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300"
+                className="animate-in fade-in fixed inset-0 bg-black/60 backdrop-blur-sm duration-300"
                 onClick={() => onOpenChange(false)}
             />
-            <div className="relative w-full max-w-md my-auto bg-card border border-primary/20 rounded-3xl shadow-2xl shadow-black/50 overflow-hidden animate-in zoom-in-95 duration-300">
-                <div className="p-6 border-b border-primary/10 flex items-center justify-between">
+            <div className="bg-card border-primary/20 animate-in zoom-in-95 relative my-auto w-full max-w-md overflow-hidden rounded-3xl border shadow-2xl shadow-black/50 duration-300">
+                <div className="border-primary/10 flex items-center justify-between border-b p-6">
                     <div>
-                        <h2 className="text-xl font-black font-outfit uppercase tracking-tight text-foreground">{title}</h2>
-                        {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+                        <h2 className="font-outfit text-foreground text-xl font-black tracking-tight uppercase">
+                            {title}
+                        </h2>
+                        {description && (
+                            <p className="text-muted-foreground mt-1 text-sm">{description}</p>
+                        )}
                     </div>
                     <button
                         onClick={() => onOpenChange(false)}
-                        className="p-2 hover:bg-muted rounded-xl transition-colors text-muted-foreground hover:text-foreground"
+                        className="hover:bg-muted text-muted-foreground hover:text-foreground rounded-xl p-2 transition-colors"
                     >
-                        <X className="w-5 h-5" />
+                        <X className="h-5 w-5" />
                     </button>
                 </div>
-                <div className="p-6">
-                    {children}
-                </div>
-                {footer && (
-                    <div className="p-6 pt-0 flex justify-end gap-3">
-                        {footer}
-                    </div>
-                )}
+                <div className="p-6">{children}</div>
+                {footer && <div className="flex justify-end gap-3 p-6 pt-0">{footer}</div>}
             </div>
         </div>,
         document.body

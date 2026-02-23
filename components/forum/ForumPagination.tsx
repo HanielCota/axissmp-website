@@ -26,17 +26,17 @@ export function ForumPagination({ totalItems, itemsPerPage = 20 }: ForumPaginati
     if (totalPages <= 1) return null;
 
     return (
-        <div className="flex items-center justify-center gap-2 mt-8">
+        <div className="mt-8 flex items-center justify-center gap-2">
             <Button
                 variant="outline"
                 size="icon"
                 disabled={currentPage <= 1}
                 onClick={() => router.push(createPageURL(currentPage - 1))}
             >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="h-4 w-4" />
             </Button>
 
-            <span className="text-sm font-medium mx-2">
+            <span className="mx-2 text-sm font-medium">
                 Página {currentPage} de {totalPages}
             </span>
 
@@ -46,7 +46,7 @@ export function ForumPagination({ totalItems, itemsPerPage = 20 }: ForumPaginati
                 disabled={currentPage >= totalPages}
                 onClick={() => router.push(createPageURL(currentPage + 1))}
             >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="h-4 w-4" />
             </Button>
         </div>
     );

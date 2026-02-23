@@ -36,25 +36,67 @@ export function MarkdownEditor({ value, onChange, placeholder }: MarkdownEditorP
 
     return (
         <div className="space-y-3">
-            <div className="flex items-center justify-between border-b pb-2 mb-2 px-1">
+            <div className="mb-2 flex items-center justify-between border-b px-1 pb-2">
                 <div className="flex items-center gap-1">
-                    <Button type="button" variant="ghost" size="icon" className="h-8 w-8" onClick={() => insertText("**", "**")} title="Negrito">
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() => insertText("**", "**")}
+                        title="Negrito"
+                    >
                         <Bold className="h-4 w-4" />
                     </Button>
-                    <Button type="button" variant="ghost" size="icon" className="h-8 w-8" onClick={() => insertText("_", "_")} title="Itálico">
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() => insertText("_", "_")}
+                        title="Itálico"
+                    >
                         <Italic className="h-4 w-4" />
                     </Button>
-                    <Button type="button" variant="ghost" size="icon" className="h-8 w-8" onClick={() => insertText("[", "](url)")} title="Link">
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() => insertText("[", "](url)")}
+                        title="Link"
+                    >
                         <LinkIcon className="h-4 w-4" />
                     </Button>
-                    <div className="w-[1px] h-4 bg-border mx-1" />
-                    <Button type="button" variant="ghost" size="icon" className="h-8 w-8" onClick={() => insertText("> ")} title="Citação">
+                    <div className="bg-border mx-1 h-4 w-[1px]" />
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() => insertText("> ")}
+                        title="Citação"
+                    >
                         <Quote className="h-4 w-4" />
                     </Button>
-                    <Button type="button" variant="ghost" size="icon" className="h-8 w-8" onClick={() => insertText("- ")} title="Lista">
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() => insertText("- ")}
+                        title="Lista"
+                    >
                         <List className="h-4 w-4" />
                     </Button>
-                    <Button type="button" variant="ghost" size="icon" className="h-8 w-8" onClick={() => insertText("```\n", "\n```")} title="Código">
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() => insertText("```\n", "\n```")}
+                        title="Código"
+                    >
                         <Code className="h-4 w-4" />
                     </Button>
                 </div>
@@ -64,7 +106,7 @@ export function MarkdownEditor({ value, onChange, placeholder }: MarkdownEditorP
                     variant={isPreview ? "secondary" : "ghost"}
                     size="sm"
                     onClick={() => setIsPreview(!isPreview)}
-                    className="h-8 gap-2 text-xs uppercase font-bold tracking-wider"
+                    className="h-8 gap-2 text-xs font-bold tracking-wider uppercase"
                 >
                     <Eye className="h-3.5 w-3.5" />
                     {isPreview ? "Editar" : "Preview"}
@@ -72,8 +114,14 @@ export function MarkdownEditor({ value, onChange, placeholder }: MarkdownEditorP
             </div>
 
             {isPreview ? (
-                <div className="min-h-[150px] p-4 rounded-xl bg-card/40 border border-dashed border-primary/20 prose prose-invert max-w-none text-sm">
-                    {value ? <Markdown>{value}</Markdown> : <span className="text-muted-foreground italic">Nada para visualizar...</span>}
+                <div className="bg-card/40 border-primary/20 prose prose-invert min-h-[150px] max-w-none rounded-xl border border-dashed p-4 text-sm">
+                    {value ? (
+                        <Markdown>{value}</Markdown>
+                    ) : (
+                        <span className="text-muted-foreground italic">
+                            Nada para visualizar...
+                        </span>
+                    )}
                 </div>
             ) : (
                 <Textarea
@@ -81,7 +129,7 @@ export function MarkdownEditor({ value, onChange, placeholder }: MarkdownEditorP
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     placeholder={placeholder}
-                    className="min-h-[150px] bg-card/40 border-primary/10 focus:border-primary/30 transition-all resize-y"
+                    className="bg-card/40 border-primary/10 focus:border-primary/30 min-h-[150px] resize-y transition-all"
                 />
             )}
         </div>

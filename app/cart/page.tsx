@@ -3,7 +3,7 @@ import { Footer } from "@/components/layout/Footer";
 
 export default function CartPage() {
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex min-h-screen flex-col">
             <main className="flex-1">
                 <CartClient />
             </main>

@@ -1,0 +1,133 @@
+[
+  {
+    "file": "D:\\axissmp-website\\app\\admin\\users\\page.tsx",
+    "msgs": [
+      "68:react/jsx-no-comment-textnodes",
+      "70:@next/next/no-img-element"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\app\\layout.tsx",
+    "msgs": [
+      "58:@typescript-eslint/no-unused-vars"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\app\\player\\[nickname]\\PlayerProfileClient.tsx",
+    "msgs": [
+      "81:@next/next/no-img-element"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\app\\rules\\page.tsx",
+    "msgs": [
+      "5:@typescript-eslint/no-unused-vars"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\app\\wiki\\[slug]\\page.tsx",
+    "msgs": [
+      "3:@typescript-eslint/no-unused-vars",
+      "3:@typescript-eslint/no-unused-vars"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\app\\wiki\\page.tsx",
+    "msgs": [
+      "151:@typescript-eslint/no-unused-vars"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\components\\admin\\ImageUpload.tsx",
+    "msgs": [
+      "93:@next/next/no-img-element"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\components\\admin\\PostForm.tsx",
+    "msgs": [
+      "7:@typescript-eslint/no-unused-vars",
+      "7:@typescript-eslint/no-unused-vars"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\components\\admin\\ProductForm.tsx",
+    "msgs": [
+      "28:@typescript-eslint/no-unused-vars"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\components\\forum\\ForumServerStatus.tsx",
+    "msgs": [
+      "5:@typescript-eslint/no-unused-vars",
+      "5:@typescript-eslint/no-unused-vars",
+      "6:@typescript-eslint/no-unused-vars",
+      "6:@typescript-eslint/no-unused-vars",
+      "6:@typescript-eslint/no-unused-vars"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\components\\forum\\ForumSidebar.tsx",
+    "msgs": [
+      "2:@typescript-eslint/no-unused-vars",
+      "5:@typescript-eslint/no-unused-vars",
+      "54:@next/next/no-img-element"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\components\\forum\\ThreadList.tsx",
+    "msgs": [
+      "35:react-hooks/purity"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\components\\layout\\Navbar\\UserMenu.tsx",
+    "msgs": [
+      "130:@next/next/no-img-element"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\components\\store\\CartClient.tsx",
+    "msgs": [
+      "18:@typescript-eslint/no-unused-vars",
+      "22:@typescript-eslint/no-unused-vars",
+      "53:@typescript-eslint/no-unused-vars"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\components\\support\\SupportClient.tsx",
+    "msgs": [
+      "57:null"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\components\\support\\TicketDetailClient.tsx",
+    "msgs": [
+      "6:@typescript-eslint/no-unused-vars",
+      "6:@typescript-eslint/no-unused-vars",
+      "10:@typescript-eslint/no-unused-vars",
+      "11:@typescript-eslint/no-unused-vars",
+      "13:@typescript-eslint/no-unused-vars"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\components\\ui\\modal.tsx",
+    "msgs": [
+      "3:@typescript-eslint/no-unused-vars",
+      "18:@typescript-eslint/no-unused-vars",
+      "56:react-hooks/set-state-in-effect"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\constants\\news-data.ts",
+    "msgs": [
+      "3:@typescript-eslint/no-unused-vars"
+    ]
+  },
+  {
+    "file": "D:\\axissmp-website\\context\\CartContext.tsx",
+    "msgs": [
+      "52:react-hooks/set-state-in-effect"
+    ]
+  }
+]

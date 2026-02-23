@@ -1,10 +1,18 @@
-
-import { getPost } from "@/app/actions/posts";
+import { getPost } from "@/lib/actions/posts";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { ChevronLeft, Calendar, User, Tag, Bell, Wrench, ShieldAlert, type LucideIcon } from "lucide-react";
+import {
+    ChevronLeft,
+    Calendar,
+    User,
+    Tag,
+    Bell,
+    Wrench,
+    ShieldAlert,
+    type LucideIcon,
+} from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { cn } from "@/lib/utils";
 
@@ -54,10 +62,10 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ sl
     }
 
     const CategoryIcon = categoryConfig[post.category]?.icon || Bell;
-    const formattedDate = new Date(post.created_at).toLocaleDateString('pt-BR', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric'
+    const formattedDate = new Date(post.created_at).toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
     });
 
     return (
@@ -66,18 +74,18 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ sl
 
             {/* Background */}
             <div className="absolute top-0 left-0 -z-10 h-[500px] w-full overflow-hidden">
-                <div className="bg-brand-dark/5 dark:bg-white/5 absolute top-[-20%] left-1/2 h-[600px] w-[1000px] -translate-x-1/2 rounded-full blur-[120px]" />
+                <div className="bg-brand-dark/5 absolute top-[-20%] left-1/2 h-[600px] w-[1000px] -translate-x-1/2 rounded-full blur-[120px] dark:bg-white/5" />
                 <div className="bg-noise absolute top-0 left-0 h-full w-full opacity-[0.05]" />
             </div>
 
             <article className="mx-auto max-w-4xl px-6 pt-32 pb-20 md:px-8">
                 {/* Navigation */}
-                <div className="mb-12 animate-in fade-in slide-in-from-left-4 duration-500">
+                <div className="animate-in fade-in slide-in-from-left-4 mb-12 duration-500">
                     <Link
                         href="/news"
-                        className="text-brand-dark/50 dark:text-white/50 hover:text-brand-orange dark:hover:text-brand-orange group inline-flex items-center gap-2 text-sm font-bold tracking-wide uppercase transition-colors"
+                        className="text-brand-dark/50 hover:text-brand-orange dark:hover:text-brand-orange group inline-flex items-center gap-2 text-sm font-bold tracking-wide uppercase transition-colors dark:text-white/50"
                     >
-                        <div className="border-brand-dark/10 dark:border-white/10 group-hover:border-brand-orange/30 flex h-8 w-8 items-center justify-center rounded-full border bg-white dark:bg-white/5 transition-colors">
+                        <div className="border-brand-dark/10 group-hover:border-brand-orange/30 flex h-8 w-8 items-center justify-center rounded-full border bg-white transition-colors dark:border-white/10 dark:bg-white/5">
                             <ChevronLeft size={16} />
                         </div>
                         Voltar para Notícias
@@ -85,33 +93,36 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ sl
                 </div>
 
                 {/* Header */}
-                <header className="mb-12 text-center md:text-left animate-in fade-in slide-in-from-bottom-4 duration-500 delay-100">
+                <header className="animate-in fade-in slide-in-from-bottom-4 mb-12 text-center delay-100 duration-500 md:text-left">
                     <div className="mb-6 flex flex-wrap items-center justify-center gap-4 md:justify-start">
                         <span
                             className={cn(
                                 "inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-bold tracking-wider uppercase",
-                                categoryConfig[post.category]?.color || "text-gray-500 bg-gray-500/10"
+                                categoryConfig[post.category]?.color ||
+                                "bg-gray-500/10 text-gray-500"
                             )}
                         >
                             <CategoryIcon size={16} />
                             {categoryConfig[post.category]?.label || post.category}
                         </span>
-                        <span className="text-brand-dark/50 dark:text-white/50 flex items-center gap-2 text-sm font-medium">
+                        <span className="text-brand-dark/50 flex items-center gap-2 text-sm font-medium dark:text-white/50">
                             <Calendar size={16} /> {formattedDate}
                         </span>
                     </div>
 
-                    <h1 className="text-brand-dark dark:text-white mb-6 text-4xl leading-[1.1] font-black md:text-6xl">
+                    <h1 className="text-brand-dark mb-6 text-4xl leading-[1.1] font-black md:text-6xl dark:text-white">
                         {post.title}
                     </h1>
 
                     <div className="flex items-center justify-center gap-3 md:justify-start">
-                        <div className="bg-brand-dark dark:bg-white/10 flex h-10 w-10 items-center justify-center rounded-full text-white">
+                        <div className="bg-brand-dark flex h-10 w-10 items-center justify-center rounded-full text-white dark:bg-white/10">
                             <User size={20} />
                         </div>
                         <div className="text-left">
-                            <div className="text-brand-dark dark:text-white text-sm font-bold">Publicado por</div>
-                            <div className="text-brand-dark/60 dark:text-white/60 text-sm font-medium">
+                            <div className="text-brand-dark text-sm font-bold dark:text-white">
+                                Publicado por
+                            </div>
+                            <div className="text-brand-dark/60 text-sm font-medium dark:text-white/60">
                                 {post.author}
                             </div>
                         </div>
@@ -119,7 +130,7 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ sl
                 </header>
 
                 {/* Content */}
-                <div className="border-brand-dark/5 dark:border-white/10 rounded-[2.5rem] border bg-white dark:bg-white/5 p-8 shadow-sm md:p-12 animate-in fade-in duration-500 delay-200">
+                <div className="border-brand-dark/5 animate-in fade-in rounded-[2.5rem] border bg-white p-8 shadow-sm delay-200 duration-500 md:p-12 dark:border-white/10 dark:bg-white/5">
                     <div className="prose prose-lg prose-headings:font-bold prose-headings:text-brand-dark dark:prose-headings:text-white prose-p:text-brand-dark/70 dark:prose-p:text-white/70 prose-strong:text-brand-dark dark:prose-strong:text-white prose-a:text-brand-blue prose-a:no-underline hover:prose-a:underline prose-li:text-brand-dark/70 dark:prose-li:text-white/70 max-w-none">
                         <ReactMarkdown>{post.content}</ReactMarkdown>
                     </div>

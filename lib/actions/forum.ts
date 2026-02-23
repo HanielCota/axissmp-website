@@ -1,4 +1,4 @@
-'use server'
+"use server";
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
@@ -7,18 +7,18 @@ import { z } from "zod";
 // Schemas
 const solveThreadSchema = z.object({
     threadId: z.string().uuid(),
-    postId: z.string().uuid()
+    postId: z.string().uuid(),
 });
 
 const reportSchema = z.object({
     postId: z.string().uuid(),
-    reason: z.string().min(5, "Motivo muito curto").max(500)
+    reason: z.string().min(5, "Motivo muito curto").max(500),
 });
 
 const updateContentSchema = z.object({
     id: z.string().uuid(),
     content: z.string().min(1, "Conteúdo não pode ser vazio"),
-    type: z.enum(['post', 'thread'])
+    type: z.enum(["post", "thread"]),
 });
 
 export async function solveThread(threadId: string, postId: string) {
@@ -27,7 +27,9 @@ export async function solveThread(threadId: string, postId: string) {
     if (!validated.success) return { data: null, error: "Dados inválidos." };
 
     const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
 
     // 2. Auth Check
     if (!user) return { data: null, error: "Não autorizado." };
@@ -70,18 +72,18 @@ export async function reportContent(postId: string, reason: string) {
     if (!validated.success) return { data: null, error: validated.error.issues[0].message };
 
     const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
 
     if (!user) return { data: null, error: "Entre para denunciar." };
 
-    const { error } = await supabase
-        .from("forum_reports")
-        .insert({
-            post_id: validated.data.postId,
-            reporter_id: user.id,
-            reason: validated.data.reason,
-            status: "pending"
-        });
+    const { error } = await supabase.from("forum_reports").insert({
+        post_id: validated.data.postId,
+        reporter_id: user.id,
+        reason: validated.data.reason,
+        status: "pending",
+    });
 
     if (error) {
         console.error("Error reporting post:", error);
@@ -91,15 +93,17 @@ export async function reportContent(postId: string, reason: string) {
     return { data: { success: true }, error: null };
 }
 
-export async function updateForumContent(id: string, content: string, type: 'post' | 'thread') {
+export async function updateForumContent(id: string, content: string, type: "post" | "thread") {
     const validated = updateContentSchema.safeParse({ id, content, type });
     if (!validated.success) return { data: null, error: "Conteúdo inválido." };
 
     const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { data: null, error: "Não autorizado." };
 
-    const table = validated.data.type === 'thread' ? 'forum_threads' : 'forum_posts';
+    const table = validated.data.type === "thread" ? "forum_threads" : "forum_posts";
 
     // Check Author
     const { data: item } = await supabase
@@ -119,7 +123,7 @@ export async function updateForumContent(id: string, content: string, type: 'pos
         .from(table)
         .update({
             content: validated.data.content,
-            updated_at: new Date().toISOString()
+            updated_at: new Date().toISOString(),
         })
         .eq("id", validated.data.id);
 
@@ -128,7 +132,7 @@ export async function updateForumContent(id: string, content: string, type: 'pos
         return { data: null, error: "Erro ao atualizar conteúdo." };
     }
 
-    // Revalidate? We don't know the URL exactly without extra query, 
+    // Revalidate? We don't know the URL exactly without extra query,
     // but usually client handles refresh or we return data.
     return { data: { success: true }, error: null };
 }

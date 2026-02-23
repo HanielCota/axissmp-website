@@ -26,20 +26,20 @@ export function ReplyForm({ threadId }: ReplyFormProps) {
         setIsLoading(true);
 
         try {
-            const { data: { user } } = await supabase.auth.getUser();
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
             if (!user) {
                 toast.error("Você precisa estar logado para responder.");
                 router.push("/login");
                 return;
             }
 
-            const { error: postError } = await supabase
-                .from("forum_posts")
-                .insert({
-                    thread_id: threadId,
-                    user_id: user.id,
-                    content: content
-                });
+            const { error: postError } = await supabase.from("forum_posts").insert({
+                thread_id: threadId,
+                user_id: user.id,
+                content: content,
+            });
 
             if (postError) throw postError;
 
@@ -52,7 +52,6 @@ export function ReplyForm({ threadId }: ReplyFormProps) {
             setContent("");
             toast.success("Resposta enviada!");
             router.refresh();
-
         } catch (error) {
             console.error("Error posting reply:", error);
             toast.error("Erro ao enviar resposta.");
@@ -62,8 +61,13 @@ export function ReplyForm({ threadId }: ReplyFormProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4 mt-8 bg-card/50 p-6 rounded-xl border border-primary/10">
-            <h3 className="text-lg font-bold font-outfit uppercase tracking-tight">Deixe sua resposta</h3>
+        <form
+            onSubmit={handleSubmit}
+            className="bg-card/50 border-primary/10 mt-8 space-y-4 rounded-xl border p-6"
+        >
+            <h3 className="font-outfit text-lg font-bold tracking-tight uppercase">
+                Deixe sua resposta
+            </h3>
 
             <MarkdownEditor
                 value={content}
@@ -72,11 +76,15 @@ export function ReplyForm({ threadId }: ReplyFormProps) {
             />
 
             <div className="flex justify-end pt-2">
-                <Button type="submit" disabled={isLoading || !content.trim()} className="font-bold uppercase tracking-wider">
+                <Button
+                    type="submit"
+                    disabled={isLoading || !content.trim()}
+                    className="font-bold tracking-wider uppercase"
+                >
                     {isLoading ? (
-                        <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     ) : (
-                        <Send className="w-4 h-4 mr-2" />
+                        <Send className="mr-2 h-4 w-4" />
                     )}
                     Responder
                 </Button>

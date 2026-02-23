@@ -12,9 +12,10 @@ export const metadata: Metadata = {
     metadataBase: new URL("https://axissmp.com"),
     title: {
         default: "AxisSMP - A Nova Era do Survival",
-        template: "%s | AxisSMP"
+        template: "%s | AxisSMP",
     },
-    description: "Servidor de Minecraft Survival 1.21 com economia, quests, proteção de terrenos e uma comunidade ativa.",
+    description:
+        "Servidor de Minecraft Survival 1.21 com economia, quests, proteção de terrenos e uma comunidade ativa.",
     keywords: ["minecraft", "survival", "servidor", "1.21", "axissmp", "economia", "mcmmo"],
     authors: [{ name: "AxisSMP Team" }],
     openGraph: {
@@ -65,15 +66,13 @@ export default function RootLayout({
     return (
         <html lang="pt-BR" suppressHydrationWarning style={{ scrollBehavior: "smooth" }}>
             <body
-                className={`${outfit.variable} bg-background text-foreground font-sans antialiased min-h-screen flex flex-col`}
+                className={`${outfit.variable} bg-background text-foreground flex min-h-screen flex-col font-sans antialiased`}
                 suppressHydrationWarning
             >
                 <ThemeProvider>
                     <Suspense fallback={null}>
                         <CartProvider>
-                            <main className="flex-1">
-                                {children}
-                            </main>
+                            <main className="flex-1">{children}</main>
                         </CartProvider>
                     </Suspense>
                 </ThemeProvider>

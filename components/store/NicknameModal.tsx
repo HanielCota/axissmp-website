@@ -66,7 +66,7 @@ export function NicknameModal({ isOpen, onClose, onConfirm }: NicknameModalProps
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm"
                     />
 
                     {/* Modal */}
@@ -74,35 +74,38 @@ export function NicknameModal({ isOpen, onClose, onConfirm }: NicknameModalProps
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="fixed z-50 w-full max-w-xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-white/10 rounded-3xl shadow-[0_0_50px_-12px_rgba(0,0,0,0.1)] overflow-hidden top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                        className="fixed top-1/2 left-1/2 z-50 w-full max-w-xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-[0_0_50px_-12px_rgba(0,0,0,0.1)] dark:border-white/10 dark:bg-zinc-900"
                     >
                         {/* Header */}
-                        <div className="bg-slate-50 dark:bg-zinc-950/50 p-8 border-b border-slate-100 dark:border-white/5 relative">
+                        <div className="relative border-b border-slate-100 bg-slate-50 p-8 dark:border-white/5 dark:bg-zinc-950/50">
                             <button
                                 onClick={onClose}
-                                className="absolute top-6 right-6 text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg"
+                                className="absolute top-6 right-6 rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-500 dark:hover:bg-white/5 dark:hover:text-white"
                             >
                                 <X size={24} />
                             </button>
-                            <div className="w-16 h-16 rounded-2xl bg-brand-orange flex items-center justify-center mb-6 text-white shadow-lg shadow-brand-orange/20">
+                            <div className="bg-brand-orange shadow-brand-orange/20 mb-6 flex h-16 w-16 items-center justify-center rounded-2xl text-white shadow-lg">
                                 <User size={32} />
                             </div>
-                            <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">Identifique-se no Servidor</h2>
-                            <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
-                                Para entregar seus produtos corretamente, precisamos saber seu nickname oficial do Minecraft.
+                            <h2 className="mb-2 text-3xl font-black tracking-tight text-slate-900 dark:text-white">
+                                Identifique-se no Servidor
+                            </h2>
+                            <p className="text-lg leading-relaxed text-slate-500 dark:text-slate-400">
+                                Para entregar seus produtos corretamente, precisamos saber seu
+                                nickname oficial do Minecraft.
                             </p>
                         </div>
 
                         {/* Body */}
-                        <form onSubmit={handleSubmit} className="p-8 space-y-8">
+                        <form onSubmit={handleSubmit} className="space-y-8 p-8">
                             <div className="space-y-3">
                                 <label
                                     htmlFor="nickname"
-                                    className="text-base font-bold text-slate-700 dark:text-slate-300 ml-1"
+                                    className="ml-1 text-base font-bold text-slate-700 dark:text-slate-300"
                                 >
                                     Seu Nick (Minecraft)
                                 </label>
-                                <div className="relative group">
+                                <div className="group relative">
                                     <input
                                         id="nickname"
                                         type="text"
@@ -114,15 +117,15 @@ export function NicknameModal({ isOpen, onClose, onConfirm }: NicknameModalProps
                                         placeholder="Ex: Steve"
                                         maxLength={16}
                                         className={cn(
-                                            "w-full bg-slate-50 dark:bg-zinc-950/50 border-2 rounded-2xl px-6 py-4 text-xl text-slate-900 dark:text-white outline-none transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600 font-bold",
+                                            "w-full rounded-2xl border-2 bg-slate-50 px-6 py-4 text-xl font-bold text-slate-900 transition-all outline-none placeholder:text-slate-300 dark:bg-zinc-950/50 dark:text-white dark:placeholder:text-slate-600",
                                             error
                                                 ? "border-red-500/50 focus:border-red-500"
-                                                : "border-slate-100 dark:border-white/5 focus:border-brand-orange dark:focus:border-brand-orange group-hover:border-slate-200 dark:group-hover:border-white/10"
+                                                : "focus:border-brand-orange dark:focus:border-brand-orange border-slate-100 group-hover:border-slate-200 dark:border-white/5 dark:group-hover:border-white/10"
                                         )}
                                         autoFocus
                                     />
                                     {error && (
-                                        <p className="text-red-500 text-sm mt-2 ml-1 font-medium">
+                                        <p className="mt-2 ml-1 text-sm font-medium text-red-500">
                                             {error}
                                         </p>
                                     )}
@@ -133,10 +136,13 @@ export function NicknameModal({ isOpen, onClose, onConfirm }: NicknameModalProps
                                 <button
                                     type="submit"
                                     disabled={!nickname.trim()}
-                                    className="w-full bg-brand-orange hover:bg-orange-500 text-white font-black py-5 px-8 rounded-2xl transition-all shadow-[0_0_30px_-10px_rgba(255,166,0,0.3)] flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed group text-lg"
+                                    className="bg-brand-orange group flex w-full items-center justify-center gap-3 rounded-2xl px-8 py-5 text-lg font-black text-white shadow-[0_0_30px_-10px_rgba(255,166,0,0.3)] transition-all hover:bg-orange-500 disabled:cursor-not-allowed disabled:opacity-50"
                                 >
                                     <span>Confirmar e Ir para o Carrinho</span>
-                                    <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+                                    <ArrowRight
+                                        size={22}
+                                        className="transition-transform group-hover:translate-x-1"
+                                    />
                                 </button>
                             </div>
                         </form>

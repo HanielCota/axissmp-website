@@ -61,7 +61,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
     // 2. Fetch threads for this category along with post counts
     // Using explicit select for count
-    let query = supabase
+    const query = supabase
         .from("forum_threads")
         .select("*, forum_posts(count)", { count: "exact" })
         .eq("category_id", categoryData.id);
@@ -75,7 +75,11 @@ export default async function CategoryPage({ params, searchParams }: Props) {
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage - 1;
 
-    const { data: threadsRaw, error: threadsError, count } = await query
+    const {
+        data: threadsRaw,
+        error: threadsError,
+        count,
+    } = await query
         .order("is_pinned", { ascending: false })
         .order("updated_at", { ascending: false, nullsFirst: false })
         .order("created_at", { ascending: false })
@@ -123,8 +127,8 @@ export default async function CategoryPage({ params, searchParams }: Props) {
             author: {
                 username: nickname,
                 avatar_url: avatarUrl,
-                role: profile?.role // Optional
-            }
+                role: profile?.role, // Optional
+            },
         };
     });
 
@@ -132,7 +136,9 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold font-outfit text-primary">{categoryData.name}</h1>
+                    <h1 className="font-outfit text-primary text-3xl font-bold">
+                        {categoryData.name}
+                    </h1>
                     <p className="text-muted-foreground">{categoryData.description}</p>
                 </div>
                 <CreateThreadButton categorySlug={category} />

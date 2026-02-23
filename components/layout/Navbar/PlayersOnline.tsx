@@ -1,7 +1,7 @@
 "use client";
 
 import { useServerStatus } from "@/hooks/useServerStatus";
-import { SERVER_IP } from "@/lib/constants";
+import { SERVER_IP } from "@/constants/constants";
 
 export function PlayersOnline() {
     const { status, loading } = useServerStatus(SERVER_IP);

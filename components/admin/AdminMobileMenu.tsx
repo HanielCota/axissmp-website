@@ -13,7 +13,7 @@ import {
     FileText,
     Package,
     MessageSquare,
-    Users
+    Users,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from "@/lib/supabase/client";
@@ -45,7 +45,7 @@ export function AdminMobileMenu() {
         <>
             <button
                 onClick={() => setIsOpen(true)}
-                className="p-2 rounded-lg hover:bg-white/10 text-white/60 hover:text-white transition-colors"
+                className="rounded-lg p-2 text-white/60 transition-colors hover:bg-white/10 hover:text-white"
             >
                 <Menu size={24} />
             </button>
@@ -58,55 +58,59 @@ export function AdminMobileMenu() {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setIsOpen(false)}
-                            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+                            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
                         />
                         <motion.div
                             initial={{ x: "100%" }}
                             animate={{ x: 0 }}
                             exit={{ x: "100%" }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="fixed right-0 top-0 h-full w-72 bg-zinc-900 border-l border-white/5 z-50 flex flex-col"
+                            className="fixed top-0 right-0 z-50 flex h-full w-72 flex-col border-l border-white/5 bg-zinc-900"
                         >
-                            <div className="p-4 border-b border-white/5 flex items-center justify-between">
-                                <h2 className="font-black text-lg">Menu</h2>
+                            <div className="flex items-center justify-between border-b border-white/5 p-4">
+                                <h2 className="text-lg font-black">Menu</h2>
                                 <button
                                     onClick={() => setIsOpen(false)}
-                                    className="p-2 rounded-lg hover:bg-white/10 text-white/60"
+                                    className="rounded-lg p-2 text-white/60 hover:bg-white/10"
                                 >
                                     <X size={20} />
                                 </button>
                             </div>
 
-                            <nav className="flex-1 p-4 space-y-1">
+                            <nav className="flex-1 space-y-1 p-4">
                                 {navItems.map((item) => (
                                     <Link
                                         key={item.href}
                                         href={item.href}
                                         onClick={() => setIsOpen(false)}
-                                        className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-white/70 hover:text-white transition-colors"
+                                        className="flex items-center gap-3 rounded-xl px-4 py-3 text-white/70 transition-colors hover:bg-white/5 hover:text-white"
                                     >
                                         <item.icon size={20} />
-                                        <span className="font-bold text-sm">{item.label}</span>
+                                        <span className="text-sm font-bold">{item.label}</span>
                                     </Link>
                                 ))}
                             </nav>
 
-                            <div className="p-4 border-t border-white/5 space-y-2">
+                            <div className="space-y-2 border-t border-white/5 p-4">
                                 <Link
                                     href="/"
                                     onClick={() => setIsOpen(false)}
-                                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-white/60 hover:text-white transition-colors"
+                                    className="flex items-center gap-3 rounded-xl px-4 py-3 text-white/60 transition-colors hover:bg-white/5 hover:text-white"
                                 >
                                     <Home size={20} />
-                                    <span className="font-bold text-sm">Voltar ao Site</span>
+                                    <span className="text-sm font-bold">Voltar ao Site</span>
                                 </Link>
                                 <button
                                     onClick={handleLogout}
                                     disabled={loggingOut}
-                                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-red-500/10 text-white/60 hover:text-red-400 transition-colors disabled:opacity-50"
+                                    className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-white/60 transition-colors hover:bg-red-500/10 hover:text-red-400 disabled:opacity-50"
                                 >
-                                    {loggingOut ? <Loader2 size={20} className="animate-spin" /> : <LogOut size={20} />}
-                                    <span className="font-bold text-sm">Sair</span>
+                                    {loggingOut ? (
+                                        <Loader2 size={20} className="animate-spin" />
+                                    ) : (
+                                        <LogOut size={20} />
+                                    )}
+                                    <span className="text-sm font-bold">Sair</span>
                                 </button>
                             </div>
                         </motion.div>

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { navLinks, socialLinks } from "@/lib/constants";
+import { navLinks, socialLinks } from "@/constants/constants";
 import { useCart } from "@/context/CartContext";
 import { ShoppingCart, X, ChevronRight, User as UserIcon, ShieldAlert } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -30,9 +30,9 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             if (!authUser) return null;
 
             const { data: profile } = await supabase
-                .from('profiles')
-                .select('role')
-                .eq('id', authUser.id)
+                .from("profiles")
+                .select("role")
+                .eq("id", authUser.id)
                 .single();
 
             return { ...authUser, role: profile?.role };
@@ -43,13 +43,17 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             setUser(userWithRole);
         });
 
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange(async (_event, session) => {
             if (!session) {
                 setUser(null);
                 return;
             }
 
-            const { data: { user } } = await supabase.auth.getUser();
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
             const userWithRole = await fetchUserWithRole(user);
             setUser(userWithRole);
         });
@@ -65,10 +69,10 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: "100%" }}
                     transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                    className="fixed inset-0 z-[100] h-[100dvh] w-full bg-brand-light dark:bg-zinc-950 md:hidden flex flex-col"
+                    className="bg-brand-light fixed inset-0 z-[100] flex h-[100dvh] w-full flex-col md:hidden dark:bg-zinc-950"
                 >
                     {/* Menu Header */}
-                    <div className="flex items-center justify-between px-6 py-4 border-b border-brand-dark/5 dark:border-white/5">
+                    <div className="border-brand-dark/5 flex items-center justify-between border-b px-6 py-4 dark:border-white/5">
                         <div className="relative h-12 w-24">
                             <Image
                                 src="/images/logo/logo.png"
@@ -81,7 +85,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                         </div>
                         <button
                             onClick={onClose}
-                            className="bg-brand-dark/5 dark:bg-white/5 p-3 rounded-full text-brand-dark dark:text-white hover:bg-brand-dark/10 dark:hover:bg-white/10 active:scale-95 transition-all"
+                            className="bg-brand-dark/5 text-brand-dark hover:bg-brand-dark/10 rounded-full p-3 transition-all active:scale-95 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
                         >
                             <X size={24} />
                         </button>
@@ -99,9 +103,9 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                 <Link
                                     href={user ? "/dashboard" : "/login"}
                                     onClick={onClose}
-                                    className="flex items-center gap-4 rounded-2xl bg-brand-orange text-brand-dark p-5 font-black text-xl transition-all active:scale-[0.98]"
+                                    className="bg-brand-orange text-brand-dark flex items-center gap-4 rounded-2xl p-5 text-xl font-black transition-all active:scale-[0.98]"
                                 >
-                                    <div className="bg-brand-dark/10 p-2 rounded-lg">
+                                    <div className="bg-brand-dark/10 rounded-lg p-2">
                                         <UserIcon size={24} />
                                     </div>
                                     {user ? "Meu Dashboard" : "Minha Conta"}
@@ -109,7 +113,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                             </motion.div>
 
                             {/* Admin Link Mobile */}
-                            {user?.role === 'admin' && (
+                            {user?.role === "admin" && (
                                 <motion.div
                                     initial={{ opacity: 0, x: 20 }}
                                     animate={{ opacity: 1, x: 0 }}
@@ -118,9 +122,9 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                     <Link
                                         href="/admin"
                                         onClick={onClose}
-                                        className="flex items-center gap-4 rounded-2xl bg-red-500/10 p-5 font-black text-xl text-red-500 transition-all active:scale-[0.98]"
+                                        className="flex items-center gap-4 rounded-2xl bg-red-500/10 p-5 text-xl font-black text-red-500 transition-all active:scale-[0.98]"
                                     >
-                                        <div className="bg-red-500/10 p-2 rounded-lg text-red-500">
+                                        <div className="rounded-lg bg-red-500/10 p-2 text-red-500">
                                             <ShieldAlert size={24} />
                                         </div>
                                         Painel Admin
@@ -139,15 +143,18 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                         href={link.href}
                                         target={link.external ? "_blank" : undefined}
                                         onClick={onClose}
-                                        className="text-brand-dark dark:text-white group flex items-center justify-between rounded-2xl bg-white dark:bg-white/5 p-5 font-black text-xl transition-all hover:bg-slate-50 dark:hover:bg-white/10 active:scale-[0.98] shadow-sm dark:shadow-none border border-brand-dark/5 dark:border-white/5"
+                                        className="text-brand-dark group border-brand-dark/5 flex items-center justify-between rounded-2xl border bg-white p-5 text-xl font-black shadow-sm transition-all hover:bg-slate-50 active:scale-[0.98] dark:border-white/5 dark:bg-white/5 dark:text-white dark:shadow-none dark:hover:bg-white/10"
                                     >
                                         <div className="flex items-center gap-4">
-                                            <div className="bg-brand-light dark:bg-white/10 p-2 rounded-lg group-hover:bg-white dark:group-hover:bg-white/20 transition-colors">
+                                            <div className="bg-brand-light rounded-lg p-2 transition-colors group-hover:bg-white dark:bg-white/10 dark:group-hover:bg-white/20">
                                                 <link.icon className="h-6 w-6" />
                                             </div>
                                             {link.name}
                                         </div>
-                                        <ChevronRight size={20} className="opacity-40 group-hover:translate-x-1 transition-transform" />
+                                        <ChevronRight
+                                            size={20}
+                                            className="opacity-40 transition-transform group-hover:translate-x-1"
+                                        />
                                     </Link>
                                 </motion.div>
                             ))}
@@ -161,28 +168,35 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                 <Link
                                     href="/cart"
                                     onClick={onClose}
-                                    className="flex items-center justify-between rounded-2xl border-2 border-brand-dark/10 dark:border-white/10 bg-white dark:bg-zinc-900 p-5 shadow-lg active:scale-[0.98] transition-all"
+                                    className="border-brand-dark/10 flex items-center justify-between rounded-2xl border-2 bg-white p-5 shadow-lg transition-all active:scale-[0.98] dark:border-white/10 dark:bg-zinc-900"
                                 >
                                     <div className="flex items-center gap-4">
-                                        <div className="relative bg-brand-orange p-2 rounded-lg">
+                                        <div className="bg-brand-orange relative rounded-lg p-2">
                                             <ShoppingCart size={24} className="text-brand-dark" />
                                             {totalItems > 0 && (
-                                                <span className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-brand-dark text-[10px] font-black text-white shadow-md">
+                                                <span className="bg-brand-dark absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-black text-white shadow-md">
                                                     {totalItems}
                                                 </span>
                                             )}
                                         </div>
-                                        <span className="font-black text-xl text-brand-dark dark:text-white uppercase tracking-tight">Carrinho</span>
+                                        <span className="text-brand-dark text-xl font-black tracking-tight uppercase dark:text-white">
+                                            Carrinho
+                                        </span>
                                     </div>
-                                    <ChevronRight size={20} className="text-brand-dark/40 dark:text-white/40" />
+                                    <ChevronRight
+                                        size={20}
+                                        className="text-brand-dark/40 dark:text-white/40"
+                                    />
                                 </Link>
                             </motion.div>
                         </div>
                     </div>
 
                     {/* Footer: Social Links */}
-                    <div className="p-6 bg-slate-50 dark:bg-black mt-auto">
-                        <p className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-widest text-center mb-4">Acompanhe nossas redes</p>
+                    <div className="mt-auto bg-slate-50 p-6 dark:bg-black">
+                        <p className="mb-4 text-center text-xs font-bold tracking-widest text-slate-500 uppercase dark:text-slate-400">
+                            Acompanhe nossas redes
+                        </p>
                         <div className="flex gap-3">
                             {socialLinks.map((social) => (
                                 <a
@@ -190,7 +204,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                     href={social.href}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="bg-brand-dark hover:bg-zinc-800 flex flex-1 items-center justify-center rounded-2xl p-4 text-white shadow-lg active:scale-95 transition-all"
+                                    className="bg-brand-dark flex flex-1 items-center justify-center rounded-2xl p-4 text-white shadow-lg transition-all hover:bg-zinc-800 active:scale-95"
                                 >
                                     <social.icon className="h-6 w-6" />
                                 </a>

@@ -1,6 +1,13 @@
 import { createClient } from "@/lib/supabase/server";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MessageSquare, ExternalLink, BookOpen, Scale, Headphones, ChevronRight } from "lucide-react";
+import {
+    MessageSquare,
+    ExternalLink,
+    BookOpen,
+    Scale,
+    Headphones,
+    ChevronRight,
+} from "lucide-react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -14,23 +21,23 @@ export async function RecentThreadsWidget() {
         .order("created_at", { ascending: false })
         .limit(4);
 
-    const userIds = Array.from(new Set(threadsRaw?.map(t => t.user_id) || []));
+    const userIds = Array.from(new Set(threadsRaw?.map((t) => t.user_id) || []));
     const { data: profiles } = await supabase
         .from("profiles")
         .select("id, nickname")
         .in("id", userIds);
 
-    const profileMap = new Map(profiles?.map(p => [p.id, p]));
+    const profileMap = new Map(profiles?.map((p) => [p.id, p]));
 
     return (
-        <Card className="bg-card border-border/40 space-y-0 overflow-hidden divide-y divide-border/40 rounded-xl shadow-sm h-full flex flex-col">
-            <CardHeader className="bg-muted/30 py-4 px-5">
-                <CardTitle className="text-sm font-bold flex items-center gap-2">
-                    <MessageSquare className="w-4 h-4 text-primary" strokeWidth={2.5} />
+        <Card className="bg-card border-border/40 divide-border/40 flex h-full flex-col space-y-0 divide-y overflow-hidden rounded-xl shadow-sm">
+            <CardHeader className="bg-muted/30 px-5 py-4">
+                <CardTitle className="flex items-center gap-2 text-sm font-bold">
+                    <MessageSquare className="text-primary h-4 w-4" strokeWidth={2.5} />
                     Tópicos Recentes
                 </CardTitle>
             </CardHeader>
-            <div className="divide-y divide-border/40 flex-1">
+            <div className="divide-border/40 flex-1 divide-y">
                 {threadsRaw?.map((thread) => {
                     const profile = profileMap.get(thread.user_id);
                     const nickname = profile?.nickname || "Jogador";
@@ -40,25 +47,30 @@ export async function RecentThreadsWidget() {
                         <Link
                             key={thread.id}
                             href={`/forum/thread/${thread.id}`}
-                            className="flex items-center gap-4 p-4 hover:bg-muted/20 transition-colors group"
+                            className="hover:bg-muted/20 group flex items-center gap-4 p-4 transition-colors"
                         >
                             <div className="relative flex-shrink-0">
-                                <div className="absolute -inset-1.5 bg-primary/20 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div className="bg-primary/20 absolute -inset-1.5 rounded-xl opacity-0 blur-md transition-opacity group-hover:opacity-100" />
                                 <img
                                     src={avatarUrl}
                                     alt={nickname}
-                                    className="w-12 h-12 rounded-xl border-2 border-border/40 relative z-10 transition-transform group-hover:scale-105"
+                                    className="border-border/40 relative z-10 h-12 w-12 rounded-xl border-2 transition-transform group-hover:scale-105"
                                 />
                             </div>
-                            <div className="flex flex-col gap-1 min-w-0">
-                                <h4 className="text-sm font-bold line-clamp-1 group-hover:text-primary transition-colors">
+                            <div className="flex min-w-0 flex-col gap-1">
+                                <h4 className="group-hover:text-primary line-clamp-1 text-sm font-bold transition-colors">
                                     {thread.title}
                                 </h4>
-                                <div className="flex items-center gap-2 text-[10px] text-muted-foreground font-medium">
-                                    <span className="text-primary/70 font-black uppercase tracking-wider">{nickname}</span>
+                                <div className="text-muted-foreground flex items-center gap-2 text-[10px] font-medium">
+                                    <span className="text-primary/70 font-black tracking-wider uppercase">
+                                        {nickname}
+                                    </span>
                                     <span className="opacity-30">•</span>
                                     <span>
-                                        {formatDistanceToNow(new Date(thread.created_at), { addSuffix: true, locale: ptBR })}
+                                        {formatDistanceToNow(new Date(thread.created_at), {
+                                            addSuffix: true,
+                                            locale: ptBR,
+                                        })}
                                     </span>
                                 </div>
                             </div>
@@ -67,7 +79,7 @@ export async function RecentThreadsWidget() {
                 })}
             </div>
             {(!threadsRaw || threadsRaw.length === 0) && (
-                <div className="p-4 text-center text-sm text-muted-foreground flex-1 flex items-center justify-center">
+                <div className="text-muted-foreground flex flex-1 items-center justify-center p-4 text-center text-sm">
                     Nenhum tópico recente
                 </div>
             )}
@@ -83,21 +95,25 @@ const quickLinks = [
 
 export function QuickLinksWidget() {
     return (
-        <div className="grid grid-cols-1 gap-3 h-full">
+        <div className="grid h-full grid-cols-1 gap-3">
             {quickLinks.map((link) => (
                 <Link
                     key={link.href}
                     href={link.href}
-                    className="flex items-center gap-4 p-4 bg-card border border-border/40 rounded-xl hover:border-primary/40 hover:shadow-sm transition-all group lg:min-h-[80px]"
+                    className="bg-card border-border/40 hover:border-primary/40 group flex items-center gap-4 rounded-xl border p-4 transition-all hover:shadow-sm lg:min-h-[80px]"
                 >
-                    <div className={`p-2 rounded-lg bg-muted/30 group-hover:bg-primary/10 transition-colors ${link.color}`}>
-                        <link.icon className="w-5 h-5" strokeWidth={2} />
+                    <div
+                        className={`bg-muted/30 group-hover:bg-primary/10 rounded-lg p-2 transition-colors ${link.color}`}
+                    >
+                        <link.icon className="h-5 w-5" strokeWidth={2} />
                     </div>
                     <div className="flex-1">
-                        <span className="block font-bold text-sm text-foreground group-hover:text-primary transition-colors">{link.label}</span>
-                        <span className="text-xs text-muted-foreground">Acessar área</span>
+                        <span className="text-foreground group-hover:text-primary block text-sm font-bold transition-colors">
+                            {link.label}
+                        </span>
+                        <span className="text-muted-foreground text-xs">Acessar área</span>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                    <ChevronRight className="text-muted-foreground/50 group-hover:text-primary h-4 w-4 transition-all group-hover:translate-x-1" />
                 </Link>
             ))}
         </div>
@@ -106,7 +122,7 @@ export function QuickLinksWidget() {
 
 export function ForumSidebar() {
     return (
-        <aside className="space-y-6 lg:sticky lg:top-24 h-fit">
+        <aside className="h-fit space-y-6 lg:sticky lg:top-24">
             <ForumServerStatus />
 
             <div className="grid grid-cols-3 gap-2">
@@ -114,13 +130,17 @@ export function ForumSidebar() {
                     <Link
                         key={link.href}
                         href={link.href}
-                        className="flex flex-col items-center justify-center gap-2 p-3 bg-card border border-border/40 rounded-xl hover:border-primary/40 hover:shadow-sm transition-all group text-center"
+                        className="bg-card border-border/40 hover:border-primary/40 group flex flex-col items-center justify-center gap-2 rounded-xl border p-3 text-center transition-all hover:shadow-sm"
                         title={link.label}
                     >
-                        <div className={`p-2 rounded-lg bg-muted/30 group-hover:bg-primary/10 transition-colors ${link.color}`}>
-                            <link.icon className="w-5 h-5" strokeWidth={2} />
+                        <div
+                            className={`bg-muted/30 group-hover:bg-primary/10 rounded-lg p-2 transition-colors ${link.color}`}
+                        >
+                            <link.icon className="h-5 w-5" strokeWidth={2} />
                         </div>
-                        <span className="text-[10px] font-bold text-muted-foreground group-hover:text-primary transition-colors leading-tight line-clamp-1 w-full">{link.label.split(' ')[0]}</span>
+                        <span className="text-muted-foreground group-hover:text-primary line-clamp-1 w-full text-[10px] leading-tight font-bold transition-colors">
+                            {link.label.split(" ")[0]}
+                        </span>
                     </Link>
                 ))}
             </div>

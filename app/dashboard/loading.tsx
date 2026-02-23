@@ -1,6 +1,6 @@
 export default function DashboardLoading() {
     return (
-        <div className="min-h-screen bg-brand-light dark:bg-[#0a0a0a] text-slate-900 dark:text-white transition-colors duration-300">
+        <div className="bg-brand-light min-h-screen text-slate-900 transition-colors duration-300 dark:bg-[#0a0a0a] dark:text-white">
             <div className="relative z-10 mx-auto max-w-7xl px-6 py-12 md:py-20">
                 {/* Header Skeleton */}
                 <div className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
@@ -15,20 +15,20 @@ export default function DashboardLoading() {
                 {/* Bento Grid Skeleton */}
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:grid-rows-2 lg:grid-rows-3">
                     {/* Character Card */}
-                    <div className="col-span-1 h-[500px] animate-pulse rounded-[2.5rem] bg-slate-200 dark:bg-white/5 md:col-span-8 md:row-span-2 lg:col-span-6 lg:row-span-3" />
+                    <div className="col-span-1 h-[500px] animate-pulse rounded-[2.5rem] bg-slate-200 md:col-span-8 md:row-span-2 lg:col-span-6 lg:row-span-3 dark:bg-white/5" />
 
                     {/* Stats Cards */}
-                    <div className="col-span-1 h-40 animate-pulse rounded-[2.5rem] bg-slate-200 dark:bg-white/5 md:col-span-4 lg:col-span-3" />
-                    <div className="col-span-1 h-40 animate-pulse rounded-[2.5rem] bg-slate-200 dark:bg-white/5 md:col-span-4 lg:col-span-3" />
-                    <div className="col-span-1 h-40 animate-pulse rounded-[2.5rem] bg-slate-200 dark:bg-white/5 md:col-span-4 lg:col-span-3" />
+                    <div className="col-span-1 h-40 animate-pulse rounded-[2.5rem] bg-slate-200 md:col-span-4 lg:col-span-3 dark:bg-white/5" />
+                    <div className="col-span-1 h-40 animate-pulse rounded-[2.5rem] bg-slate-200 md:col-span-4 lg:col-span-3 dark:bg-white/5" />
+                    <div className="col-span-1 h-40 animate-pulse rounded-[2.5rem] bg-slate-200 md:col-span-4 lg:col-span-3 dark:bg-white/5" />
 
                     {/* Quick Links */}
-                    <div className="col-span-1 h-64 animate-pulse rounded-[2.5rem] bg-slate-200 dark:bg-white/5 md:col-span-8 lg:col-span-3 lg:row-span-2" />
+                    <div className="col-span-1 h-64 animate-pulse rounded-[2.5rem] bg-slate-200 md:col-span-8 lg:col-span-3 lg:row-span-2 dark:bg-white/5" />
                 </div>
 
                 {/* Orders Section Skeleton */}
                 <div className="mt-12 h-80 animate-pulse rounded-[2.5rem] bg-slate-200 dark:bg-white/5" />
             </div>
         </div>
-    )
+    );
 }

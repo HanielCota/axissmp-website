@@ -29,19 +29,19 @@ export function ForumBreadcrumbs() {
             breadcrumbs.push({
                 href: `/forum/${paths[1]}`,
                 label: formatSlug(paths[1]),
-                icon: null
+                icon: null,
             });
         }
 
         // paths[2] could be 'create' or 'thread'
         if (paths[2]) {
-            if (paths[2] === 'create') {
+            if (paths[2] === "create") {
                 breadcrumbs.push({
                     href: `/forum/${paths[1]}/create`,
                     label: "Criar Tópico",
-                    icon: null
+                    icon: null,
                 });
-            } else if (paths[2] === 'thread' && paths[3]) {
+            } else if (paths[2] === "thread" && paths[3]) {
                 // /forum/thread/[id]
                 // We typically don't show the ID in breadcrumb, maybe just "Tópico"
                 // Or if we had the thread title, that would be ideal.
@@ -50,7 +50,7 @@ export function ForumBreadcrumbs() {
                 breadcrumbs.push({
                     href: pathname, // Current page
                     label: "Visualizar Tópico",
-                    icon: null
+                    icon: null,
                 });
             }
         }
@@ -61,21 +61,23 @@ export function ForumBreadcrumbs() {
 
     return (
         <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex items-center flex-wrap gap-2 text-sm text-muted-foreground">
+            <ol className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
                 {breadcrumbs.map((item, index) => {
                     const isActive = index === activeIndex;
                     return (
                         <li key={item.href} className="flex items-center gap-2">
-                            {index > 0 && <ChevronRight className="w-4 h-4 text-muted-foreground/50" />}
+                            {index > 0 && (
+                                <ChevronRight className="text-muted-foreground/50 h-4 w-4" />
+                            )}
 
                             <Link
                                 href={item.href}
                                 className={cn(
-                                    "flex items-center gap-1.5 transition-colors hover:text-primary",
-                                    isActive && "font-semibold text-primary pointer-events-none"
+                                    "hover:text-primary flex items-center gap-1.5 transition-colors",
+                                    isActive && "text-primary pointer-events-none font-semibold"
                                 )}
                             >
-                                {item.icon && <item.icon className="w-4 h-4" />}
+                                {item.icon && <item.icon className="h-4 w-4" />}
                                 <span>{item.label}</span>
                             </Link>
                         </li>
@@ -90,6 +92,6 @@ function formatSlug(slug: string) {
     if (!slug) return "";
     return slug
         .split("-")
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
 }

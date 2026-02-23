@@ -16,7 +16,7 @@ export function ImageUpload({
     value,
     onChange,
     bucket = "product-images",
-    folder = "products"
+    folder = "products",
 }: ImageUploadProps) {
     const [isUploading, setIsUploading] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
@@ -39,12 +39,10 @@ export function ImageUpload({
         const fileExt = file.name.split(".").pop();
         const fileName = `${folder}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
 
-        const { error } = await supabase.storage
-            .from(bucket)
-            .upload(fileName, file, {
-                cacheControl: "3600",
-                upsert: false,
-            });
+        const { error } = await supabase.storage.from(bucket).upload(fileName, file, {
+            cacheControl: "3600",
+            upsert: false,
+        });
 
         if (error) {
             console.error("Upload error:", error);
@@ -53,9 +51,7 @@ export function ImageUpload({
             return;
         }
 
-        const { data: publicUrl } = supabase.storage
-            .from(bucket)
-            .getPublicUrl(fileName);
+        const { data: publicUrl } = supabase.storage.from(bucket).getPublicUrl(fileName);
 
         onChange(publicUrl.publicUrl);
         toast.success("Imagem enviada com sucesso!");
@@ -92,18 +88,14 @@ export function ImageUpload({
 
     if (value) {
         return (
-            <div className="relative group">
-                <div className="relative w-full aspect-video rounded-2xl border-2 border-white/5 bg-black/20 overflow-hidden backdrop-blur-sm">
-                    <img
-                        src={value}
-                        alt="Preview"
-                        className="w-full h-full object-contain"
-                    />
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+            <div className="group relative">
+                <div className="relative aspect-video w-full overflow-hidden rounded-2xl border-2 border-white/5 bg-black/20 backdrop-blur-sm">
+                    <img src={value} alt="Preview" className="h-full w-full object-contain" />
+                    <div className="absolute inset-0 flex items-center justify-center gap-4 bg-black/60 opacity-0 transition-opacity group-hover:opacity-100">
                         <button
                             type="button"
                             onClick={() => inputRef.current?.click()}
-                            className="p-3 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors"
+                            className="rounded-xl bg-white/10 p-3 text-white transition-colors hover:bg-white/20"
                             title="Trocar imagem"
                         >
                             <Upload size={20} />
@@ -111,7 +103,7 @@ export function ImageUpload({
                         <button
                             type="button"
                             onClick={handleRemove}
-                            className="p-3 rounded-xl bg-red-500/20 hover:bg-red-500/40 text-red-400 transition-colors"
+                            className="rounded-xl bg-red-500/20 p-3 text-red-400 transition-colors hover:bg-red-500/40"
                             title="Remover imagem"
                         >
                             <X size={20} />
@@ -135,31 +127,25 @@ export function ImageUpload({
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onClick={() => inputRef.current?.click()}
-            className={`
-                relative w-full aspect-video rounded-2xl border-2 border-dashed transition-all cursor-pointer
-                flex flex-col items-center justify-center gap-4
-                ${isDragging
+            className={`relative flex aspect-video w-full cursor-pointer flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed transition-all ${
+                isDragging
                     ? "border-brand-orange bg-brand-orange/10"
                     : "border-white/5 bg-black/20 hover:border-white/10 hover:bg-black/30"
-                }
-                ${isUploading ? "pointer-events-none opacity-50" : ""}
-            `}
+            } ${isUploading ? "pointer-events-none opacity-50" : ""} `}
         >
             {isUploading ? (
                 <>
-                    <Loader2 className="animate-spin text-brand-orange" size={40} />
-                    <span className="text-sm text-white/60 font-medium">Enviando...</span>
+                    <Loader2 className="text-brand-orange animate-spin" size={40} />
+                    <span className="text-sm font-medium text-white/60">Enviando...</span>
                 </>
             ) : (
                 <>
-                    <div className="p-4 rounded-2xl bg-white/5 text-white/40">
+                    <div className="rounded-2xl bg-white/5 p-4 text-white/40">
                         <ImageIcon size={32} />
                     </div>
                     <div className="text-center">
-                        <p className="text-sm font-bold text-white/80">
-                            Clique para fazer upload
-                        </p>
-                        <p className="text-xs text-white/40 mt-1">
+                        <p className="text-sm font-bold text-white/80">Clique para fazer upload</p>
+                        <p className="mt-1 text-xs text-white/40">
                             ou arraste uma imagem aqui (máx. 5MB)
                         </p>
                     </div>

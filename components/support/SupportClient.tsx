@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import {
     LifeBuoy,
     Plus,
@@ -12,7 +12,7 @@ import {
     ChevronRight,
     ArrowLeft,
     AlertCircle,
-    Search
+    Search,
 } from "lucide-react";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
@@ -22,8 +22,8 @@ import { cn } from "@/lib/utils";
 interface Ticket {
     id: string;
     title: string;
-    category: 'vendas' | 'bug' | 'suporte' | 'outro';
-    status: 'open' | 'pending' | 'closed';
+    category: "vendas" | "bug" | "suporte" | "outro";
+    status: "open" | "pending" | "closed";
     created_at: string;
 }
 
@@ -35,7 +35,9 @@ export function SupportClient() {
 
     const fetchTickets = async () => {
         setLoading(true);
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+            data: { user },
+        } = await supabase.auth.getUser();
 
         if (!user) return;
 
@@ -52,55 +54,61 @@ export function SupportClient() {
     };
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         fetchTickets();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [supabase]);
 
-    const getStatusStyles = (status: Ticket['status']) => {
+    const getStatusStyles = (status: Ticket["status"]) => {
         switch (status) {
-            case 'open':
+            case "open":
                 return "bg-emerald-500/10 text-emerald-500 border-emerald-500/20";
-            case 'pending':
+            case "pending":
                 return "bg-amber-500/10 text-amber-500 border-amber-500/20";
-            case 'closed':
+            case "closed":
                 return "bg-white/5 text-white/40 border-white/10";
         }
     };
 
-    const getCategoryLabel = (category: Ticket['category']) => {
+    const getCategoryLabel = (category: Ticket["category"]) => {
         const labels = {
             vendas: "Vendas/VIP",
             bug: "Bug Report",
             suporte: "Suporte Geral",
-            outro: "Outros"
+            outro: "Outros",
         };
         return labels[category];
     };
 
     return (
-        <main className="min-h-screen bg-brand-light dark:bg-[#0a0a0a] text-slate-900 dark:text-white selection:bg-brand-orange/30">
+        <main className="bg-brand-light selection:bg-brand-orange/30 min-h-screen text-slate-900 dark:bg-[#0a0a0a] dark:text-white">
             <Navbar />
 
             <div className="relative z-10 mx-auto max-w-5xl px-6 pt-32 pb-20">
-
                 {/* Header */}
-                <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
                     <div>
                         <Link
                             href="/dashboard"
-                            className="group mb-4 flex items-center gap-2 text-sm font-bold text-slate-500 dark:text-white/60 transition-colors hover:text-brand-orange"
+                            className="group hover:text-brand-orange mb-4 flex items-center gap-2 text-sm font-bold text-slate-500 transition-colors dark:text-white/60"
                         >
-                            <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
+                            <ArrowLeft
+                                size={16}
+                                className="transition-transform group-hover:-translate-x-1"
+                            />
                             Voltar ao Dashboard
                         </Link>
-                        <h1 className="text-4xl font-black uppercase italic tracking-tight md:text-5xl text-slate-900 dark:text-white">
+                        <h1 className="text-4xl font-black tracking-tight text-slate-900 uppercase italic md:text-5xl dark:text-white">
                             Central de <span className="text-brand-orange">Suporte</span>
                         </h1>
-                        <p className="text-slate-600 dark:text-white/70 font-medium mt-1">Como podemos ajudar você hoje?</p>
+                        <p className="mt-1 font-medium text-slate-600 dark:text-white/70">
+                            Como podemos ajudar você hoje?
+                        </p>
                     </div>
 
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="flex items-center gap-3 rounded-2xl bg-brand-orange px-8 py-4 text-sm font-black uppercase text-brand-dark transition-all hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,145,0,0.4)] active:scale-95"
+                        className="bg-brand-orange text-brand-dark flex items-center gap-3 rounded-2xl px-8 py-4 text-sm font-black uppercase transition-all hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,145,0,0.4)] active:scale-95"
                     >
                         <Plus size={20} />
                         Novo Ticket
@@ -108,31 +116,41 @@ export function SupportClient() {
                 </div>
 
                 {/* Stats / Quick Info */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                    <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl p-6 backdrop-blur-md shadow-sm dark:shadow-none">
-                        <div className="flex items-center gap-4 mb-2">
-                            <div className="p-2 rounded-xl bg-brand-orange/10 text-brand-orange">
+                <div className="mb-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+                    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/5 dark:shadow-none">
+                        <div className="mb-2 flex items-center gap-4">
+                            <div className="bg-brand-orange/10 text-brand-orange rounded-xl p-2">
                                 <MessageSquare size={20} />
                             </div>
-                            <span className="text-sm font-bold text-slate-500 dark:text-white/60 uppercase tracking-widest">Tickets Ativos</span>
+                            <span className="text-sm font-bold tracking-widest text-slate-500 uppercase dark:text-white/60">
+                                Tickets Ativos
+                            </span>
                         </div>
-                        <p className="text-3xl font-black text-slate-900 dark:text-white">{tickets.filter(t => t.status !== 'closed').length}</p>
+                        <p className="text-3xl font-black text-slate-900 dark:text-white">
+                            {tickets.filter((t) => t.status !== "closed").length}
+                        </p>
                     </div>
-                    <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl p-6 backdrop-blur-md shadow-sm dark:shadow-none">
-                        <div className="flex items-center gap-4 mb-2">
-                            <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-500">
+                    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/5 dark:shadow-none">
+                        <div className="mb-2 flex items-center gap-4">
+                            <div className="rounded-xl bg-emerald-500/10 p-2 text-emerald-500">
                                 <CheckCircle2 size={20} />
                             </div>
-                            <span className="text-sm font-bold text-slate-500 dark:text-white/60 uppercase tracking-widest">Resolvidos</span>
+                            <span className="text-sm font-bold tracking-widest text-slate-500 uppercase dark:text-white/60">
+                                Resolvidos
+                            </span>
                         </div>
-                        <p className="text-3xl font-black text-slate-900 dark:text-white">{tickets.filter(t => t.status === 'closed').length}</p>
+                        <p className="text-3xl font-black text-slate-900 dark:text-white">
+                            {tickets.filter((t) => t.status === "closed").length}
+                        </p>
                     </div>
-                    <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl p-6 backdrop-blur-md shadow-sm dark:shadow-none">
-                        <div className="flex items-center gap-4 mb-2">
-                            <div className="p-2 rounded-xl bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-white/40">
+                    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/5 dark:shadow-none">
+                        <div className="mb-2 flex items-center gap-4">
+                            <div className="rounded-xl bg-slate-100 p-2 text-slate-500 dark:bg-white/5 dark:text-white/40">
                                 <Search size={20} />
                             </div>
-                            <span className="text-sm font-bold text-slate-500 dark:text-white/60 uppercase tracking-widest">Prazo Médio</span>
+                            <span className="text-sm font-bold tracking-widest text-slate-500 uppercase dark:text-white/60">
+                                Prazo Médio
+                            </span>
                         </div>
                         <p className="text-3xl font-black text-slate-900 dark:text-white">12h</p>
                     </div>
@@ -140,47 +158,71 @@ export function SupportClient() {
 
                 {/* Tickets List */}
                 <div className="space-y-4">
-                    <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 dark:text-white/40 ml-2 mb-4">Seus Atendimentos</h3>
+                    <h3 className="mb-4 ml-2 text-xs font-black tracking-[0.2em] text-slate-500 uppercase dark:text-white/40">
+                        Seus Atendimentos
+                    </h3>
 
                     {loading ? (
                         <div className="flex justify-center py-20">
-                            <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-orange border-t-transparent" />
+                            <div className="border-brand-orange h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
                         </div>
                     ) : tickets.length === 0 ? (
-                        <div className="bg-white dark:bg-white/5 border border-dashed border-slate-200 dark:border-white/10 rounded-[2.5rem] p-16 text-center">
-                            <LifeBuoy size={48} className="mx-auto text-slate-200 dark:text-white/10 mb-4" />
-                            <h4 className="text-xl font-bold mb-2 text-slate-900 dark:text-white">Nenhum ticket aberto</h4>
-                            <p className="text-slate-600 dark:text-white/60 max-w-xs mx-auto text-sm">Se tiver algum problema ou dúvida, nossa equipe está pronta para ajudar.</p>
+                        <div className="rounded-[2.5rem] border border-dashed border-slate-200 bg-white p-16 text-center dark:border-white/10 dark:bg-white/5">
+                            <LifeBuoy
+                                size={48}
+                                className="mx-auto mb-4 text-slate-200 dark:text-white/10"
+                            />
+                            <h4 className="mb-2 text-xl font-bold text-slate-900 dark:text-white">
+                                Nenhum ticket aberto
+                            </h4>
+                            <p className="mx-auto max-w-xs text-sm text-slate-600 dark:text-white/60">
+                                Se tiver algum problema ou dúvida, nossa equipe está pronta para
+                                ajudar.
+                            </p>
                         </div>
                     ) : (
                         tickets.map((ticket) => (
                             <Link
                                 key={ticket.id}
                                 href={`/support/${ticket.id}`}
-                                className="group block bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl p-6 transition-all hover:bg-slate-50 dark:hover:bg-white/[0.08] hover:border-slate-300 dark:hover:border-white/20 shadow-sm"
+                                className="group block rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:border-slate-300 hover:bg-slate-50 dark:border-white/10 dark:bg-white/5 dark:hover:border-white/20 dark:hover:bg-white/[0.08]"
                             >
                                 <div className="flex items-center justify-between gap-4">
-                                    <div className="flex flex-col gap-1 min-w-0">
-                                        <div className="flex items-center gap-3 mb-1">
-                                            <span className={cn(
-                                                "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border",
-                                                getStatusStyles(ticket.status)
-                                            )}>
-                                                {ticket.status === 'open' ? 'Aberto' : ticket.status === 'pending' ? 'Pendente' : 'Fechado'}
+                                    <div className="flex min-w-0 flex-col gap-1">
+                                        <div className="mb-1 flex items-center gap-3">
+                                            <span
+                                                className={cn(
+                                                    "rounded-full border px-3 py-1 text-[10px] font-black tracking-wider uppercase",
+                                                    getStatusStyles(ticket.status)
+                                                )}
+                                            >
+                                                {ticket.status === "open"
+                                                    ? "Aberto"
+                                                    : ticket.status === "pending"
+                                                        ? "Pendente"
+                                                        : "Fechado"}
                                             </span>
-                                            <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40">
+                                            <span className="text-[10px] font-black tracking-widest text-slate-500 uppercase dark:text-white/40">
                                                 {getCategoryLabel(ticket.category)}
                                             </span>
                                         </div>
-                                        <h4 className="text-lg font-black truncate text-slate-900 dark:text-white group-hover:text-brand-orange transition-colors">
+                                        <h4 className="group-hover:text-brand-orange truncate text-lg font-black text-slate-900 transition-colors dark:text-white">
                                             {ticket.title}
                                         </h4>
                                         <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-white/60">
                                             <Clock size={12} />
-                                            Criado em {new Date(ticket.created_at).toLocaleDateString('pt-BR')} às {new Date(ticket.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                                            Criado em{" "}
+                                            {new Date(ticket.created_at).toLocaleDateString(
+                                                "pt-BR"
+                                            )}{" "}
+                                            às{" "}
+                                            {new Date(ticket.created_at).toLocaleTimeString(
+                                                "pt-BR",
+                                                { hour: "2-digit", minute: "2-digit" }
+                                            )}
                                         </div>
                                     </div>
-                                    <div className="bg-slate-100 dark:bg-white/5 p-3 rounded-2xl group-hover:bg-brand-orange group-hover:text-brand-dark text-slate-400 dark:text-white transition-all">
+                                    <div className="group-hover:bg-brand-orange group-hover:text-brand-dark rounded-2xl bg-slate-100 p-3 text-slate-400 transition-all dark:bg-white/5 dark:text-white">
                                         <ChevronRight size={20} />
                                     </div>
                                 </div>
@@ -190,17 +232,22 @@ export function SupportClient() {
                 </div>
 
                 {/* FAQ Prompt */}
-                <div className="mt-16 bg-brand-orange/5 border border-brand-orange/10 rounded-[2.5rem] p-10 flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
-                    <div className="p-5 rounded-3xl bg-brand-orange/10 text-brand-orange">
+                <div className="bg-brand-orange/5 border-brand-orange/10 mt-16 flex flex-col items-center gap-8 rounded-[2.5rem] border p-10 text-center md:flex-row md:text-left">
+                    <div className="bg-brand-orange/10 text-brand-orange rounded-3xl p-5">
                         <AlertCircle size={32} />
                     </div>
                     <div>
-                        <h4 className="text-xl font-black uppercase italic mb-2 tracking-tight text-slate-900 dark:text-white">Dúvida rápida?</h4>
-                        <p className="text-slate-600 dark:text-white/70 text-sm max-w-md">Confira nossa Wiki oficial com guias e tutoriais antes de abrir um ticket. A resposta pode estar lá!</p>
+                        <h4 className="mb-2 text-xl font-black tracking-tight text-slate-900 uppercase italic dark:text-white">
+                            Dúvida rápida?
+                        </h4>
+                        <p className="max-w-md text-sm text-slate-600 dark:text-white/70">
+                            Confira nossa Wiki oficial com guias e tutoriais antes de abrir um
+                            ticket. A resposta pode estar lá!
+                        </p>
                     </div>
                     <Link
                         href="/wiki"
-                        className="md:ml-auto w-full md:w-auto px-8 py-4 rounded-2xl bg-white dark:bg-white/5 text-slate-900 dark:text-white font-black text-sm uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/10 transition-all text-center shadow-sm"
+                        className="w-full rounded-2xl bg-white px-8 py-4 text-center text-sm font-black tracking-wider text-slate-900 uppercase shadow-sm transition-all hover:bg-slate-50 md:ml-auto md:w-auto dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
                     >
                         Acessar Wiki
                     </Link>

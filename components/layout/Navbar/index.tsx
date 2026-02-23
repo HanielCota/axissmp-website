@@ -62,7 +62,7 @@ export function Navbar() {
                     </div>
 
                     {/* Right: Search & User (Equal width flex container on desktop) */}
-                    <div className="hidden md:flex md:flex-1 items-center justify-end gap-4">
+                    <div className="hidden items-center justify-end gap-4 md:flex md:flex-1">
                         <SearchBar />
                         <ThemeToggle />
                         <UserMenu />
@@ -70,10 +70,10 @@ export function Navbar() {
                 </div>
 
                 {/* Bottom Section: Nav Bar */}
-                <div className="h-16 w-full relative">
+                <div className="relative h-16 w-full">
                     <div
                         className={cn(
-                            "bg-brand-orange shadow-brand-orange/20 w-full border-y border-white/10 shadow-lg backdrop-blur-sm transition-all duration-300 z-50",
+                            "bg-brand-orange shadow-brand-orange/20 z-50 w-full border-y border-white/10 shadow-lg backdrop-blur-sm transition-all duration-300",
                             scrolled
                                 ? "animate-in slide-in-from-top bg-brand-orange/95 fixed top-0 left-0 duration-300"
                                 : "relative"

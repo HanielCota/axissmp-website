@@ -1,4 +1,4 @@
-import { Navbar } from "@/components/layout/Navbar"
+import { Navbar } from "@/components/layout/Navbar";
 
 export default function SupportLoading() {
     return (
@@ -20,11 +20,11 @@ export default function SupportLoading() {
                     {[1, 2, 3].map((i) => (
                         <div
                             key={i}
-                            className="h-24 animate-pulse rounded-2xl bg-white/5 border border-white/10"
+                            className="h-24 animate-pulse rounded-2xl border border-white/10 bg-white/5"
                         />
                     ))}
                 </div>
             </div>
         </main>
-    )
+    );
 }

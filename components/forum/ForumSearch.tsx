@@ -23,12 +23,12 @@ export function ForumSearch({ placeholder = "Pesquisar tópicos..." }: { placeho
     }, 300);
 
     return (
-        <div className="relative group">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+        <div className="group relative">
+            <Search className="text-muted-foreground group-focus-within:text-primary absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 transition-colors" />
             <Input
                 placeholder={placeholder}
                 aria-label="Pesquisar tópicos"
-                className="pl-10 h-11 w-full bg-muted/30 backdrop-blur-sm border-input focus:border-primary focus:ring-1 focus:ring-primary transition-all rounded-xl text-foreground placeholder:text-muted-foreground shadow-sm"
+                className="bg-muted/30 border-input focus:border-primary focus:ring-primary text-foreground placeholder:text-muted-foreground h-11 w-full rounded-xl pl-10 shadow-sm backdrop-blur-sm transition-all focus:ring-1"
                 onChange={(e) => handleSearch(e.target.value)}
                 defaultValue={searchParams.get("q")?.toString()}
             />

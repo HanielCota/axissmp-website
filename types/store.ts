@@ -1,4 +1,4 @@
-export type Category = 'vips' | 'coins' | 'unban';
+export type Category = "vips" | "coins" | "unban";
 
 export interface Product {
     id: number;

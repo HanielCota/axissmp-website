@@ -5,7 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Search } from "lucide-react";
-import { wikiData, WikiSlug } from "@/lib/wiki-data";
+import { wikiData, WikiSlug } from "@/constants/wiki-data";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Input } from "@/components/ui/input";
@@ -68,8 +68,8 @@ export default function WikiArticlePage({ params }: { params: Promise<{ slug: st
                                         key={key}
                                         href={`/wiki/${key}`}
                                         className={`flex items-center gap-3 rounded-xl px-4 py-3 font-medium transition-all ${key === slug
-                                            ? "bg-brand-dark shadow-brand-dark/20 text-white shadow-lg"
-                                            : "text-brand-dark/60 hover:bg-brand-dark/5 hover:text-brand-dark"
+                                                ? "bg-brand-dark shadow-brand-dark/20 text-white shadow-lg"
+                                                : "text-brand-dark/60 hover:bg-brand-dark/5 hover:text-brand-dark"
                                             }`}
                                     >
                                         <item.icon size={18} />
